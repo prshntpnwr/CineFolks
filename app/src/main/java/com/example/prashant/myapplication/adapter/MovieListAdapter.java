@@ -40,7 +40,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         holder.titleView.setText(mMovieList.get(position).getTitle());
 
         Glide.with(mContext)
-                .load("http://image.tmdb.org/t/p/w342/" + mMovieList.get(position).getImage())
+                .load(mMovieList.get(position).getImage())
                 .placeholder(R.color.colorAccent)
                 .error(R.color.colorPrimaryDark)
                 .into(holder.imageView);
