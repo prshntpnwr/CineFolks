@@ -19,7 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.Urls;
+import com.example.prashant.myapplication.ui.Urls;
 import com.example.prashant.myapplication.adapter.MovieListAdapter;
 import com.example.prashant.myapplication.objects.Movies;
 
@@ -106,7 +106,6 @@ public class PopularListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        //recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
