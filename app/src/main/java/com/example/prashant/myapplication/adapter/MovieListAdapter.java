@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.prashant.myapplication.ui.MovieDetailActivity;
 import java.util.ArrayList;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
+    private final String TAG = getClass().getSimpleName();
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private Context mContext;
@@ -41,10 +43,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             @Override
             public void onClick(View v) {
                 final Bundle args = new Bundle();
-                args.putString("image", getItem(vh.getAdapterPosition()));
+                args.putString("id", getItem(vh.getAdapterPosition()));
                 Intent intent = new Intent(v.getContext(), MovieDetailActivity.class);
                 intent.putExtras(args);
                 v.getContext().startActivity(intent);
+                Log.d(TAG, "detail intent send");
 
             }
         });

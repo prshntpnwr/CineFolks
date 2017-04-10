@@ -144,7 +144,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .load(Urls.YOUTUBE_THUMB + data[0] + Urls.YOUTUBE_MEDIUM_QUALITY)
                         .placeholder(R.color.colorAccent)
                         .error(R.color.colorPrimaryDark)
-                        .into(((ViewHolderDetails) holder).getImageView());
+                        .into(((ViewHolderTrailer) holder).getImageView());
 
                 ((ViewHolderTrailer) holder).getTitleView().setText(data[1]);
                 ((ViewHolderTrailer) holder).getSiteView().setText(mAct.getString(R.string.site) + data[2]);

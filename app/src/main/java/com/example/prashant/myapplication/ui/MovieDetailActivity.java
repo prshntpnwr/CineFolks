@@ -2,6 +2,7 @@ package com.example.prashant.myapplication.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment.MovieDetailFragment;
@@ -15,8 +16,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment, new MovieDetailFragment())
+                    .replace(R.id.movie_detail_container, new MovieDetailFragment())
                     .commit();
+            Log.d(getClass().getSimpleName(), "Transition happened");
         }
     }
 
