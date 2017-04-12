@@ -17,11 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.ui.Urls;
 import com.example.prashant.myapplication.adapter.MovieListAdapter;
 import com.example.prashant.myapplication.objects.Movies;
+import com.example.prashant.myapplication.ui.Urls;
 
 import org.json.JSONArray;
 import org.json.JSONException;

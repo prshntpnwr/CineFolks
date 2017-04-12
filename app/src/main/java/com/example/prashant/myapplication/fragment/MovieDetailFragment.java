@@ -103,7 +103,7 @@ public class MovieDetailFragment extends Fragment {
     }
 
     private void getMovieDataFromID(final String id) {
-        Log.d(TAG, " getMovieDataFromID id is " + id );
+        Log.d(TAG, " getMovieDataFromID id is " + id);
         String url = Urls.MOVIE_BASE_URL + id + "?" + Urls.API_KEY;
 
         RequestQueue queue = Volley.newRequestQueue(getContext());

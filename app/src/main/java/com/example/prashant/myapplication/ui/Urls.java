@@ -30,31 +30,32 @@ public class Urls {
 
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
-        c.add(Calendar.MONTH, + month);
-        c.add(Calendar.DATE, + date);
+        c.add(Calendar.MONTH, +month);
+        c.add(Calendar.DATE, +date);
 
         Date d = c.getTime();
         return format.format(d);
     }
 
-    private String getLteDate(int date) {
+    private String getLteDate(int month, int date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
-        c.add(Calendar.DATE, + date);
+        c.add(Calendar.MONTH, +month);
+        c.add(Calendar.DATE, +date);
 
         Date d = c.getTime();
         return format.format(d);
     }
 
     public String getPlayingNow() {
-        SORT_PLAYING_NOW = "&release_date.lte=" + getLteDate(3) + "&" + "release_date.gte=" + getGteDate(-1, -2);
+        SORT_PLAYING_NOW = "&release_date.lte=" + getLteDate(0, 3) + "&" + "release_date.gte=" + getGteDate(-1, -2);
         return SORT_PLAYING_NOW;
     }
 
     public String getUpcoming() {
-        SORT_UPCOMING = "&release_date.gte=2017-06-20&release_date.lte=2021-12-30";
+        SORT_UPCOMING = "&release_date.lte=" + getLteDate(8, 0) + "&" + "release_date.gte=" + getGteDate(0, 10);
         return SORT_UPCOMING;
     }
 }
