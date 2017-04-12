@@ -18,6 +18,7 @@ import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment.PlayingNowFragment;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
+import com.example.prashant.myapplication.fragment.UpcomingFragment;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity{
                     PlayingNowFragment tab3 = new PlayingNowFragment();
                     return tab3;
                 case 3:
-                    PopularListFragment tab4 = new PopularListFragment();
+                    UpcomingFragment tab4 = new UpcomingFragment();
                     return tab4;
 
                 default:
