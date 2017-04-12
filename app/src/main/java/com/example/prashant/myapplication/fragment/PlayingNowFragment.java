@@ -25,11 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class PlayingNowFragment extends Fragment {
 
@@ -67,7 +63,12 @@ public class PlayingNowFragment extends Fragment {
     }
 
     private void fetchMovieTask() {
-        url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_PLAYING_NOW;
+
+        Urls urls = new Urls();
+        String sort_by = urls.getPlayingNow();
+
+        url = Urls.BASE_URL + Urls.API_KEY + sort_by;
+        Log.d(TAG, "Playing Now Url - " + url);
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
 

@@ -17,12 +17,38 @@ public class Urls {
     public static String SORT_POPULARITY = "&sort_by=popularity.desc";
     public static String SORT_TOP_RATED =
             "&certification_country=US&certification=R&sort_by=vote_average.desc&vote_count.gte=250";
-    public static String SORT_PLAYING_NOW =
-            "&sort_by=popularity.desc&release_date.lte=2017-4-15&release_date.gte=2017-03-10";
+    public static String SORT_PLAYING_NOW;
 
     //youtube strings url/endpoint
     public static String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
     public static String YOUTUBE_THUMB = "http://img.youtube.com/vi/";
     public static String YOUTUBE_MEDIUM_QUALITY = "/mqdefault.jpg";
 
+    private String getGteDate() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, -1);
+        c.add(Calendar.DATE, -2);
+
+        Date d = c.getTime();
+        return format.format(d);
+    }
+
+    private String getLteDate() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DATE, +3);
+
+        Date d = c.getTime();
+        return format.format(d);
+    }
+
+    public String getPlayingNow() {
+        SORT_PLAYING_NOW = "&release_date.lte=" + getLteDate() + "&" + "release_date.gte=" + getGteDate();
+        return SORT_PLAYING_NOW;
+    }
 }
