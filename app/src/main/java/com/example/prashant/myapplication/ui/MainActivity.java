@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.prashant.myapplication.R;
+import com.example.prashant.myapplication.fragment.PlayingNowFragment;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
 
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity{
                     TopRatedFragment tab2 = new TopRatedFragment();
                     return tab2;
                 case 2:
-                    PopularListFragment tab3 = new PopularListFragment();
+                    PlayingNowFragment tab3 = new PlayingNowFragment();
                     return tab3;
                 case 3:
                     PopularListFragment tab4 = new PopularListFragment();

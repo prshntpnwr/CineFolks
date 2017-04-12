@@ -11,7 +11,8 @@ public class Urls {
 
     //sort-by string endpoint
     public static String SORT_POPULARITY = "&sort_by=popularity.desc";
-    public static String SORT_R_RATED = "&certification_country=US&certification=R&sort_by=vote_average.desc&vote_count.gte=250";
+    public static String SORT_TOP_RATED = "&certification_country=US&certification=R&sort_by=vote_average.desc&vote_count.gte=250";
+    public static String SORT_PLAYING_NOW = "&sort_by=now-playing.desc";
 
     //youtube strings url/endpoint
     public static String YOUTUBE_URL = "http://www.youtube.com/watch?v=";

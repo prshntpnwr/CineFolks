@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class TopRatedFragment extends Fragment {
+public class PlayingNowFragment extends Fragment {
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -60,7 +60,7 @@ public class TopRatedFragment extends Fragment {
     }
 
     private void fetchMovieTask() {
-        url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_TOP_RATED;
+        url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_PLAYING_NOW;
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
