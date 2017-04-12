@@ -158,7 +158,7 @@ public class MovieDetailFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    mAdapter = new MoviesDetailAdapter(movie, trailerInfo, reviewInfo, getActivity());
+                    mAdapter = new MoviesDetailAdapter(movie, trailerInfo, reviewInfo, getContext());
                     mRecyclerView.setAdapter(mAdapter);
 
                     getTrailerInfo(id);
@@ -195,8 +195,7 @@ public class MovieDetailFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {
-                    // Specify Adapter
-                    mAdapter = new MoviesDetailAdapter(movie, trailerInfo, reviewInfo, getActivity());
+                    mAdapter = new MoviesDetailAdapter(movie, trailerInfo, reviewInfo, getContext());
                     mAdapter.notifyDataSetChanged();
                     getMovieReviews(id);
                 }

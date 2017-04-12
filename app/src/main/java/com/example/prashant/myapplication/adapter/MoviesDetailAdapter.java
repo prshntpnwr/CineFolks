@@ -28,18 +28,18 @@ import java.util.ArrayList;
 public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private MoviesDetail movie;
-    private Activity mAct;
+    private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<String> trailerInfo;
     private ArrayList<String> reviewInfo;
 
-    public MoviesDetailAdapter(MoviesDetail movie, ArrayList<String> trailerInfo, ArrayList<String> reviewInfo, Activity mActivity) {
+    public MoviesDetailAdapter(MoviesDetail movie, ArrayList<String> trailerInfo, ArrayList<String> reviewInfo, Context context) {
         this.movie = movie;
         this.trailerInfo = trailerInfo;
         this.reviewInfo = reviewInfo;
-        this.mAct = mActivity;
+        this.mContext = context;
 
-        mInflater = (LayoutInflater) mAct.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 0:
                 try {
                     //image loading and setting color using glide and palette
-                    Glide.with(mAct)
+                    Glide.with(mContext)
                             .load(movie.getPoster())
                             .listener(new RequestListener<String, GlideDrawable>() {
                                 @Override
@@ -117,8 +117,8 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 ((ViewHolderDetails) holder).getDateStatusView().setText(movie.getDate()
                         + " (" + movie.getStatus() + ")");
-                ((ViewHolderDetails) holder).getDurationView().setText(mAct.getString(R.string.duration)
-                        + movie.getRuntime() + mAct.getString(R.string.min));
+                ((ViewHolderDetails) holder).getDurationView().setText(mContext.getString(R.string.duration)
+                        + movie.getRuntime() + mContext.getString(R.string.min));
                 ((ViewHolderDetails) holder).getRatingView().setText(movie.getRating());
 
                 try {
@@ -140,19 +140,20 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 final String[] data = trailerInfo.get(position - 1).split(",,");
 
                 //image loading using glide
-                Glide.with(mAct)
+                Glide.with(mContext)
                         .load(Urls.YOUTUBE_THUMB + data[0] + Urls.YOUTUBE_MEDIUM_QUALITY)
                         .placeholder(R.color.colorAccent)
                         .error(R.color.colorPrimaryDark)
                         .into(((ViewHolderTrailer) holder).getImageView());
 
                 ((ViewHolderTrailer) holder).getTitleView().setText(data[1]);
-                ((ViewHolderTrailer) holder).getSiteView().setText(mAct.getString(R.string.site) + data[2]);
+                ((ViewHolderTrailer) holder).getSiteView().setText(mContext.getString(R.string.site) + data[2]);
+                ((ViewHolderTrailer) holder).getQualityView().setText(mContext.getString(R.string.quality) + data[3] + "p");
 
                 ((ViewHolderTrailer) holder).getRippleLayout().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mAct.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Urls.YOUTUBE_URL + data[0])));
+                        mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Urls.YOUTUBE_URL + data[0])));
                     }
                 });
                 break;
@@ -162,7 +163,6 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .substring(reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-") + 1));
                 ((ViewHolderReview) holder).getReviewAuthorView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
                         .substring(0, reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-")));
-
                 break;
         }
     }
@@ -197,7 +197,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(view);
             imageView = (ImageView) view.findViewById(R.id.image);
             titleView = (TextView) view.findViewById(R.id.title);
-            taglineView = (TextView) view.findViewById(R.id.tagline);
+            taglineView = (TextView) view.findViewById(R.id.tag_line);
             dateStatusView = (TextView) view.findViewById(R.id.date_status);
             durationView = (TextView) view.findViewById(R.id.duration);
             ratingView = (TextView) view.findViewById(R.id.rating);
