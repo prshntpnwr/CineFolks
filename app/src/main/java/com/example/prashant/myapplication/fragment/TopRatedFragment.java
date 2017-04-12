@@ -1,12 +1,10 @@
 package com.example.prashant.myapplication.fragment;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +15,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.ui.Urls;
 import com.example.prashant.myapplication.adapter.MovieListAdapter;
 import com.example.prashant.myapplication.objects.Movies;
+import com.example.prashant.myapplication.ui.Urls;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,9 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class PopularListFragment extends Fragment {
-
-    private final String TAG = getClass().getSimpleName();
+public class TopRatedFragment extends Fragment {
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -42,8 +37,7 @@ public class PopularListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_list_main, container, false);
-
-        mAdapter = new MovieListAdapter(mMovieList, getContext());
+        mAdapter = new MovieListAdapter(mMovieList, getActivity());
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
 
         fetchMovieTask();
@@ -55,18 +49,18 @@ public class PopularListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            mMovieList = savedInstanceState.getParcelableArrayList("mMovies");
+            mMovieList = savedInstanceState.getParcelableArrayList("mMovieList");
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("mMovies", mMovieList);
+        outState.putParcelableArrayList("mMovieList", mMovieList);
     }
 
     private void fetchMovieTask() {
-        url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY;
+        url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_R_RATED;
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
@@ -74,7 +68,6 @@ public class PopularListFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d(TAG + "this is the response", response.toString());
                     JSONArray mResultArray = response.getJSONArray("results");
                     for (int i = 0; i < mResultArray.length(); i++) {
                         JSONObject mResultObject = mResultArray.getJSONObject(i);
@@ -94,16 +87,10 @@ public class PopularListFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                showSnackBar("Something went wrong!");
             }
         });
 
         queue.add(getListData);
-    }
-
-    void showSnackBar(String msg) {
-        Snackbar.make(mRecyclerView, msg, Snackbar.LENGTH_LONG)
-                .show();
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {

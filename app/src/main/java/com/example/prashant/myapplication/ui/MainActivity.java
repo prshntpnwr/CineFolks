@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
+import com.example.prashant.myapplication.fragment.TopRatedFragment;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
                     PopularListFragment tab1 = new PopularListFragment();
                     return tab1;
                 case 1:
-                    PopularListFragment tab2 = new PopularListFragment();
+                    TopRatedFragment tab2 = new TopRatedFragment();
                     return tab2;
                 case 2:
                     PopularListFragment tab3 = new PopularListFragment();

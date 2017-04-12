@@ -1,6 +1,5 @@
 package com.example.prashant.myapplication.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -86,7 +85,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                                                boolean isFromMemoryCache, boolean isFirstResource) {
                                     Bitmap bitmap = ((GlideBitmapDrawable) resource.getCurrent()).getBitmap();
                                     Palette palette = Palette.generate(bitmap);
-                                    int  defaultColor = 0xFF333333;
+                                    int defaultColor = 0xFF333333;
                                     int color = palette.getMutedColor(defaultColor);
                                     ((ViewHolderDetails) holder).getRatingsBackground()
                                             .setColorFilter(color);

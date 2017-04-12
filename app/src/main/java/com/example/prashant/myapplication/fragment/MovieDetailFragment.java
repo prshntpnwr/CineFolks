@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MovieDetailFragment extends Fragment {
+
     private final String TAG = getClass().getSimpleName();
 
     private MoviesDetail movie;
@@ -80,16 +81,25 @@ public class MovieDetailFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mToolbar.setNavigationIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_back));
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        setupToolbar();
 
         getMovieDataFromID(id);
         return v;
+    }
+
+    private void setupToolbar() {
+        if (mToolbar != null) {
+            mToolbar.setNavigationIcon(ContextCompat
+                    .getDrawable(getActivity(), R.drawable.ic_back));
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
+
+            mToolbar.setTitle("");
+        }
     }
 
     private void getMovieDataFromID(final String id) {

@@ -9,6 +9,8 @@ import com.example.prashant.myapplication.fragment.MovieDetailFragment;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
+    private final String TAG = getClass().getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +20,8 @@ public class MovieDetailActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.movie_detail_container, new MovieDetailFragment())
                     .commit();
-            Log.d(getClass().getSimpleName(), "Transition happened");
+
+            Log.d(TAG, "Transition happened");
         }
     }
 
