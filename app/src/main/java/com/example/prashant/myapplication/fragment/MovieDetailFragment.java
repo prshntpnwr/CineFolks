@@ -1,10 +1,13 @@
 package com.example.prashant.myapplication.fragment;
 
+import android.content.ContentValues;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
@@ -31,6 +34,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.MoviesDetailAdapter;
+import com.example.prashant.myapplication.data.MoviesContract.MoviesEntry;
+import com.example.prashant.myapplication.data.MoviesProviderHelper;
 import com.example.prashant.myapplication.objects.MoviesDetail;
 import com.example.prashant.myapplication.ui.Urls;
 
@@ -138,6 +143,7 @@ public class MovieDetailFragment extends Fragment {
                     movie.setPoster("http://image.tmdb.org/t/p/w342/" + response.getString("poster_path"));
 
                     mCollapsingToolbarLayout.setTitle(movie.getTitle());
+                    fabAction();
 
                     try {
                         //image loading and setting color using glide and palette
@@ -255,5 +261,61 @@ public class MovieDetailFragment extends Fragment {
         });
 
         queue.add(mReviewRequest);
+    }
+
+    private void fabAction(){
+
+        boolean isMovieInDB = MoviesProviderHelper
+                .isMovieInDatabase(getActivity(),
+                        String.valueOf(movie.getId()));
+
+        if (isMovieInDB) {
+            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+        } else {
+            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unfavorite));
+        }
+
+        fab.show();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                boolean isMovieInDB = MoviesProviderHelper
+                        .isMovieInDatabase(getActivity(),
+                                String.valueOf(movie.getId()));
+
+                if (isMovieInDB) {
+                    Uri contentUri = MoviesEntry.CONTENT_URI;
+                    getActivity().getContentResolver().delete(contentUri, "id=?", new String[]{String.valueOf(movie.getId())});
+                    Snackbar.make(view, getResources().getString(R.string.remove_favourites), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unfavorite));
+
+                } else {
+                    ContentValues values = new ContentValues();
+                    values.put(MoviesEntry.KEY_ID, movie.getId());
+                    values.put(MoviesEntry.KEY_TITLE, movie.getTitle());
+                    values.put(MoviesEntry.KEY_RATING, movie.getRating());
+                    values.put(MoviesEntry.KEY_GENRE, movie.getGenre());
+                    values.put(MoviesEntry.KEY_DATE, movie.getDate());
+                    values.put(MoviesEntry.KEY_STATUS, movie.getStatus());
+                    values.put(MoviesEntry.KEY_OVERVIEW, movie.getOverview());
+                    values.put(MoviesEntry.KEY_BACKDROP, movie.getBackdrop());
+                    values.put(MoviesEntry.KEY_VOTE_COUNT, movie.getVoteCount());
+                    values.put(MoviesEntry.KEY_TAG_LINE, movie.getTagLine());
+                    values.put(MoviesEntry.KEY_RUN_TIME, movie.getRuntime());
+                    values.put(MoviesEntry.KEY_LANGUAGE, movie.getLanguage());
+                    values.put(MoviesEntry.KEY_POPULARITY, movie.getPopularity());
+                    values.put(MoviesEntry.KEY_POSTER, movie.getPoster());
+
+                    getActivity().getContentResolver().insert(MoviesEntry.CONTENT_URI, values);
+
+                    Snackbar.make(view, getResources().getString(R.string.add_favourites), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                }
+            }
+        });
     }
 }

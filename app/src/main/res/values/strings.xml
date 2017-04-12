@@ -13,4 +13,7 @@
     <string name="quality">"Quality - "</string>
     <string name="min">" min"</string>
 
+    <string name="add_favourites">Movie added to favourites!</string>
+    <string name="remove_favourites">Movie removed from favourites.</string>
+
 </resources>

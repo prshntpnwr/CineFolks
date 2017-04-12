@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.prashant.myapplication.R;
+import com.example.prashant.myapplication.fragment.FavouriteFragment;
 import com.example.prashant.myapplication.fragment.PlayingNowFragment;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab 4"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 5"));
 
         // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
@@ -125,6 +127,9 @@ public class MainActivity extends AppCompatActivity{
                 case 3:
                     UpcomingFragment tab4 = new UpcomingFragment();
                     return tab4;
+                case 4:
+                    FavouriteFragment tab5 = new FavouriteFragment();
+                    return tab5;
 
                 default:
                     return null;
@@ -148,6 +153,8 @@ public class MainActivity extends AppCompatActivity{
                     return "SECTION 3";
                 case 3:
                     return "SECTION 4";
+                case 4:
+                    return "SECTION 5";
 
             }
             return null;
