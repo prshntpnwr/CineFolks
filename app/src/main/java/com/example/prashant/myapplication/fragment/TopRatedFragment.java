@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class TopRatedFragment extends Fragment {
+
+    private final String TAG = getClass().getSimpleName();
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -68,6 +71,7 @@ public class TopRatedFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    Log.d(TAG, "Top Rated response is: " + response.toString());
                     JSONArray mResultArray = response.getJSONArray("results");
                     for (int i = 0; i < mResultArray.length(); i++) {
                         JSONObject mResultObject = mResultArray.getJSONObject(i);

@@ -24,5 +24,4 @@ public class MovieDetailActivity extends AppCompatActivity {
             Log.d(TAG, "Transition happened");
         }
     }
-
 }

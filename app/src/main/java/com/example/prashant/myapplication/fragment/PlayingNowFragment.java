@@ -76,6 +76,7 @@ public class PlayingNowFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    Log.d(TAG, "Playing now response is - " + response.toString());
                     JSONArray mResultArray = response.getJSONArray("results");
                     for (int i = 0; i < mResultArray.length(); i++) {
                         JSONObject mResultObject = mResultArray.getJSONObject(i);

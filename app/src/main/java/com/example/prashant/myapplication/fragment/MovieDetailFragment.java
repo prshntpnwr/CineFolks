@@ -1,5 +1,6 @@
 package com.example.prashant.myapplication.fragment;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -157,6 +158,7 @@ public class MovieDetailFragment extends Fragment {
                                         int defaultColor = 0xFF333333;
                                         int color = palette.getMutedColor(defaultColor);
                                         mCollapsingToolbarLayout.setContentScrimColor(color);
+                                        fab.setBackgroundTintList(ColorStateList.valueOf(color));
 
                                         return false;
                                     }
@@ -248,7 +250,7 @@ public class MovieDetailFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                error.printStackTrace();
             }
         });
 

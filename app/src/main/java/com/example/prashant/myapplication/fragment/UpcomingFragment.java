@@ -76,7 +76,7 @@ public class UpcomingFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d(TAG + "this is the response", response.toString());
+                    Log.d(TAG + "Upcoming response is - ", response.toString());
                     JSONArray mResultArray = response.getJSONArray("results");
                     for (int i = 0; i < mResultArray.length(); i++) {
                         JSONObject mResultObject = mResultArray.getJSONObject(i);

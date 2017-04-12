@@ -30,8 +30,8 @@ public class Urls {
 
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
-        c.add(Calendar.MONTH, +month);
-        c.add(Calendar.DATE, +date);
+        c.add(Calendar.MONTH, + month);
+        c.add(Calendar.DATE, + date);
 
         Date d = c.getTime();
         return format.format(d);
@@ -42,8 +42,8 @@ public class Urls {
 
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
-        c.add(Calendar.MONTH, +month);
-        c.add(Calendar.DATE, +date);
+        c.add(Calendar.MONTH, + month);
+        c.add(Calendar.DATE, + date);
 
         Date d = c.getTime();
         return format.format(d);
