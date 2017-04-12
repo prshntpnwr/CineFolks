@@ -1,5 +1,9 @@
 package com.example.prashant.myapplication.ui;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Urls {
 
     //request base urls
@@ -11,11 +15,14 @@ public class Urls {
 
     //sort-by string endpoint
     public static String SORT_POPULARITY = "&sort_by=popularity.desc";
-    public static String SORT_TOP_RATED = "&certification_country=US&certification=R&sort_by=vote_average.desc&vote_count.gte=250";
-    public static String SORT_PLAYING_NOW = "&sort_by=now-playing.desc";
+    public static String SORT_TOP_RATED =
+            "&certification_country=US&certification=R&sort_by=vote_average.desc&vote_count.gte=250";
+    public static String SORT_PLAYING_NOW =
+            "&sort_by=popularity.desc&release_date.lte=2017-4-15&release_date.gte=2017-03-10";
 
     //youtube strings url/endpoint
     public static String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
     public static String YOUTUBE_THUMB = "http://img.youtube.com/vi/";
     public static String YOUTUBE_MEDIUM_QUALITY = "/mqdefault.jpg";
+
 }
