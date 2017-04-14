@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,6 @@ public class PopularListFragment extends Fragment {
     private View mRootView;
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
-    private GridLayoutManager mGridLayoutManager;
     private String url;
 
     @Override
@@ -46,7 +46,6 @@ public class PopularListFragment extends Fragment {
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
         mAdapter = new MovieListAdapter(mMovieList, getContext());
-        mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
 
         fetchMovieTask();
         setupRecyclerView(mRecyclerView);
@@ -109,8 +108,9 @@ public class PopularListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(mGridLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+        StaggeredGridLayoutManager sglm =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(sglm);
     }
 }
