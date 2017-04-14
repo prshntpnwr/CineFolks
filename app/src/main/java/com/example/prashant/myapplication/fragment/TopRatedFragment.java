@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +38,15 @@ public class TopRatedFragment extends Fragment {
     private View mRootView;
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
-    private String url;
+    private StaggeredGridLayoutManager sglm;
+
+    private int firstVisibleItem;
+    private int visibleItemCount;
+    private int totalItemCount;
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 4;
+    private int pageCount = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +54,8 @@ public class TopRatedFragment extends Fragment {
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
         mAdapter = new MovieListAdapter(mMovieList, getActivity());
 
-        fetchMovieTask();
+        String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_TOP_RATED;
+        fetchMovieTask(url);
         setupRecyclerView(mRecyclerView);
         return mRecyclerView;
     }
@@ -64,8 +74,7 @@ public class TopRatedFragment extends Fragment {
         outState.putParcelableArrayList("mMovieList", mMovieList);
     }
 
-    private void fetchMovieTask() {
-        url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_TOP_RATED;
+    private void fetchMovieTask(String url) {
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
@@ -100,9 +109,38 @@ public class TopRatedFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
+        sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(sglm);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                visibleItemCount = mRecyclerView.getChildCount();
+                totalItemCount = sglm.getItemCount();
+
+                int[] firstVisibleItemPositions = new int[2];
+                firstVisibleItem = ((StaggeredGridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
+
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                        pageCount++;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                    String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_TOP_RATED + "&page=" + String.valueOf(pageCount);
+                    Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
+                    fetchMovieTask(url);
+
+                    loading = true;
+                }
+            }
+        });
+
         recyclerView.setAdapter(mAdapter);
-        StaggeredGridLayoutManager sglm =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(sglm);
     }
 }
