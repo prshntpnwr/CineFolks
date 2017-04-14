@@ -25,7 +25,7 @@ public class Urls {
     public static String YOUTUBE_THUMB = "http://img.youtube.com/vi/";
     public static String YOUTUBE_MEDIUM_QUALITY = "/mqdefault.jpg";
 
-    private String getGteDate(int month, int date) {
+    private static String getGteDate(int month, int date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar c = Calendar.getInstance();
@@ -37,7 +37,7 @@ public class Urls {
         return format.format(d);
     }
 
-    private String getLteDate(int month, int date) {
+    private static String getLteDate(int month, int date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar c = Calendar.getInstance();
@@ -49,12 +49,12 @@ public class Urls {
         return format.format(d);
     }
 
-    public String getPlayingNow() {
+    public static String getPlayingNow() {
         SORT_PLAYING_NOW = "&release_date.lte=" + getLteDate(0, 3) + "&" + "release_date.gte=" + getGteDate(-1, -2);
         return SORT_PLAYING_NOW;
     }
 
-    public String getUpcoming() {
+    public static String getUpcoming() {
         SORT_UPCOMING = "&release_date.lte=" + getLteDate(8, 0) + "&" + "release_date.gte=" + getGteDate(0, 10);
         return SORT_UPCOMING;
     }

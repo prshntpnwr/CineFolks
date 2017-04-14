@@ -33,14 +33,17 @@ public class PopularListFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
+
+    private View mRootView;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MovieListAdapter mAdapter;
     private GridLayoutManager mGridLayoutManager;
     private String url;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_list_main, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
         mAdapter = new MovieListAdapter(mMovieList, getContext());
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -54,14 +57,14 @@ public class PopularListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            mMovieList = savedInstanceState.getParcelableArrayList("mMovies");
+            mMovieList = savedInstanceState.getParcelableArrayList("mMoviesList");
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("mMovies", mMovieList);
+        outState.putParcelableArrayList("mMoviesList", mMovieList);
     }
 
     private void fetchMovieTask() {

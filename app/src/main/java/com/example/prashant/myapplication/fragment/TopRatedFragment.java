@@ -32,14 +32,17 @@ public class TopRatedFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
+
+    private View mRootView;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MovieListAdapter mAdapter;
     private GridLayoutManager mGridLayoutManager;
     private String url;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_list_main, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
         mAdapter = new MovieListAdapter(mMovieList, getActivity());
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
 
