@@ -68,13 +68,25 @@ public class PopularListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mMovieList = savedInstanceState.getParcelableArrayList("mMoviesList");
+            pageCount = savedInstanceState.getInt("pageCount");
+            previousTotal = savedInstanceState.getInt("previousTotal");
+            firstVisibleItem = savedInstanceState.getInt("firstVisibleItem");
+            visibleItemCount = savedInstanceState.getInt("visibleItemCount");
+            totalItemCount = savedInstanceState.getInt("totalItemCount");
+            loading = savedInstanceState.getBoolean("loading");
         }
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("mMoviesList", mMovieList);
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList("mMoviesList", mMovieList);
+        bundle.putInt("pageCount", pageCount);
+        bundle.putInt("previousTotal", previousTotal);
+        bundle.putInt("firstVisibleItem", firstVisibleItem);
+        bundle.putInt("visibleItemCount", visibleItemCount);
+        bundle.putInt("totalItemCount", totalItemCount);
+        bundle.putBoolean("loading", loading);
     }
 
     private void fetchMovieTask(String url) {
