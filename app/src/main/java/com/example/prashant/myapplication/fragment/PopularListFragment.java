@@ -117,6 +117,7 @@ public class PopularListFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                Log.d(TAG, "fail response from api " + error);
             }
         });
 

@@ -24,8 +24,9 @@ import com.example.prashant.myapplication.fragment.PlayingNowFragment;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
 import com.example.prashant.myapplication.fragment.UpcomingFragment;
+import com.example.prashant.myapplication.fragment_tv.PopularTVFragment;
 
-public class MainActivity extends AppCompatActivity{
+public class TVMainActivity extends AppCompatActivity{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -61,9 +62,6 @@ public class MainActivity extends AppCompatActivity{
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 4"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 5"));
 
         // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
@@ -85,7 +83,6 @@ public class MainActivity extends AppCompatActivity{
                         .setAction("Action", null).show();
             }
         });
-
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -97,12 +94,11 @@ public class MainActivity extends AppCompatActivity{
                         int id = menuItem.getItemId();
 
                         if (id == R.id.nav_tv) {
-
-                            Intent intent = new Intent(getApplicationContext(), TVMainActivity.class);
-                            startActivity(intent);
+                           //do nothing
 
                         } else if (id == R.id.nav_movie){
-                            //do nothing
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
                         }
 
                         mDrawerLayout.closeDrawers();
@@ -151,15 +147,9 @@ public class MainActivity extends AppCompatActivity{
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new PopularListFragment();
+                    return new PopularTVFragment();
                 case 1:
-                    return new TopRatedFragment();
-                case 2:
-                    return new PlayingNowFragment();
-                case 3:
-                    return new UpcomingFragment();
-                case 4:
-                    return  new FavouriteFragment();
+                    return new PopularTVFragment();
 
                 default:
                     return null;
@@ -176,15 +166,10 @@ public class MainActivity extends AppCompatActivity{
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "TAB 1";
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-                case 3:
-                    return "SECTION 4";
-                case 4:
-                    return "SECTION 5";
+                    return "TAB 2";
+
             }
             return null;
         }
