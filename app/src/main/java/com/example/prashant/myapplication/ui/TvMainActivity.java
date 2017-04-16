@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,14 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.fragment.FavouriteFragment;
-import com.example.prashant.myapplication.fragment.PlayingNowFragment;
-import com.example.prashant.myapplication.fragment.PopularListFragment;
-import com.example.prashant.myapplication.fragment.TopRatedFragment;
-import com.example.prashant.myapplication.fragment.UpcomingFragment;
-import com.example.prashant.myapplication.fragment_tv.PopularTVFragment;
+import com.example.prashant.myapplication.fragment_tv.PopularTvFragment;
 
-public class TVMainActivity extends AppCompatActivity{
+public class TvMainActivity extends AppCompatActivity{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -147,9 +141,9 @@ public class TVMainActivity extends AppCompatActivity{
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new PopularTVFragment();
+                    return new PopularTvFragment();
                 case 1:
-                    return new PopularTVFragment();
+                    return new PopularTvFragment();
 
                 default:
                     return null;

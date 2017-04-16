@@ -106,6 +106,7 @@ public class PopularListFragment extends Fragment {
                                 getResources().getString(R.string.release_date) + mResultObject.getString("release_date"),
                                 mResultObject.getString("overview"),
                                 String.valueOf(mResultObject.getInt("id")));
+                        Log.d(TAG, " Movies list is " + movie.toString());
                         mMovieList.add(movie);
                     }
                 } catch (JSONException e) {

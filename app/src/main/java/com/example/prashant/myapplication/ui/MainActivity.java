@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity{
 
                         if (id == R.id.nav_tv) {
 
-                            Intent intent = new Intent(getApplicationContext(), TVMainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), TvMainActivity.class);
                             startActivity(intent);
 
                         } else if (id == R.id.nav_movie){
