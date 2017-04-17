@@ -98,6 +98,7 @@ public class PopularListFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     Log.d(TAG + "this is the response", response.toString());
+
                     JSONArray mResultArray = response.getJSONArray("results");
                     for (int i = 0; i < mResultArray.length(); i++) {
                         JSONObject mResultObject = mResultArray.getJSONObject(i);
@@ -106,8 +107,9 @@ public class PopularListFragment extends Fragment {
                                 getResources().getString(R.string.release_date) + mResultObject.getString("release_date"),
                                 mResultObject.getString("overview"),
                                 String.valueOf(mResultObject.getInt("id")));
-                        Log.d(TAG, " Movies list is " + movie.toString());
+                        Log.d(TAG, " Movies list is - " + movie.toString());
                         mMovieList.add(movie);
+                        Log.d(TAG, " mMovieList inside loop is - " + mMovieList);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -118,7 +120,7 @@ public class PopularListFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Log.d(TAG, "fail response from api " + error);
+                Log.d(TAG, "fail response from movie api " + error);
             }
         });
 

@@ -28,13 +28,14 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
     public TVListAdapter(ArrayList<TV> TvList, Context context) {
         this.mTvList = TvList;
         this.mContext = context;
-        Log.d(TAG, "Tv adapter is called");
+        Log.d(TAG, " Tv adapter TvList " + TvList.size() + " " + mTvList.size());
     }
 
     @Override
     public TVListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_list_item, parent, false);
+        Log.d(TAG, "Tv adapter onCreateViewHolder");
 
         return new ViewHolder(view);
     }
@@ -43,6 +44,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
     public void onBindViewHolder(final TVListAdapter.ViewHolder holder, int position) {
 
         holder.titleView.setText(mTvList.get(position).getTitle());
+        Log.d(TAG, " Tv adapter onBindViewHolder ");
 
         Glide.with(mContext)
                 .load(mTvList.get(position).getImage())
@@ -50,11 +52,12 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
                 .error(R.color.colorPrimaryDark)
                 .into(holder.imageView);
 
-        Log.d(TAG, "Tv adapter image" + mTvList.get(position).getImage());
+        Log.d(TAG, " Tv adapter overview " + mTvList.get(position).getOverview());
     }
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, " Tv adapter getItemCount " + mTvList.size());
         return mTvList.size();
     }
 

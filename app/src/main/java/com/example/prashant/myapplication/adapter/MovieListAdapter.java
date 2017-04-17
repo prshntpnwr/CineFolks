@@ -24,9 +24,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private Context mContext;
 
-    public MovieListAdapter(ArrayList<Movies> mMovieList, Context context) {
-        this.mMovieList = mMovieList;
+    public MovieListAdapter(ArrayList<Movies> MovieList, Context context) {
+        this.mMovieList = MovieList;
         this.mContext = context;
+        Log.d(TAG, " Movie adapter MovieList " + MovieList.size() + " " + mMovieList.size());
     }
 
     public String getItem(int position) {
@@ -58,16 +59,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public void onBindViewHolder(final MovieListAdapter.ViewHolder holder, int position) {
 
         holder.titleView.setText(mMovieList.get(position).getTitle());
-
+        Log.d(TAG, "movie adapter onBindViewHolder");
         Glide.with(mContext)
                 .load(mMovieList.get(position).getImage())
                 .placeholder(R.color.colorAccent)
                 .error(R.color.colorPrimaryDark)
                 .into(holder.imageView);
+        Log.d(TAG, " Movie adapter poster " + mMovieList.get(position).getImage());
     }
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, " Movie adapter getItemCount " + mMovieList.size());
         return mMovieList.size();
     }
 

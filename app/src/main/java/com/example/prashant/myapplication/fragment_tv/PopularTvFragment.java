@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,11 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.adapter.MovieListAdapter;
 import com.example.prashant.myapplication.adapter.TVListAdapter;
-import com.example.prashant.myapplication.objects.Movies;
 import com.example.prashant.myapplication.objects.TV;
-import com.example.prashant.myapplication.ui.Urls;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,11 +52,15 @@ public class PopularTvFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mTVList = savedInstanceState.getParcelableArrayList("TvList");
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList("TvList", mTVList);
     }
 
     private void fetchTvTask() {
@@ -81,28 +81,30 @@ public class PopularTvFragment extends Fragment {
                     Log.d(TAG + " TV Response length - ", String.valueOf(mResultArray.length()));
 
                     for (int i = 0; i < mResultArray.length(); i++) {
-                        Log.d(TAG, " Enter into tv response loop "+ i);
+                        Log.d(TAG, " Enter into tv response loop " + i);
 
                         JSONObject mResultObject = mResultArray.getJSONObject(i);
-                        TV tv;tv = new TV(mResultObject.getString("name"),
+                        TV tv = new TV(mResultObject.getString("original_name"),
                                 "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"),
                                 getResources().getString(R.string.release_date) + mResultObject.getString("first_air_date"),
                                 mResultObject.getString("overview"),
                                 String.valueOf(mResultObject.getInt("id")));
                         Log.d(TAG, " TV list is " + tv.toString());
                         mTVList.add(tv);
+                        Log.d(TAG, " mTVList inside loop is " + mTVList);
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.d(TAG, " failed to parse json from TV" + e);
+                    Log.d(TAG, " failed to parse json from TV " + e);
                 }
+                mAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Log.d(TAG, "fail response from api " + error);
+                Log.d(TAG, "fail response from Tv api " + error);
             }
         });
 
@@ -110,6 +112,7 @@ public class PopularTvFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setHasFixedSize(true);
         sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(sglm);
         recyclerView.setAdapter(mAdapter);
