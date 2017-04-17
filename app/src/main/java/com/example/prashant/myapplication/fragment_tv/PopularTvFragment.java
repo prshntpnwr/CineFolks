@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.TVListAdapter;
 import com.example.prashant.myapplication.objects.TV;
+import com.example.prashant.myapplication.ui.Urls;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,7 +66,7 @@ public class PopularTvFragment extends Fragment {
 
     private void fetchTvTask() {
 
-        String url = "http://api.themoviedb.org/3/discover/tv?api_key=b7f57ee32644eb6ddfdca9ca38b5513e";
+        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY;
 
         Log.d(TAG, " URL - " + url);
 
@@ -84,7 +85,7 @@ public class PopularTvFragment extends Fragment {
                         Log.d(TAG, " Enter into tv response loop " + i);
 
                         JSONObject mResultObject = mResultArray.getJSONObject(i);
-                        TV tv = new TV(mResultObject.getString("original_name"),
+                        TV tv = new TV(mResultObject.getString("name"),
                                 "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"),
                                 getResources().getString(R.string.release_date) + mResultObject.getString("first_air_date"),
                                 mResultObject.getString("overview"),

@@ -16,6 +16,7 @@ import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.objects.Movies;
 import com.example.prashant.myapplication.objects.TV;
 import com.example.prashant.myapplication.ui.MovieDetailActivity;
+import com.example.prashant.myapplication.ui.TvDetailActivity;
 
 import java.util.ArrayList;
 
@@ -31,13 +32,33 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
         Log.d(TAG, " Tv adapter TvList " + TvList.size() + " " + mTvList.size());
     }
 
+    public String getItem(int position) {
+        return mTvList.get(position).getId();
+    }
+
+
     @Override
     public TVListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_list_item, parent, false);
         Log.d(TAG, "Tv adapter onCreateViewHolder");
 
-        return new ViewHolder(view);
+        final ViewHolder vh =  new ViewHolder(view);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Bundle args = new Bundle();
+                args.putString("id", getItem(vh.getAdapterPosition()));
+                Intent intent = new Intent(v.getContext(), TvDetailActivity.class);
+                intent.putExtras(args);
+                v.getContext().startActivity(intent);
+                Log.d(TAG, "detail intent send");
+
+            }
+        });
+
+        return vh;
     }
 
     @Override

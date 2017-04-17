@@ -30,7 +30,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         Log.d(TAG, " Movie adapter MovieList " + MovieList.size() + " " + mMovieList.size());
     }
 
-    public String getItem(int position) {
+    private String getItem(int position) {
         return mMovieList.get(position).getId();
     }
 

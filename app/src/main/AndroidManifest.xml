@@ -44,6 +44,16 @@
         </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.TvDetailActivity"
+            android:theme="@style/AppTheme.Detail">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:authorities="com.example.prashant.myapplication"
             android:name=".data.MoviesProvider"
