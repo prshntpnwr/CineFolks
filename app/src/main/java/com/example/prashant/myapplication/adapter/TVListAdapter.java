@@ -49,11 +49,11 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 final Bundle args = new Bundle();
-                args.putString("id", getItem(vh.getAdapterPosition()));
+                args.putString("id_", getItem(vh.getAdapterPosition()));
                 Intent intent = new Intent(v.getContext(), TvDetailActivity.class);
                 intent.putExtras(args);
                 v.getContext().startActivity(intent);
-                Log.d(TAG, "detail intent send");
+                Log.d(TAG, "id from tv adapter " + getItem(vh.getAdapterPosition()));
 
             }
         });

@@ -62,7 +62,7 @@ public class TvDetailFragment extends Fragment {
     private ImageView mBackdrop;
 
     private ArrayList<String> trailerInfo = new ArrayList<>();
-    private ArrayList<String> reviewInfo = new ArrayList<>();
+   // private ArrayList<String> reviewInfo = new ArrayList<>();
 
     private FloatingActionButton fab;
 
@@ -71,7 +71,7 @@ public class TvDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
-        String id = getActivity().getIntent().getStringExtra("id");
+        String id = getActivity().getIntent().getStringExtra("id_");
         Log.d(TAG, " intent receive from adapter is " + id);
         tv = new TvDetail();
 
@@ -124,10 +124,11 @@ public class TvDetailFragment extends Fragment {
                     Log.d(TAG, " Tv detail response is " + response);
                     tv.setId(Integer.valueOf(id));
                     Log.d(TAG, " Tv detail id is " + id);
-                    tv.setTitle(response.getString("title"));
-                    Log.d(TAG, " Tv detail title is " + response.getString("title"));
+                    tv.setTitle(response.getString("name"));
+                    Log.d(TAG, " Tv detail title is " + response.getString("name"));
                     tv.setRating(String.valueOf(response.getDouble("vote_average")));
                     Log.d(TAG, " Tv detail rating is " + String.valueOf(response.getDouble("vote_average")));
+
                     String genres = "";
                     JSONArray genreArray = response.getJSONArray("genres");
                     for (int i = 0; i < genreArray.length(); i++) {
@@ -137,28 +138,36 @@ public class TvDetailFragment extends Fragment {
                         else
                             genres += genre + ".";
                     }
+
                     tv.setGenre(genres);
                     Log.d(TAG, " Tv genres is " + genres);
-                    tv.setDate(response.getString("release_date"));
-                    Log.d(TAG, " Tv date is " + response.getString("release_date"));
+
+                    tv.setDate(response.getString("first_air_date"));
+                    Log.d(TAG, " Tv date is " + response.getString("first_air_date"));
+
                     tv.setStatus(response.getString("status"));
                     Log.d(TAG, " Tv status is " + response.getString("status"));
+
                     tv.setOverview(response.getString("overview"));
                     Log.d(TAG, " Tv overview is " + response.getString("overview"));
+
                     tv.setBackdrop("http://image.tmdb.org/t/p/w780/" + response.getString("backdrop_path"));
                     Log.d(TAG, " Tv backdrop is " + "http://image.tmdb.org/t/p/w780/" + response.getString("backdrop_path"));
+
                     tv.setVoteCount(String.valueOf(response.getInt("vote_count")));
                     Log.d(TAG, " Tv vote_count is " + String.valueOf(response.getInt("vote_count")));
-                    tv.setTagLine(response.getString("tagline"));
-                    Log.d(TAG, " Tv tagline is " + response.getString("tagline"));
-                    tv.setRuntime(String.valueOf(response.getInt("runtime")));
-                    Log.d(TAG, " Tv runtime is " + String.valueOf(response.getInt("runtime")));
-                    tv.setLanguage(response.getString("original_language"));
-                    Log.d(TAG, " Tv original_language is " + response.getString("original_language"));
-                    tv.setPopularity(String.valueOf(response.getDouble("popularity")));
-                    Log.d(TAG, " Tv popularity is " + String.valueOf(response.getDouble("popularity")));
+
                     tv.setPoster("http://image.tmdb.org/t/p/w342/" + response.getString("poster_path"));
                     Log.d(TAG, " Tv poster_path is " + "http://image.tmdb.org/t/p/w342/" + response.getString("poster_path"));
+
+                    tv.setLanguage(response.getString("original_language"));
+                    Log.d(TAG, " Tv original_language is " + response.getString("original_language"));
+
+                    tv.setPopularity(String.valueOf(response.getDouble("popularity")));
+                    Log.d(TAG, " Tv popularity is " + String.valueOf(response.getDouble("popularity")));
+
+                    tv.setRuntime(String.valueOf(response.getString("episode_run_time")));
+                    Log.d(TAG, " Tv runtime is " + String.valueOf(response.getString("episode_run_time")));
 
                     mCollapsingToolbarLayout.setTitle(tv.getTitle());
 
@@ -193,19 +202,21 @@ public class TvDetailFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    mAdapter = new TvDetailAdapter(tv, trailerInfo, reviewInfo, getContext());
+                    mAdapter = new TvDetailAdapter(tv, trailerInfo, getContext());
                     mRecyclerView.setAdapter(mAdapter);
 
                     getTrailerInfo(id);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    getTrailerInfo(id);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                getTrailerInfo(id);
             }
         });
         queue.add(getDetails);
@@ -230,54 +241,19 @@ public class TvDetailFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {
-                    mAdapter = new TvDetailAdapter(tv, trailerInfo, reviewInfo, getContext());
+                    Log.d(TAG, "Trailers are - " + trailerInfo);
+                    mAdapter = new TvDetailAdapter(tv, trailerInfo, getContext());
                     mAdapter.notifyDataSetChanged();
-                    getTvReviews(id);
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                getTvReviews(id);
                 error.printStackTrace();
             }
         });
 
         queue.add(mTrailerRequest);
-    }
-
-    void getTvReviews(String id) {
-        reviewInfo.clear();
-
-        String reviewUrl = Urls.TV_BASE_URL + id + "/reviews?" + Urls.API_KEY;
-
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        JsonObjectRequest mReviewRequest = new JsonObjectRequest(Request.Method.GET, reviewUrl, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    int size = response.getInt("total_results");
-                    if (size != 0) {
-                        JSONArray mReviewArray = response.getJSONArray("results");
-                        for (int i = 0; i < mReviewArray.length(); i++) {
-                            JSONObject mReview = mReviewArray.getJSONObject(i);
-                            reviewInfo.add(mReview.getString("author") + "-" + mReview.getString("content"));
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        queue.add(mReviewRequest);
     }
 }

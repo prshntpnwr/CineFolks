@@ -31,12 +31,10 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<String> trailerInfo;
-    private ArrayList<String> reviewInfo;
 
-    public TvDetailAdapter(TvDetail tv, ArrayList<String> trailerInfo, ArrayList<String> reviewInfo, Context context) {
+    public TvDetailAdapter(TvDetail tv, ArrayList<String> trailerInfo, Context context) {
         this.tv = tv;
         this.trailerInfo = trailerInfo;
-        this.reviewInfo = reviewInfo;
         this.mContext = context;
 
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,11 +55,11 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return vh;
         }
 
-        if (viewType == 2) {
-            View v = mInflater.inflate(R.layout.layout_holder_review, parent, false);
-            vh = new ViewHolderReview(v);
-            return vh;
-        }
+//        if (viewType == 2) {
+//            View v = mInflater.inflate(R.layout.layout_holder_review, parent, false);
+//            vh = new ViewHolderReview(v);
+//            return vh;
+//        }
         return null;
     }
 
@@ -109,11 +107,11 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 ((ViewHolderDetails) holder).getTitleView().setText(tv.getTitle());
 
-                if (!tv.getTagLine().equals("")) {
-                    ((ViewHolderDetails) holder).getTaglineView().setText("\"" + tv.getTagLine() + "\"");
-                } else {
-                    ((ViewHolderDetails) holder).getTaglineView().setVisibility(View.GONE);
-                }
+//                if (!tv.getTagLine().equals("")) {
+//                    ((ViewHolderDetails) holder).getTaglineView().setText("\"" + tv.getTagLine() + "\"");
+//                } else {
+//                    ((ViewHolderDetails) holder).getTaglineView().setVisibility(View.GONE);
+//                }
 
                 ((ViewHolderDetails) holder).getDateStatusView().setText(tv.getDate()
                         + " (" + tv.getStatus() + ")");
@@ -158,18 +156,18 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 });
                 break;
 
-            case 2:
-                ((ViewHolderReview) holder).getReviewView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
-                        .substring(reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-") + 1));
-                ((ViewHolderReview) holder).getReviewAuthorView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
-                        .substring(0, reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-")));
-                break;
+//            case 2:
+//                ((ViewHolderReview) holder).getReviewView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
+//                        .substring(reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-") + 1));
+//                ((ViewHolderReview) holder).getReviewAuthorView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
+//                        .substring(0, reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-")));
+//                break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return 1 + trailerInfo.size() + reviewInfo.size();
+        return 1 + trailerInfo.size();
     }
 
     @Override
@@ -179,8 +177,6 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return 0;
         if (position > 0 && position <= trailerInfo.size())
             return 1;
-        if (position > trailerInfo.size() && position <= trailerInfo.size() + reviewInfo.size())
-            return 2;
         return 999;
     }
 
@@ -309,23 +305,23 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public static class ViewHolderReview extends RecyclerView.ViewHolder {
-
-        private TextView reviewView;
-        private TextView reviewAuthorView;
-
-        public ViewHolderReview(View view) {
-            super(view);
-            reviewAuthorView = (TextView) view.findViewById(R.id.review_author_text);
-            reviewView = (TextView) view.findViewById(R.id.review_text);
-        }
-
-        public TextView getReviewAuthorView() {
-            return reviewAuthorView;
-        }
-
-        public TextView getReviewView() {
-            return reviewView;
-        }
-    }
+//    public static class ViewHolderReview extends RecyclerView.ViewHolder {
+//
+//        private TextView reviewView;
+//        private TextView reviewAuthorView;
+//
+//        public ViewHolderReview(View view) {
+//            super(view);
+//            reviewAuthorView = (TextView) view.findViewById(R.id.review_author_text);
+//            reviewView = (TextView) view.findViewById(R.id.review_text);
+//        }
+//
+//        public TextView getReviewAuthorView() {
+//            return reviewAuthorView;
+//        }
+//
+//        public TextView getReviewView() {
+//            return reviewView;
+//        }
+//    }
 }

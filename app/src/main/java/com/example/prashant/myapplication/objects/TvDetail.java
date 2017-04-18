@@ -15,7 +15,7 @@ public class TvDetail implements Parcelable {
         }
     };
     private String title, rating, genre, date, status, overview, backdrop, voteCount, tagLine,
-            runtime, language, popularity, poster;
+            runtime, language, popularity, poster, number_of_episodes, number_of_seasons, last_air_date;
     private int id;
 
     public TvDetail() {
@@ -24,7 +24,7 @@ public class TvDetail implements Parcelable {
     public TvDetail(int id, String title, String rating, String genre, String date,
                     String status, String overview, String backdrop, String voteCount,
                     String tagLine, String runtime, String language, String popularity,
-                    String poster) {
+                    String poster, String number_of_episodes, String number_of_seasons, String last_air_date) {
         this.id = id;
         this.title = title;
         this.rating = rating;
@@ -39,6 +39,9 @@ public class TvDetail implements Parcelable {
         this.language = language;
         this.popularity = popularity;
         this.poster = poster;
+        this.number_of_episodes = number_of_episodes;
+        this.number_of_seasons = number_of_seasons;
+        this.last_air_date = last_air_date;
     }
 
     public TvDetail(Parcel in) {
@@ -59,6 +62,10 @@ public class TvDetail implements Parcelable {
         this.language = data[11];
         this.popularity = data[12];
         this.poster = data[13];
+        this.number_of_episodes = data[14];
+        this.number_of_seasons = data[15];
+        this.last_air_date = data[16];
+
     }
 
     public int getId() {
@@ -173,6 +180,31 @@ public class TvDetail implements Parcelable {
         this.poster = poster;
     }
 
+    public String getNumber_of_seasons() {
+        return number_of_seasons;
+    }
+
+    public void setNumber_of_seasons(String number_of_seasons) {
+        this.number_of_seasons = number_of_seasons;
+    }
+
+    public String getNumber_of_episodes() {
+        return number_of_episodes;
+    }
+
+    public void setNumber_of_episodes(String number_of_episodes) {
+        this.number_of_episodes = number_of_episodes;
+    }
+
+    public String getLast_air_date() {
+        return number_of_episodes;
+    }
+
+    public void setLast_air_date(String last_air_date) {
+        this.last_air_date = last_air_date;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -184,6 +216,6 @@ public class TvDetail implements Parcelable {
                 this.title, this.rating, this.genre, this.date,
                 this.status, this.overview, this.backdrop,
                 this.voteCount, this.tagLine, this.runtime,
-                this.language, this.popularity, this.poster});
+                this.language, this.popularity, this.poster, this.number_of_seasons, this.number_of_episodes, this.last_air_date});
     }
 }
