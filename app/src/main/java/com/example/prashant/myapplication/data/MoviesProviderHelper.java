@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.example.prashant.myapplication.objects.*;
 import com.example.prashant.myapplication.data.MoviesContract.MoviesEntry;
+import com.example.prashant.myapplication.objects.Movies;
+import com.example.prashant.myapplication.objects.MoviesDetail;
 
 import java.util.ArrayList;
 

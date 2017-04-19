@@ -2,8 +2,6 @@ package com.example.prashant.myapplication.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -135,7 +133,7 @@ public class TopRatedFragment extends Fragment {
                 totalItemCount = sglm.getItemCount();
 
                 int[] firstVisibleItemPositions = new int[2];
-                firstVisibleItem = ((StaggeredGridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
+                firstVisibleItem = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
 
                 if (loading) {
                     if (totalItemCount > previousTotal) {

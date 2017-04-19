@@ -125,6 +125,7 @@ public class MovieDetailFragment extends Fragment {
                     JSONArray genreArray = response.getJSONArray("genres");
                     for (int i = 0; i < genreArray.length(); i++) {
                         String genre = genreArray.getJSONObject(i).getString("name");
+                        Log.d(TAG, "Movie genre is - " + genre);
                         if (i != genreArray.length() - 1)
                             genres += genre + ", ";
                         else
@@ -138,7 +139,9 @@ public class MovieDetailFragment extends Fragment {
                     movie.setVoteCount(String.valueOf(response.getInt("vote_count")));
                     movie.setTagLine(response.getString("tagline"));
                     movie.setRuntime(String.valueOf(response.getInt("runtime")));
+                    Log.d(TAG, "Movie duration is - " + String.valueOf(response.getInt("runtime")));
                     movie.setLanguage(response.getString("original_language"));
+                    Log.d(TAG, "Movie language is - " + response.getString("original_language"));
                     movie.setPopularity(String.valueOf(response.getDouble("popularity")));
                     movie.setPoster("http://image.tmdb.org/t/p/w342/" + response.getString("poster_path"));
 
@@ -264,7 +267,7 @@ public class MovieDetailFragment extends Fragment {
         queue.add(mReviewRequest);
     }
 
-    private void fabAction(){
+    private void fabAction() {
 
         boolean isMovieInDB = MoviesProviderHelper
                 .isMovieInDatabase(getActivity(),

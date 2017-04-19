@@ -24,7 +24,7 @@ import com.example.prashant.myapplication.fragment.PopularListFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
 import com.example.prashant.myapplication.fragment.UpcomingFragment;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -92,15 +92,15 @@ public class MainActivity extends AppCompatActivity{
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
                         int id = menuItem.getItemId();
+                        menuItem.setChecked(true);
 
                         if (id == R.id.nav_tv) {
 
                             Intent intent = new Intent(getApplicationContext(), TvMainActivity.class);
                             startActivity(intent);
 
-                        } else if (id == R.id.nav_movie){
+                        } else if (id == R.id.nav_movie) {
                             //do nothing
                         }
 
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity{
                 case 3:
                     return new UpcomingFragment();
                 case 4:
-                    return  new FavouriteFragment();
+                    return new FavouriteFragment();
 
                 default:
                     return null;

@@ -1,13 +1,10 @@
 package com.example.prashant.myapplication.fragment_tv;
 
-import android.content.ContentValues;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
@@ -33,11 +30,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.adapter.MoviesDetailAdapter;
 import com.example.prashant.myapplication.adapter.TvDetailAdapter;
-import com.example.prashant.myapplication.data.MoviesContract.MoviesEntry;
-import com.example.prashant.myapplication.data.MoviesProviderHelper;
-import com.example.prashant.myapplication.objects.MoviesDetail;
 import com.example.prashant.myapplication.objects.TvDetail;
 import com.example.prashant.myapplication.ui.Urls;
 
@@ -62,7 +55,7 @@ public class TvDetailFragment extends Fragment {
     private ImageView mBackdrop;
 
     private ArrayList<String> trailerInfo = new ArrayList<>();
-   // private ArrayList<String> reviewInfo = new ArrayList<>();
+    // private ArrayList<String> reviewInfo = new ArrayList<>();
 
     private FloatingActionButton fab;
 
@@ -133,6 +126,7 @@ public class TvDetailFragment extends Fragment {
                     JSONArray genreArray = response.getJSONArray("genres");
                     for (int i = 0; i < genreArray.length(); i++) {
                         String genre = genreArray.getJSONObject(i).getString("name");
+                        Log.d(TAG, " Tv genres in loop is -  " + genres);
                         if (i != genreArray.length() - 1)
                             genres += genre + ", ";
                         else
@@ -140,34 +134,34 @@ public class TvDetailFragment extends Fragment {
                     }
 
                     tv.setGenre(genres);
-                    Log.d(TAG, " Tv genres is " + genres);
+                    Log.d(TAG, " Tv genres is - " + genres);
 
                     tv.setDate(response.getString("first_air_date"));
-                    Log.d(TAG, " Tv date is " + response.getString("first_air_date"));
+                    Log.d(TAG, " Tv date is - " + response.getString("first_air_date"));
 
                     tv.setStatus(response.getString("status"));
-                    Log.d(TAG, " Tv status is " + response.getString("status"));
+                    Log.d(TAG, " Tv status is - " + response.getString("status"));
 
                     tv.setOverview(response.getString("overview"));
-                    Log.d(TAG, " Tv overview is " + response.getString("overview"));
+                    Log.d(TAG, " Tv overview is - " + response.getString("overview"));
 
                     tv.setBackdrop("http://image.tmdb.org/t/p/w780/" + response.getString("backdrop_path"));
-                    Log.d(TAG, " Tv backdrop is " + "http://image.tmdb.org/t/p/w780/" + response.getString("backdrop_path"));
+                    Log.d(TAG, " Tv backdrop is - " + "http://image.tmdb.org/t/p/w780/" + response.getString("backdrop_path"));
 
                     tv.setVoteCount(String.valueOf(response.getInt("vote_count")));
-                    Log.d(TAG, " Tv vote_count is " + String.valueOf(response.getInt("vote_count")));
+                    Log.d(TAG, " Tv vote_count is - " + String.valueOf(response.getInt("vote_count")));
 
                     tv.setPoster("http://image.tmdb.org/t/p/w342/" + response.getString("poster_path"));
-                    Log.d(TAG, " Tv poster_path is " + "http://image.tmdb.org/t/p/w342/" + response.getString("poster_path"));
+                    Log.d(TAG, " Tv poster_path is - " + "http://image.tmdb.org/t/p/w342/" + response.getString("poster_path"));
 
                     tv.setLanguage(response.getString("original_language"));
-                    Log.d(TAG, " Tv original_language is " + response.getString("original_language"));
+                    Log.d(TAG, " Tv original_language is - " + response.getString("original_language"));
 
                     tv.setPopularity(String.valueOf(response.getDouble("popularity")));
-                    Log.d(TAG, " Tv popularity is " + String.valueOf(response.getDouble("popularity")));
+                    Log.d(TAG, " Tv popularity is - " + String.valueOf(response.getDouble("popularity")));
 
                     tv.setRuntime(String.valueOf(response.getString("episode_run_time")));
-                    Log.d(TAG, " Tv runtime is " + String.valueOf(response.getString("episode_run_time")));
+                    Log.d(TAG, " Tv runtime is - " + String.valueOf(response.getString("episode_run_time")));
 
                     mCollapsingToolbarLayout.setTitle(tv.getTitle());
 
@@ -216,7 +210,6 @@ public class TvDetailFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                getTrailerInfo(id);
             }
         });
         queue.add(getDetails);

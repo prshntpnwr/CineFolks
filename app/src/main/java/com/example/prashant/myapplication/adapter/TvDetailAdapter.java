@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,14 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.objects.MoviesDetail;
 import com.example.prashant.myapplication.objects.TvDetail;
 import com.example.prashant.myapplication.ui.Urls;
 
 import java.util.ArrayList;
 
 public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final String TAG = getClass().getSimpleName();
 
     private TvDetail tv;
     private Context mContext;
@@ -55,11 +57,6 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return vh;
         }
 
-//        if (viewType == 2) {
-//            View v = mInflater.inflate(R.layout.layout_holder_review, parent, false);
-//            vh = new ViewHolderReview(v);
-//            return vh;
-//        }
         return null;
     }
 
@@ -107,12 +104,6 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 ((ViewHolderDetails) holder).getTitleView().setText(tv.getTitle());
 
-//                if (!tv.getTagLine().equals("")) {
-//                    ((ViewHolderDetails) holder).getTaglineView().setText("\"" + tv.getTagLine() + "\"");
-//                } else {
-//                    ((ViewHolderDetails) holder).getTaglineView().setVisibility(View.GONE);
-//                }
-
                 ((ViewHolderDetails) holder).getDateStatusView().setText(tv.getDate()
                         + " (" + tv.getStatus() + ")");
                 ((ViewHolderDetails) holder).getDurationView().setText(mContext.getString(R.string.duration)
@@ -144,6 +135,8 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         .error(R.color.colorPrimaryDark)
                         .into(((ViewHolderTrailer) holder).getImageView());
 
+                Log.d(TAG, "trailer info " + Urls.YOUTUBE_THUMB + data[0] + Urls.YOUTUBE_MEDIUM_QUALITY);
+
                 ((ViewHolderTrailer) holder).getTitleView().setText(data[1]);
                 ((ViewHolderTrailer) holder).getSiteView().setText(mContext.getString(R.string.site) + data[2]);
                 ((ViewHolderTrailer) holder).getQualityView().setText(mContext.getString(R.string.quality) + data[3] + "p");
@@ -155,13 +148,6 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 });
                 break;
-
-//            case 2:
-//                ((ViewHolderReview) holder).getReviewView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
-//                        .substring(reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-") + 1));
-//                ((ViewHolderReview) holder).getReviewAuthorView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
-//                        .substring(0, reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-")));
-//                break;
         }
     }
 
@@ -304,24 +290,4 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return qualityView;
         }
     }
-
-//    public static class ViewHolderReview extends RecyclerView.ViewHolder {
-//
-//        private TextView reviewView;
-//        private TextView reviewAuthorView;
-//
-//        public ViewHolderReview(View view) {
-//            super(view);
-//            reviewAuthorView = (TextView) view.findViewById(R.id.review_author_text);
-//            reviewView = (TextView) view.findViewById(R.id.review_text);
-//        }
-//
-//        public TextView getReviewAuthorView() {
-//            return reviewAuthorView;
-//        }
-//
-//        public TextView getReviewView() {
-//            return reviewView;
-//        }
-//    }
 }

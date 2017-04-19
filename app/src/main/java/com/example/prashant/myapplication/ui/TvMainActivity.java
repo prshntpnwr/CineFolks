@@ -19,8 +19,9 @@ import android.view.View;
 
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment_tv.PopularTvFragment;
+import com.example.prashant.myapplication.fragment_tv.TopRatedTvFragment;
 
-public class TvMainActivity extends AppCompatActivity{
+public class TvMainActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -84,13 +85,13 @@ public class TvMainActivity extends AppCompatActivity{
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
                         int id = menuItem.getItemId();
+                        menuItem.setChecked(true);
 
                         if (id == R.id.nav_tv) {
-                           //do nothing
+                            //do nothing
 
-                        } else if (id == R.id.nav_movie){
+                        } else if (id == R.id.nav_movie) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }
@@ -143,7 +144,7 @@ public class TvMainActivity extends AppCompatActivity{
                 case 0:
                     return new PopularTvFragment();
                 case 1:
-                    return new PopularTvFragment();
+                    return new TopRatedTvFragment();
 
                 default:
                     return null;
