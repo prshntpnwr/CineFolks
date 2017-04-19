@@ -23,25 +23,14 @@ public class Urls {
             "&certification_country=US&certification=R&sort_by=vote_average.desc&vote_count.gte=250";
     private static String SORT_PLAYING_NOW;
     private static String SORT_UPCOMING;
+    private static String SORT_AIRING_TODAY;
 
     //youtube strings url/endpoint
     public static String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
     public static String YOUTUBE_THUMB = "http://img.youtube.com/vi/";
     public static String YOUTUBE_MEDIUM_QUALITY = "/mqdefault.jpg";
 
-    private static String getGteDate(int month, int date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.MONTH, +month);
-        c.add(Calendar.DATE, +date);
-
-        Date d = c.getTime();
-        return format.format(d);
-    }
-
-    private static String getLteDate(int month, int date) {
+    private static String getDate(int month, int date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar c = Calendar.getInstance();
@@ -54,12 +43,17 @@ public class Urls {
     }
 
     public static String getPlayingNow() {
-        SORT_PLAYING_NOW = "&release_date.lte=" + getLteDate(0, 3) + "&" + "release_date.gte=" + getGteDate(-1, -2);
+        SORT_PLAYING_NOW = "&release_date.lte=" + getDate(0, 3) + "&" + "release_date.gte=" + getDate(-1, -2);
         return SORT_PLAYING_NOW;
     }
 
     public static String getUpcoming() {
-        SORT_UPCOMING = "&release_date.lte=" + getLteDate(8, 0) + "&" + "release_date.gte=" + getGteDate(0, 10);
+        SORT_UPCOMING = "&release_date.lte=" + getDate(8, 0) + "&" + "release_date.gte=" + getDate(0, 10);
         return SORT_UPCOMING;
+    }
+
+    public static String getAiringToday() {
+        SORT_AIRING_TODAY = "&air_date.lte=" + getDate(0, 0) + "&" + "air_date.gte=" + getDate(0, 0);
+        return SORT_AIRING_TODAY;
     }
 }

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.prashant.myapplication.R;
+import com.example.prashant.myapplication.fragment_tv.AiringTodayTvFragment;
 import com.example.prashant.myapplication.fragment_tv.PopularTvFragment;
 import com.example.prashant.myapplication.fragment_tv.TopRatedTvFragment;
 
@@ -57,6 +58,7 @@ public class TvMainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
 
         // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
@@ -145,6 +147,8 @@ public class TvMainActivity extends AppCompatActivity {
                     return new PopularTvFragment();
                 case 1:
                     return new TopRatedTvFragment();
+                case 2:
+                    return new AiringTodayTvFragment();
 
                 default:
                     return null;
@@ -164,6 +168,8 @@ public class TvMainActivity extends AppCompatActivity {
                     return "TAB 1";
                 case 1:
                     return "TAB 2";
+                case 2:
+                    return "TAB 3";
 
             }
             return null;
