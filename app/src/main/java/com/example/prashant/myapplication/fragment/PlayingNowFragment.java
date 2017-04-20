@@ -2,6 +2,8 @@ package com.example.prashant.myapplication.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -53,7 +55,7 @@ public class PlayingNowFragment extends Fragment {
         mAdapter = new MovieListAdapter(mMovieList, getActivity());
 
         String url = Urls.BASE_URL + Urls.API_KEY + Urls.getPlayingNow();
-        // String url = " http://api.themoviedb.org/3/discover/movie?api_key=b7f57ee32644eb6ddfdca9ca38b5513e&release_date.lte=2017-12-15&release_date.gte=2017-04-25";
+       // String url = " http://api.themoviedb.org/3/discover/movie?api_key=b7f57ee32644eb6ddfdca9ca38b5513e&release_date.lte=2017-12-15&release_date.gte=2017-04-25";
 
         fetchMovieTask(url);
         setupRecyclerView(mRecyclerView);
@@ -137,7 +139,7 @@ public class PlayingNowFragment extends Fragment {
                 totalItemCount = sglm.getItemCount();
 
                 int[] firstVisibleItemPositions = new int[2];
-                firstVisibleItem = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
+                firstVisibleItem = ((StaggeredGridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
 
                 if (loading) {
                     if (totalItemCount > previousTotal) {

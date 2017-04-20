@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="primary_text">#000000</color>
+
+    <color name="photo_placeholder">#e0e7e7e7</color>
 </resources>
