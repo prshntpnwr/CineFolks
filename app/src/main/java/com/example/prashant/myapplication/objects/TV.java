@@ -2,8 +2,9 @@ package com.example.prashant.myapplication.objects;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
-public class TV implements Parcelable {
+public class TV implements Parcelable, Comparable<TV>{
 
     public static final Creator CREATOR = new Creator() {
         public TV createFromParcel(Parcel in) {
@@ -78,6 +79,14 @@ public class TV implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public int compareTo(@NonNull TV tv) {
+        if (getDate() == null || tv.getDate() == null)
+            return 0;
+
+        return getDate().compareTo(tv.getDate());
     }
 
     @Override
