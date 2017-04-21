@@ -2,6 +2,8 @@ package com.example.prashant.myapplication.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
+    private BottomNavigationView mBottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
+        }
+
+        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+
+        if (mBottomNavigationView != null) {
+            setupNavigationContent(mBottomNavigationView);
         }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -96,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
 
                         if (id == R.id.nav_tv) {
-
                             Intent intent = new Intent(getApplicationContext(), TvMainActivity.class);
                             startActivity(intent);
 
@@ -108,6 +116,26 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    private void setupNavigationContent(BottomNavigationView navigationView) {
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                //item.setChecked(true);
+
+                if (id == R.id.item_tv) {
+                    Intent intent = new Intent(getApplicationContext(), TvMainActivity.class);
+                    startActivity(intent);
+
+                } else if (id == R.id.item_movie) {
+                    //do nothing
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override

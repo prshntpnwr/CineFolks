@@ -158,7 +158,7 @@ public class CurrentlyAiringTvFragment extends Fragment {
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getCurrentlyAiring()+ "&page=" + String.valueOf(pageCount);
+                    String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getCurrentlyAiring() + "&page=" + String.valueOf(pageCount);
                     Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
                     fetchTvTask(url);
 

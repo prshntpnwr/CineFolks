@@ -2,6 +2,8 @@ package com.example.prashant.myapplication.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -40,6 +42,7 @@ public class TvMainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
+    private BottomNavigationView mBottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,12 @@ public class TvMainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+
+        if (mBottomNavigationView != null) {
+            setupNavigationContent(mBottomNavigationView);
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
@@ -88,7 +97,7 @@ public class TvMainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         int id = menuItem.getItemId();
                         menuItem.setChecked(true);
 
@@ -100,10 +109,30 @@ public class TvMainActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
 
-                        mDrawerLayout.closeDrawers();
                         return true;
                     }
                 });
+    }
+
+    private void setupNavigationContent(BottomNavigationView navigationView) {
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                item.setChecked(true);
+
+                if (id == R.id.item_tv) {
+                    //do nothing
+
+                } else if (id == R.id.item_movie) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 
     @Override
