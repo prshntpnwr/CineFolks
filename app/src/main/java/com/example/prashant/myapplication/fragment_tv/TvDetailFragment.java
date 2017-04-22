@@ -1,10 +1,13 @@
 package com.example.prashant.myapplication.fragment_tv;
 
+import android.content.ContentValues;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
@@ -31,6 +34,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.TvDetailAdapter;
+import com.example.prashant.myapplication.data.TvContract;
+import com.example.prashant.myapplication.data.TvContract.TvEntry;
+import com.example.prashant.myapplication.data.TvProviderHelper;
 import com.example.prashant.myapplication.objects.TvDetail;
 import com.example.prashant.myapplication.ui.Urls;
 
@@ -165,6 +171,8 @@ public class TvDetailFragment extends Fragment {
 
                     mCollapsingToolbarLayout.setTitle(tv.getTitle());
 
+                    fabAction();
+
                     try {
                         //image loading and setting color using glide and palette
                         Glide.with(getContext())
@@ -248,5 +256,60 @@ public class TvDetailFragment extends Fragment {
         });
 
         queue.add(mTrailerRequest);
+    }
+
+    private void fabAction() {
+
+        boolean isMovieInDB = TvProviderHelper
+                .isTvInDatabase(getActivity(),
+                        String.valueOf(tv.getId()));
+
+        if (isMovieInDB) {
+            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+        } else {
+            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unfavorite));
+        }
+
+        //fab.show();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                boolean isMovieInDB = TvProviderHelper
+                        .isTvInDatabase(getActivity(),
+                                String.valueOf(tv.getId()));
+
+                if (isMovieInDB) {
+                    Uri contentUri = TvEntry.CONTENT_URI;
+                    getActivity().getContentResolver().delete(contentUri, "id=?", new String[]{String.valueOf(tv.getId())});
+                    Snackbar.make(view, getResources().getString(R.string.remove_favourites), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unfavorite));
+
+                } else {
+                    ContentValues values = new ContentValues();
+                    values.put(TvEntry.KEY_ID, tv.getId());
+                    values.put(TvEntry.KEY_TITLE, tv.getTitle());
+                    values.put(TvEntry.KEY_RATING, tv.getRating());
+                    values.put(TvEntry.KEY_GENRE, tv.getGenre());
+                    values.put(TvEntry.KEY_DATE, tv.getDate());
+                    values.put(TvEntry.KEY_STATUS, tv.getStatus());
+                    values.put(TvEntry.KEY_OVERVIEW, tv.getOverview());
+                    values.put(TvEntry.KEY_BACKDROP, tv.getBackdrop());
+                    values.put(TvEntry.KEY_VOTE_COUNT, tv.getVoteCount());
+                    values.put(TvEntry.KEY_RUN_TIME, tv.getRuntime());
+                    values.put(TvEntry.KEY_LANGUAGE, tv.getLanguage());
+                    values.put(TvEntry.KEY_POPULARITY, tv.getPopularity());
+                    values.put(TvEntry.KEY_POSTER, tv.getPoster());
+
+                    getActivity().getContentResolver().insert(TvEntry.CONTENT_URI, values);
+
+                    Snackbar.make(view, getResources().getString(R.string.add_favourites), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                }
+            }
+        });
     }
 }

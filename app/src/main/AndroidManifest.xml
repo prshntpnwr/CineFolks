@@ -56,7 +56,7 @@
 
         <provider
             android:authorities="com.example.prashant.myapplication"
-            android:name=".data.MoviesProvider"
+            android:name=".data.DataProvider"
             android:exported="false" />
 
     </application>

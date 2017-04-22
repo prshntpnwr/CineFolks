@@ -10,31 +10,43 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.example.prashant.myapplication.data.MoviesContract.MoviesEntry;
+import com.example.prashant.myapplication.data.TvContract.TvEntry;
 
-public class MoviesProvider extends ContentProvider {
+public class DataProvider extends ContentProvider {
 
     // The URI Matcher used by this content provider.
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private MoviesDbHelper mOpenHelper;
+    private MoviesDbHelper mOpenMovieHelper;
+    private TvDbHelper mOpenTvHelper;
 
     private static final int MOVIES = 0;
     private static final int MOVIES_ID = 1;
+    private static final int TV = 2;
+    private static final int TV_ID = 3;
 
     private static UriMatcher buildUriMatcher() {
         //The code passed into the constructor represents the code to return for the root URI.
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = MoviesContract.CONTENT_AUTHORITY;
+        final String authority_tv = TvContract.CONTENT_AUTHORITY;
 
         //for the type of URI we want to add, create a corresponding code
+        //Movies
         matcher.addURI(authority, MoviesContract.PATH_MOVIE, MOVIES);
-        matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/#", MOVIES_ID);
+        matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/#", TV_ID);
+
+        //tv
+        matcher.addURI(authority_tv, TvContract.PATH_TV, TV);
+        matcher.addURI(authority_tv, TvContract.PATH_TV + "/#", TV_ID);
 
         return matcher;
     }
 
     @Override
     public boolean onCreate() {
-        mOpenHelper = new MoviesDbHelper(getContext());
+        mOpenMovieHelper = new MoviesDbHelper(getContext());
+
+        mOpenTvHelper = new TvDbHelper(getContext());
 
         return true;
     }
@@ -48,6 +60,10 @@ public class MoviesProvider extends ContentProvider {
                 return MoviesEntry.CONTENT_ITEM_TYPE;
             case MOVIES_ID:
                 return MoviesEntry.CONTENT_ITEM_TYPE;
+            case TV:
+                return TvEntry.CONTENT_ITEM_TYPE;
+            case TV_ID:
+                return TvEntry.CONTENT_ITEM_TYPE;
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -57,12 +73,13 @@ public class MoviesProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
-        final SQLiteDatabase db_g = mOpenHelper.getReadableDatabase();
+        final SQLiteDatabase movieDb = mOpenMovieHelper.getReadableDatabase();
+        final SQLiteDatabase tvDb = mOpenTvHelper.getReadableDatabase();
 
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
             case MOVIES:
-                retCursor = db_g.query(MoviesEntry.TABLE_NAME,
+                retCursor = movieDb.query(MoviesEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -70,7 +87,24 @@ public class MoviesProvider extends ContentProvider {
                         sortOrder);
                 break;
             case MOVIES_ID:
-                retCursor = db_g.query(MoviesEntry.TABLE_NAME,
+                retCursor = movieDb.query(MoviesEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null, null,
+                        sortOrder);
+                break;
+
+            case TV:
+                retCursor = tvDb.query(TvEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null, null,
+                        sortOrder);
+                break;
+            case TV_ID:
+                retCursor = tvDb.query(TvEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -89,16 +123,26 @@ public class MoviesProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
 
-        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final SQLiteDatabase movieDb = mOpenMovieHelper.getReadableDatabase();
+        final SQLiteDatabase tvDb = mOpenTvHelper.getReadableDatabase();
 
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
 
         switch (match) {
             case MOVIES:
-                long _id = db.insert(MoviesEntry.TABLE_NAME, null, values);
+                long _id = movieDb.insert(MoviesEntry.TABLE_NAME, null, values);
                 if (_id > 0) {
                     returnUri = MoviesEntry.buildUri(_id);
+                } else {
+                    throw new SQLException("Failed to add a record into " + uri);
+                }
+                break;
+
+            case TV:
+                long id_ = tvDb.insert(TvEntry.TABLE_NAME, null, values);
+                if (id_ > 0) {
+                    returnUri = TvEntry.buildtvUri(id_);
                 } else {
                     throw new SQLException("Failed to add a record into " + uri);
                 }
@@ -109,7 +153,8 @@ public class MoviesProvider extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
-        db.close();
+        movieDb.close();
+        tvDb.close();
 
         return returnUri;
     }
@@ -117,7 +162,8 @@ public class MoviesProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
 
-        final SQLiteDatabase db_g = mOpenHelper.getReadableDatabase();
+        final SQLiteDatabase movieDb = mOpenMovieHelper.getReadableDatabase();
+        final SQLiteDatabase tvDb = mOpenTvHelper.getReadableDatabase();
 
         final int match = sUriMatcher.match(uri);
         int rowDeleted;
@@ -126,7 +172,11 @@ public class MoviesProvider extends ContentProvider {
 
         switch (match) {
             case MOVIES:
-                rowDeleted = db_g.delete(MoviesEntry.TABLE_NAME, selection, selectionArgs);
+                rowDeleted = movieDb.delete(MoviesEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+
+            case TV:
+                rowDeleted = tvDb.delete(TvEntry.TABLE_NAME, selection, selectionArgs);
                 break;
 
             default:
@@ -143,14 +193,20 @@ public class MoviesProvider extends ContentProvider {
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
-        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final SQLiteDatabase movieDb = mOpenMovieHelper.getReadableDatabase();
+        final SQLiteDatabase tvDb = mOpenTvHelper.getReadableDatabase();
 
         final int match = sUriMatcher.match(uri);
         int rowUpdated;
 
         switch (match) {
             case MOVIES:
-                rowUpdated = db.update(MoviesEntry.TABLE_NAME, values, selection,
+                rowUpdated = movieDb.update(MoviesEntry.TABLE_NAME, values, selection,
+                        selectionArgs);
+                break;
+
+            case TV:
+                rowUpdated = tvDb.update(TvEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
 
@@ -164,5 +220,4 @@ public class MoviesProvider extends ContentProvider {
 
         return rowUpdated;
     }
-
 }
