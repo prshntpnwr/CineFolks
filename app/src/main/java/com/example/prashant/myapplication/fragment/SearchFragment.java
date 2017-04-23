@@ -1,11 +1,7 @@
 package com.example.prashant.myapplication.fragment;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -31,25 +27,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class PopularListFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     private final String TAG = getClass().getSimpleName();
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
-
+    private String url;
 
     private View mRootView;
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
     private StaggeredGridLayoutManager sglm;
-
-    private int firstVisibleItem;
-    private int visibleItemCount;
-    private int totalItemCount;
-    private int previousTotal = 0;
-    private boolean loading = true;
-    private int visibleThreshold = 4;
-    private int pageCount = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +46,11 @@ public class PopularListFragment extends Fragment {
 
         mAdapter = new MovieListAdapter(mMovieList, getContext());
 
-        String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY;
+        String res = getActivity().getIntent().getStringExtra("search");
+
+        Log.d(TAG, "Search string is " + res);
+
+        url = Urls.MOVIE_BASE_SEARCH_URL + "api_key=b7f57ee32644eb6ddfdca9ca38b5513e" + "&query=" + res;
 
         fetchMovieTask(url);
         setupRecyclerView(mRecyclerView);
@@ -70,12 +62,6 @@ public class PopularListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mMovieList = savedInstanceState.getParcelableArrayList("mMoviesList");
-            pageCount = savedInstanceState.getInt("pageCount");
-            previousTotal = savedInstanceState.getInt("previousTotal");
-            firstVisibleItem = savedInstanceState.getInt("firstVisibleItem");
-            visibleItemCount = savedInstanceState.getInt("visibleItemCount");
-            totalItemCount = savedInstanceState.getInt("totalItemCount");
-            loading = savedInstanceState.getBoolean("loading");
         }
     }
 
@@ -83,17 +69,11 @@ public class PopularListFragment extends Fragment {
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putParcelableArrayList("mMoviesList", mMovieList);
-        bundle.putInt("pageCount", pageCount);
-        bundle.putInt("previousTotal", previousTotal);
-        bundle.putInt("firstVisibleItem", firstVisibleItem);
-        bundle.putInt("visibleItemCount", visibleItemCount);
-        bundle.putInt("totalItemCount", totalItemCount);
-        bundle.putBoolean("loading", loading);
     }
 
     private void fetchMovieTask(String url) {
 
-        Log.d(TAG, "URL is - " + url);
+        Log.d(TAG, "Search URL is - " + url);
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
@@ -134,36 +114,6 @@ public class PopularListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(sglm);
-
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                visibleItemCount = mRecyclerView.getChildCount();
-                totalItemCount = sglm.getItemCount();
-
-                int[] firstVisibleItemPositions = new int[2];
-                firstVisibleItem = ((StaggeredGridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
-
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                        pageCount++;
-                    }
-                }
-                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
-                    Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
-                    fetchMovieTask(url);
-
-                    loading = true;
-                }
-            }
-        });
-
         recyclerView.setAdapter(mAdapter);
     }
 }

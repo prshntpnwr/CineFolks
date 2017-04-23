@@ -24,6 +24,7 @@ import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment.FavouriteFragment;
 import com.example.prashant.myapplication.fragment.PlayingNowFragment;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
+import com.example.prashant.myapplication.fragment.SearchFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
 import com.example.prashant.myapplication.fragment.UpcomingFragment;
 import com.quinny898.library.persistentsearch.SearchBox;
@@ -196,6 +197,13 @@ public class MainActivity extends AppCompatActivity {
             public void onSearch(String searchTerm) {
                 Toast.makeText(MainActivity.this, searchTerm + " Searched",
                         Toast.LENGTH_LONG).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("search", searchTerm);
+
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
 

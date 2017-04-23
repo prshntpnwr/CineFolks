@@ -9,6 +9,7 @@ public class Urls {
     //request base urls movie
     public static String BASE_URL = "http://api.themoviedb.org/3/discover/movie?";
     public static String MOVIE_BASE_URL = "http://api.themoviedb.org/3/movie/";
+    public static String MOVIE_BASE_SEARCH_URL = "http://api.themoviedb.org/3/search/movie?";
 
     //request base urls tv
     public static String BASE_URL_TV = "http://api.themoviedb.org/3/search/tv?";
