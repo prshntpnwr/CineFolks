@@ -186,6 +186,13 @@ public class TvMainActivity extends AppCompatActivity {
             public void onSearch(String searchTerm) {
                 Toast.makeText(TvMainActivity.this, searchTerm + " Searched",
                         Toast.LENGTH_LONG).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("search", searchTerm);
+
+                Intent intent = new Intent(TvMainActivity.this, SearchTvActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
 
@@ -201,7 +208,6 @@ public class TvMainActivity extends AppCompatActivity {
 
         });
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

@@ -50,11 +50,6 @@
             </intent-filter>
         </activity>
 
-        <provider
-            android:name=".data.DataProvider"
-            android:authorities="com.example.prashant.myapplication"
-            android:exported="false" />
-
         <activity android:name=".ui.SearchActivity"
             android:theme="@style/AppTheme.Search"
             android:parentActivityName=".ui.MainActivity">
@@ -65,6 +60,23 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.SearchTvActivity"
+            android:theme="@style/AppTheme.Search"
+            android:parentActivityName=".ui.TvMainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".data.DataProvider"
+            android:authorities="com.example.prashant.myapplication"
+            android:exported="false" />
+
     </application>
 
 </manifest>
