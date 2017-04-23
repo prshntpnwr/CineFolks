@@ -2,6 +2,8 @@ package com.example.prashant.myapplication.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -16,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment.FavouriteFragment;
@@ -23,6 +26,10 @@ import com.example.prashant.myapplication.fragment.PlayingNowFragment;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
 import com.example.prashant.myapplication.fragment.UpcomingFragment;
+import com.quinny898.library.persistentsearch.SearchBox;
+import com.quinny898.library.persistentsearch.SearchResult;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,16 +48,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
+    private SearchBox search;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        search = (SearchBox) findViewById(R.id.search_box);
+        search.enableVoiceRecognition(this);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
@@ -91,13 +103,14 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         int id = menuItem.getItemId();
                         menuItem.setChecked(true);
 
                         if (id == R.id.nav_tv) {
 
                             Intent intent = new Intent(getApplicationContext(), TvMainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
 
                         } else if (id == R.id.nav_movie) {
@@ -114,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -129,7 +143,83 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_search) {
+            openSearch();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void closeSearch() {
+        search.hideCircularly(this);
+        if (search.getSearchText().isEmpty()) toolbar.setTitle("");
+    }
+
+    public void openSearch() {
+        search.setLogoText("");
+        search.revealFromMenuItem(R.id.action_search, this);
+
+        search.setMenuListener(new SearchBox.MenuListener() {
+
+            @Override
+            public void onMenuClick() {
+            }
+
+        });
+        search.setSearchListener(new SearchBox.SearchListener() {
+
+            @Override
+            public void onSearchOpened() {
+                // Use this to tint the screen
+
+            }
+
+            @Override
+            public void onSearchClosed() {
+                // Use this to un-tint the screen
+                closeSearch();
+                toolbar.setTitle(getResources().getString(R.string.app_name));
+            }
+
+            @Override
+            public void onSearchTermChanged(String s) {
+
+            }
+
+//            @Override
+//            public void onSearchTermChanged() {
+//                // React to the search term changing
+//                // Called after it has updated results
+//            }
+
+            @Override
+            public void onSearch(String searchTerm) {
+                Toast.makeText(MainActivity.this, searchTerm + " Searched",
+                        Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onResultClick(SearchResult searchResult) {
+
+            }
+
+            @Override
+            public void onSearchCleared() {
+
+            }
+
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1234 && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            search.setSearchString(matches.get(0));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

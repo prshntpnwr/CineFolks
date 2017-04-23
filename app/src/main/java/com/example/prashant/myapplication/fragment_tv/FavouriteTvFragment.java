@@ -19,7 +19,7 @@ import com.example.prashant.myapplication.objects.TV;
 
 import java.util.ArrayList;
 
-public class TvFavouriteFragment extends Fragment {
+public class FavouriteTvFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
 
     private ArrayList<TV> mTvList = new ArrayList<>();

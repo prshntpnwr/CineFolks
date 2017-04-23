@@ -56,7 +56,7 @@ public class PopularTvFragment extends Fragment {
 
         mAdapter = new TVListAdapter(mTVList, getContext());
 
-        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY;
+        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY + "&query=Doctor%20Who";
 
         fetchTvTask(url);
         setupRecyclerView(mRecyclerView);
@@ -162,7 +162,7 @@ public class PopularTvFragment extends Fragment {
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
+                    String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount) + "&query=Doctor%20Who";
                     Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
                     fetchTvTask(url);
 

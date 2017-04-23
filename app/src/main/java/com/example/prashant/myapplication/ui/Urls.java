@@ -11,7 +11,7 @@ public class Urls {
     public static String MOVIE_BASE_URL = "http://api.themoviedb.org/3/movie/";
 
     //request base urls tv
-    public static String BASE_URL_TV = "http://api.themoviedb.org/3/discover/tv?";
+    public static String BASE_URL_TV = "http://api.themoviedb.org/3/search/tv?";
     public static String TV_BASE_URL = "http://api.themoviedb.org/3/tv/";
 
     //API key

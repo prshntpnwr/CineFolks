@@ -279,7 +279,6 @@ public class MovieDetailFragment extends Fragment {
             fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unfavorite));
         }
 
-        //fab.show();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
