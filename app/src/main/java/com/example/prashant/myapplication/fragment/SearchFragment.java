@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class SearchFragment extends Fragment {
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private String url;
+    private String res;
 
     private View mRootView;
     private RecyclerView mRecyclerView;
@@ -46,7 +48,8 @@ public class SearchFragment extends Fragment {
 
         mAdapter = new MovieListAdapter(mMovieList, getContext());
 
-        String res = getActivity().getIntent().getStringExtra("search");
+        res = getActivity().getIntent().getStringExtra("search");
+        getActivity().setTitle(res);
 
         Log.d(TAG, "Search string is " + res);
 

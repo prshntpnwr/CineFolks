@@ -21,6 +21,6 @@
     <string name="remove_tv_favourites">TV Series removed from favourites.</string>
 
     <string name="action_search">Search</string>
-
+    <string name="Search_result">Search</string>
 
 </resources>
