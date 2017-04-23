@@ -10,8 +10,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -22,9 +24,9 @@ import android.widget.Toast;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment_tv.AiringTodayTvFragment;
 import com.example.prashant.myapplication.fragment_tv.CurrentlyAiringTvFragment;
+import com.example.prashant.myapplication.fragment_tv.FavouriteTvFragment;
 import com.example.prashant.myapplication.fragment_tv.PopularTvFragment;
 import com.example.prashant.myapplication.fragment_tv.TopRatedTvFragment;
-import com.example.prashant.myapplication.fragment_tv.FavouriteTvFragment;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
 
@@ -60,6 +62,12 @@ public class TvMainActivity extends AppCompatActivity {
 
         search = (SearchBox) findViewById(R.id.search_box);
         search.enableVoiceRecognition(this);
+
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.ic_nav_menu);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
@@ -132,8 +140,8 @@ public class TvMainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == android.R.id.home) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
 

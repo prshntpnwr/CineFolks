@@ -26,8 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class PopularTvFragment extends Fragment {
 
@@ -152,7 +150,7 @@ public class PopularTvFragment extends Fragment {
                 totalItemCount = sglm.getItemCount();
 
                 int[] firstVisibleItemPositions = new int[2];
-                firstVisibleItem = ((StaggeredGridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
+                firstVisibleItem = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
 
                 if (loading) {
                     if (totalItemCount > previousTotal) {

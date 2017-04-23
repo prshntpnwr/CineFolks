@@ -1,7 +1,5 @@
 package com.example.prashant.myapplication.ui;
 
-import android.annotation.SuppressLint;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,7 +33,7 @@ public class Urls {
     public static String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
     public static String YOUTUBE_THUMB = "http://img.youtube.com/vi/";
     public static String YOUTUBE_MEDIUM_QUALITY = "/mqdefault.jpg";
-    
+
     private static String getDate(int month, int date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 

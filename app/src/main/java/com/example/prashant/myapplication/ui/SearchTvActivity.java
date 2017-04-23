@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.fragment.SearchFragment;
 import com.example.prashant.myapplication.fragment_tv.SearchTvFragment;
 
 public class SearchTvActivity extends AppCompatActivity {

@@ -11,8 +11,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,7 +26,6 @@ import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment.FavouriteFragment;
 import com.example.prashant.myapplication.fragment.PlayingNowFragment;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
-import com.example.prashant.myapplication.fragment.SearchFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
 import com.example.prashant.myapplication.fragment.UpcomingFragment;
 import com.quinny898.library.persistentsearch.SearchBox;
@@ -64,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
 
         search = (SearchBox) findViewById(R.id.search_box);
         search.enableVoiceRecognition(this);
+
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.ic_nav_menu);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
@@ -140,7 +147,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+
+        if (id == android.R.id.home) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
 
