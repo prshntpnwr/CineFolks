@@ -1,6 +1,7 @@
 package com.example.prashant.myapplication.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
@@ -16,7 +17,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +32,11 @@ import com.example.prashant.myapplication.fragment.PopularListFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
 import com.example.prashant.myapplication.fragment.UpcomingFragment;
 import com.quinny898.library.persistentsearch.SearchBox;
+import com.quinny898.library.persistentsearch.SearchResult;
+
+import com.quinny898.library.persistentsearch.SearchBox;
+import com.quinny898.library.persistentsearch.SearchBox.MenuListener;
+import com.quinny898.library.persistentsearch.SearchBox.SearchListener;
 import com.quinny898.library.persistentsearch.SearchResult;
 
 import java.util.ArrayList;
@@ -66,12 +74,6 @@ public class MainActivity extends AppCompatActivity {
         search = (SearchBox) findViewById(R.id.search_box);
         search.enableVoiceRecognition(this);
 
-        final ActionBar ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setHomeAsUpIndicator(R.drawable.ic_nav_menu);
-            ab.setDisplayHomeAsUpEnabled(true);
-        }
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        openSearch();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -145,67 +148,41 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        if (id == android.R.id.home) {
-            mDrawerLayout.openDrawer(GravityCompat.START);
-            return true;
-        }
-
-        if (id == R.id.action_search) {
-            openSearch();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
-    protected void closeSearch() {
-        search.hideCircularly(this);
-        if (search.getSearchText().isEmpty()) toolbar.setTitle("");
-    }
-
     public void openSearch() {
-        search.setLogoText("");
-        search.revealFromMenuItem(R.id.action_search, this);
+        search.setLogoText(getResources().getString(R.string.app_name));
+        search.setLogoTextColor(Color.parseColor("#696969"));
+        search.setHint(getResources().getString(R.string.movies_hint));
 
-        search.setMenuListener(new SearchBox.MenuListener() {
-
+        search.setMenuListener(new MenuListener(){
             @Override
             public void onMenuClick() {
+                //Hamburger has been clicked
+                mDrawerLayout.openDrawer(GravityCompat.START);
             }
-
         });
-        search.setSearchListener(new SearchBox.SearchListener() {
-
+        search.setSearchListener(new SearchListener(){
             @Override
             public void onSearchOpened() {
-                // Use this to tint the screen
-
+                //Use this to tint the screen
             }
 
             @Override
             public void onSearchClosed() {
-                // Use this to un-tint the screen
-                closeSearch();
-                toolbar.setTitle(getResources().getString(R.string.app_name));
+                //Use this to un-tint the screen
             }
 
             @Override
-            public void onSearchTermChanged(String s) {
-
+            public void onSearchTermChanged(String term) {
+                //React to the search term changing
+                //Called after it has updated results
             }
-
-//            @Override
-//            public void onSearchTermChanged() {
-//                // React to the search term changing
-//                // Called after it has updated results
-//            }
 
             @Override
             public void onSearch(String searchTerm) {
-                Toast.makeText(MainActivity.this, searchTerm + " Searched",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("search", searchTerm);
 
@@ -213,17 +190,16 @@ public class MainActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
             }
 
             @Override
-            public void onResultClick(SearchResult searchResult) {
-
+            public void onResultClick(SearchResult result) {
+                //React to a result being clicked
             }
 
             @Override
             public void onSearchCleared() {
-
+                //Called when the clear button is clicked
             }
 
         });
