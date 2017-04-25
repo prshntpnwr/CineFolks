@@ -31,6 +31,12 @@ import com.example.prashant.myapplication.fragment.PlayingNowFragment;
 import com.example.prashant.myapplication.fragment.PopularListFragment;
 import com.example.prashant.myapplication.fragment.TopRatedFragment;
 import com.example.prashant.myapplication.fragment.UpcomingFragment;
+import com.example.prashant.myapplication.service.NotifyJobService;
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Trigger;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
 
@@ -53,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+    public static final int SYNC_INTERVAL = 60 * 10;
+    public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -65,6 +74,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Create a new dispatcher using the Google Play driver.
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        Job myJob = dispatcher.newJobBuilder()
+                .setService(NotifyJobService.class) // the JobService that will be called
+                .setTag("create-notification")        // uniquely identifies the job
+                .setTrigger(Trigger.executionWindow(0, 10))
+                .setRecurring(true)
+                .setConstraints(Constraint.ON_ANY_NETWORK)
+                .build();
+
+        dispatcher.mustSchedule(myJob);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
