@@ -15,11 +15,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,9 +34,6 @@ import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Trigger;
-import com.quinny898.library.persistentsearch.SearchBox;
-import com.quinny898.library.persistentsearch.SearchResult;
-
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchBox.MenuListener;
 import com.quinny898.library.persistentsearch.SearchBox.SearchListener;
@@ -177,14 +171,14 @@ public class MainActivity extends AppCompatActivity {
         search.setLogoTextColor(Color.parseColor("#696969"));
         search.setHint(getResources().getString(R.string.movies_hint));
 
-        search.setMenuListener(new MenuListener(){
+        search.setMenuListener(new MenuListener() {
             @Override
             public void onMenuClick() {
                 //Hamburger has been clicked
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        search.setSearchListener(new SearchListener(){
+        search.setSearchListener(new SearchListener() {
             @Override
             public void onSearchOpened() {
                 //Use this to tint the screen
@@ -203,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSearch(String searchTerm) {
-                Toast.makeText(MainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("search", searchTerm);
 

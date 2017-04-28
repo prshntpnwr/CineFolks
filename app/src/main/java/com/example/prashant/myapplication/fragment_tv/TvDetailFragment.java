@@ -34,7 +34,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.TvDetailAdapter;
-import com.example.prashant.myapplication.data.TvContract;
 import com.example.prashant.myapplication.data.TvContract.TvEntry;
 import com.example.prashant.myapplication.data.TvProviderHelper;
 import com.example.prashant.myapplication.objects.TvDetail;

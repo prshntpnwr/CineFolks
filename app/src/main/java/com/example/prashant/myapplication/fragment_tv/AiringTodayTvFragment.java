@@ -148,7 +148,7 @@ public class AiringTodayTvFragment extends Fragment {
                 totalItemCount = sglm.getItemCount();
 
                 int[] firstVisibleItemPositions = new int[2];
-                firstVisibleItem = ((StaggeredGridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
+                firstVisibleItem = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
 
                 if (loading) {
                     if (totalItemCount > previousTotal) {

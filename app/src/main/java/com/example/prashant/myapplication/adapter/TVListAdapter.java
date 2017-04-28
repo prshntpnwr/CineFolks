@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.objects.Movies;
 import com.example.prashant.myapplication.objects.TV;
-import com.example.prashant.myapplication.ui.MovieDetailActivity;
 import com.example.prashant.myapplication.ui.TvDetailActivity;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
                 .inflate(R.layout.movie_list_item, parent, false);
         Log.d(TAG, "Tv adapter onCreateViewHolder");
 
-        final ViewHolder vh =  new ViewHolder(view);
+        final ViewHolder vh = new ViewHolder(view);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

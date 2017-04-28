@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-public class TV implements Parcelable, Comparable<TV>{
+public class TV implements Parcelable, Comparable<TV> {
 
     public static final Creator CREATOR = new Creator() {
         public TV createFromParcel(Parcel in) {

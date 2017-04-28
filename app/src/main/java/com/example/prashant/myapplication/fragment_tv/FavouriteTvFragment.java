@@ -10,11 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.adapter.MovieListAdapter;
 import com.example.prashant.myapplication.adapter.TVListAdapter;
-import com.example.prashant.myapplication.data.MoviesProviderHelper;
 import com.example.prashant.myapplication.data.TvProviderHelper;
-import com.example.prashant.myapplication.objects.Movies;
 import com.example.prashant.myapplication.objects.TV;
 
 import java.util.ArrayList;
@@ -44,6 +41,7 @@ public class FavouriteTvFragment extends Fragment {
 
         ArrayList<TV> list = new ArrayList<>(TvProviderHelper
                 .getTvListFromDatabase(getActivity()));
+
         mTvList.clear();
         for (TV tv : list) {
             mTvList.add(tv);

@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class TvProviderHelper {
 
-    public static ArrayList<TV> getTvListFromDatabase(Activity mAct) {
+    public static ArrayList<TV> getTvListFromDatabase(Activity activity) {
 
         ArrayList<TV> mTVList = new ArrayList<>();
         Uri contentUri = TvEntry.CONTENT_URI;
-        Cursor c = mAct.getContentResolver().query(contentUri, null, null, null, null);
+        Cursor c = activity.getContentResolver().query(contentUri, null, null, null, null);
         if (c != null && c.moveToFirst()) {
             do {
 

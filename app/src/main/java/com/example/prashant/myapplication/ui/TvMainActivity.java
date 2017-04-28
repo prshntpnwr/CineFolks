@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -144,7 +143,7 @@ public class TvMainActivity extends AppCompatActivity {
         search.setLogoTextColor(Color.parseColor("#696969"));
         search.setHint(getResources().getString(R.string.tv_hint));
 
-        search.setMenuListener(new SearchBox.MenuListener(){
+        search.setMenuListener(new SearchBox.MenuListener() {
             @Override
             public void onMenuClick() {
                 //Hamburger has been clicked
@@ -152,7 +151,7 @@ public class TvMainActivity extends AppCompatActivity {
             }
         });
 
-        search.setSearchListener(new SearchBox.SearchListener(){
+        search.setSearchListener(new SearchBox.SearchListener() {
             @Override
             public void onSearchOpened() {
                 //Use this to tint the screen
@@ -171,7 +170,7 @@ public class TvMainActivity extends AppCompatActivity {
 
             @Override
             public void onSearch(String searchTerm) {
-                Toast.makeText(TvMainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
+                Toast.makeText(TvMainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("search", searchTerm);
 

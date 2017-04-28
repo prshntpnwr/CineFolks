@@ -34,7 +34,7 @@ public class Urls {
     public static String YOUTUBE_THUMB = "http://img.youtube.com/vi/";
     public static String YOUTUBE_MEDIUM_QUALITY = "/mqdefault.jpg";
 
-    private static String getDate(int month, int date) {
+    public static String getDate(int month, int date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar c = Calendar.getInstance();
