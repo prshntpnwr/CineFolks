@@ -172,9 +172,7 @@ public class NotifyJobService extends JobService {
                         .setSmallIcon(R.drawable.ic_movie)
                         .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
                         .setStyle(bigPictureStyle)
-                        .setAutoCancel(true)
-                        .setGroup(String.valueOf((new Date().getTime() / 1000L) % Integer.MAX_VALUE))
-                        .setGroupSummary(true);
+                        .setAutoCancel(true);
 
         Intent intent = new Intent(this, MainActivity.class);
 

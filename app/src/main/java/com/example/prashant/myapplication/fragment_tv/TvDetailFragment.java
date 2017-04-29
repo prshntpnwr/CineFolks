@@ -60,7 +60,6 @@ public class TvDetailFragment extends Fragment {
     private ImageView mBackdrop;
 
     private ArrayList<String> trailerInfo = new ArrayList<>();
-    // private ArrayList<String> reviewInfo = new ArrayList<>();
 
     private FloatingActionButton fab;
 
