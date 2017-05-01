@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         Job myJob = dispatcher.newJobBuilder()
                 .setService(NotifyJobService.class) // the JobService that will be called
                 .setTag("create-notification")        // uniquely identifies the job
-                .setTrigger(Trigger.executionWindow(0, 10))
+                .setTrigger(Trigger.executionWindow(0, 5))
                 .setRecurring(true)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .build();

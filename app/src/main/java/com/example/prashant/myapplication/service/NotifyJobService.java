@@ -36,6 +36,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static android.R.attr.bitmap;
+
 public class NotifyJobService extends JobService {
 
     private final String TAG = getClass().getSimpleName();
@@ -123,7 +125,7 @@ public class NotifyJobService extends JobService {
                             Log.d(TAG, "Title is - " + title);
                             poster = "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("backdrop_path");
 
-                            createNotifications();
+                            createNotifications(title, poster);
                         } else Log.d(TAG, " not found ");
                     }
 
@@ -142,28 +144,14 @@ public class NotifyJobService extends JobService {
         queue.add(getListData);
     }
 
-    private void createNotifications() {
+    private void createNotifications(String title, String poster) {
 
-        final Bitmap[] bitmap = new Bitmap[1];
-
-        Glide.with(this)
-                .load(poster)
-                .asBitmap()
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        bitmap[0] = resource;
-                    }
-                });
-
-        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle()
-                // Provides the bitmap for the BigPicture notification
-                .bigPicture(bitmap[0]);
+        Log.d(TAG, "Number of notification - ");
 
         Log.d(TAG, " Poster url is - " + poster);
 
         // create basic notification here
-        NotificationCompat.Builder notificationBuilder =
+        final NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this)
                         .setContentTitle("Episode Airing Today")
                         .setColor(Color.BLUE)
@@ -171,8 +159,22 @@ public class NotifyJobService extends JobService {
                         .setTicker("Alert New Notification")
                         .setSmallIcon(R.drawable.ic_movie)
                         .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
-                        .setStyle(bigPictureStyle)
-                        .setAutoCancel(true);
+                        .setAutoCancel(true)
+                        .setGroupSummary(true)
+                        .setGroup("GROUP_KEY");
+
+        Glide.with(this)
+                .load(poster)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle()
+                                // Provides the bitmap for the BigPicture notification
+                                .bigPicture(resource);
+                        notificationBuilder.setStyle(bigPictureStyle);
+                    }
+                });
 
         Intent intent = new Intent(this, MainActivity.class);
 
@@ -186,6 +188,6 @@ public class NotifyJobService extends JobService {
         notificationBuilder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify((int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE), notificationBuilder.build());
+        notificationManager.notify((((int)(new Date().getTime() / 1000L) % Integer.MAX_VALUE)), notificationBuilder.build());
     }
 }
