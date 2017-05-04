@@ -137,7 +137,7 @@ public class PopularTvFragment extends Fragment {
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);
-        sglm = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(sglm);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

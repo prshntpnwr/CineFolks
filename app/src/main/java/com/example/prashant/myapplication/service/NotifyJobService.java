@@ -36,8 +36,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static android.R.attr.bitmap;
-
 public class NotifyJobService extends JobService {
 
     private final String TAG = getClass().getSimpleName();
