@@ -26,4 +26,6 @@
     <string name="tv_hint">Search Tv Shows</string>
     <string name="movies_hint">Search Movies</string>
 
+    <string name="empty_view_text">No favorite images yet!</string>
+
 </resources>
