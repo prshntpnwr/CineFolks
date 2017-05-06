@@ -90,7 +90,8 @@ public class NotifyJobService extends JobService {
                         c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_POSTER)),
                         c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_DATE)),
                         c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_OVERVIEW)),
-                        c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_ID)));
+                        c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_ID)),
+                        c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_RATING)));
 
                 mTVList.add(tv);
             } while (c.moveToNext());

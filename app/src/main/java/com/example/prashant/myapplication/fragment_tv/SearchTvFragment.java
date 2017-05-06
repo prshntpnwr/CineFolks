@@ -115,7 +115,8 @@ public class SearchTvFragment extends Fragment {
                                 "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"),
                                 getResources().getString(R.string.release_date) + mResultObject.getString("first_air_date"),
                                 mResultObject.getString("overview"),
-                                String.valueOf(mResultObject.getInt("id")));
+                                String.valueOf(mResultObject.getInt("id")),
+                                String.valueOf(mResultObject.getDouble("vote_average")));
                         Log.d(TAG, " TV list is " + tv.toString());
                         mTVList.add(tv);
                         Log.d(TAG, " mTVList inside loop is " + mTVList);

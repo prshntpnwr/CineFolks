@@ -24,7 +24,8 @@ public class TvProviderHelper {
                         c.getString(c.getColumnIndex(TvEntry.KEY_POSTER)),
                         c.getString(c.getColumnIndex(TvEntry.KEY_DATE)),
                         c.getString(c.getColumnIndex(TvEntry.KEY_OVERVIEW)),
-                        c.getString(c.getColumnIndex(TvEntry.KEY_ID)));
+                        c.getString(c.getColumnIndex(TvEntry.KEY_ID)),
+                        c.getString(c.getColumnIndex(TvEntry.KEY_RATING)));
 
                 mTVList.add(tv);
             } while (c.moveToNext());

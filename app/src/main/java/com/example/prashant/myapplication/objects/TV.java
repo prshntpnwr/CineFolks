@@ -15,18 +15,19 @@ public class TV implements Parcelable, Comparable<TV> {
             return new TV[size];
         }
     };
-    private String title, image, date, overview, id;
+    private String title, image, date, overview, id, rating;
 
-    public TV(String title, String image, String date, String overview, String id) {
+    public TV(String title, String image, String date, String overview, String id, String rating) {
         this.title = title;
         this.image = image;
         this.date = date;
         this.overview = overview;
         this.id = id;
+        this.rating = rating;
     }
 
     public TV(Parcel in) {
-        String[] data = new String[5];
+        String[] data = new String[6];
 
         in.readStringArray(data);
         this.title = data[0];
@@ -34,6 +35,7 @@ public class TV implements Parcelable, Comparable<TV> {
         this.date = data[2];
         this.overview = data[3];
         this.id = data[4];
+        this.rating = data[5];
     }
 
     public String getTitle() {
@@ -76,6 +78,14 @@ public class TV implements Parcelable, Comparable<TV> {
         this.id = id;
     }
 
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -95,6 +105,8 @@ public class TV implements Parcelable, Comparable<TV> {
                 this.image,
                 this.date,
                 this.overview,
-                this.id});
+                this.id,
+                this.rating
+        });
     }
 }

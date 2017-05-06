@@ -85,7 +85,6 @@ public class Movies implements Parcelable {
         this.rating = rating;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
