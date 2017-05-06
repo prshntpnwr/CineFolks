@@ -112,7 +112,8 @@ public class SearchFragment extends Fragment {
                                 "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"),
                                 getResources().getString(R.string.release_date) + mResultObject.getString("release_date"),
                                 mResultObject.getString("overview"),
-                                String.valueOf(mResultObject.getInt("id")));
+                                String.valueOf(mResultObject.getInt("id")),
+                                String.valueOf(mResultObject.getDouble("vote_average")));
                         Log.d(TAG, " Movies list is - " + movie.toString());
                         mMovieList.add(movie);
                         Log.d(TAG, " mMovieList inside loop is - " + mMovieList);

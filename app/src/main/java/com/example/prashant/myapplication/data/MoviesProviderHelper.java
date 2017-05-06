@@ -24,7 +24,8 @@ public class MoviesProviderHelper {
                         c.getString(c.getColumnIndex(MoviesEntry.KEY_POSTER)),
                         c.getString(c.getColumnIndex(MoviesEntry.KEY_DATE)),
                         c.getString(c.getColumnIndex(MoviesEntry.KEY_OVERVIEW)),
-                        c.getString(c.getColumnIndex(MoviesEntry.KEY_ID)));
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_ID)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_RATING)));
 
                 mMovieList.add(movie);
             } while (c.moveToNext());

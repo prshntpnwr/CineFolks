@@ -103,7 +103,8 @@ public class UpcomingFragment extends Fragment {
                                 "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"),
                                 getResources().getString(R.string.release_date) + mResultObject.getString("release_date"),
                                 mResultObject.getString("overview"),
-                                String.valueOf(mResultObject.getInt("id")));
+                                String.valueOf(mResultObject.getInt("id")),
+                                String.valueOf(mResultObject.getDouble("vote_average")));
                         mMovieList.add(movie);
                     }
                 } catch (JSONException e) {

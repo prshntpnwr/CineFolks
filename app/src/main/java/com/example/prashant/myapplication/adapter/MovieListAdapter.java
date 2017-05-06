@@ -59,6 +59,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public void onBindViewHolder(final MovieListAdapter.ViewHolder holder, int position) {
 
         holder.titleView.setText(mMovieList.get(position).getTitle());
+        holder.ratingView.setText(mMovieList.get(position).getRating());
+
         Log.d(TAG, "movie adapter onBindViewHolder");
         Glide.with(mContext)
                 .load(mMovieList.get(position).getImage())
@@ -78,11 +80,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
         ImageView imageView;
         TextView titleView;
+        TextView ratingView;
 
         public ViewHolder(View v) {
             super(v);
             imageView = (ImageView) v.findViewById(R.id.image);
             titleView = (TextView) v.findViewById(R.id.title);
+            ratingView = (TextView) v.findViewById(R.id.list_rating);
         }
     }
 }

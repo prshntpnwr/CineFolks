@@ -14,18 +14,19 @@ public class Movies implements Parcelable {
             return new Movies[size];
         }
     };
-    private String title, image, date, overview, id;
+    private String title, image, date, overview, id, rating;
 
-    public Movies(String title, String image, String date, String overview, String id) {
+    public Movies(String title, String image, String date, String overview, String id, String rating) {
         this.title = title;
         this.image = image;
         this.date = date;
         this.overview = overview;
         this.id = id;
+        this.rating = rating;
     }
 
     public Movies(Parcel in) {
-        String[] data = new String[5];
+        String[] data = new String[6];
 
         in.readStringArray(data);
         this.title = data[0];
@@ -33,6 +34,7 @@ public class Movies implements Parcelable {
         this.date = data[2];
         this.overview = data[3];
         this.id = data[4];
+        this.rating = data[5];
     }
 
     public String getTitle() {
@@ -67,13 +69,22 @@ public class Movies implements Parcelable {
         this.overview = overview;
     }
 
-    public String getId() {
+      public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
 
     @Override
     public int describeContents() {
@@ -86,6 +97,8 @@ public class Movies implements Parcelable {
                 this.image,
                 this.date,
                 this.overview,
-                this.id});
+                this.id,
+                this.rating
+        });
     }
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.MovieListAdapter;
@@ -15,6 +16,9 @@ import com.example.prashant.myapplication.data.MoviesProviderHelper;
 import com.example.prashant.myapplication.objects.Movies;
 
 import java.util.ArrayList;
+
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class FavouriteFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
