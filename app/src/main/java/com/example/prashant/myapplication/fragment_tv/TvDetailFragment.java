@@ -1,6 +1,7 @@
 package com.example.prashant.myapplication.fragment_tv;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -62,6 +65,7 @@ public class TvDetailFragment extends Fragment {
     private ArrayList<String> trailerInfo = new ArrayList<>();
 
     private FloatingActionButton fab;
+    private static final String MoviesApp_SHARE_HASHTAG = " #MoviesApp";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,6 +108,31 @@ public class TvDetailFragment extends Fragment {
             });
 
             mToolbar.setTitle("");
+
+            mToolbar.inflateMenu(R.menu.menu_detail);
+
+            mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+
+                    if (item.getItemId() == R.id.action_share) {
+                        String[] data = trailerInfo.get(0).split(",,");
+
+                        try {
+                            startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
+                                    .setType("text/plain")
+                                    .setText(Urls.YOUTUBE_URL + data[0] + "\n\n"
+                                            + MoviesApp_SHARE_HASHTAG)
+                                    .getIntent(), getString(R.string.action_share)));
+
+                            Log.d(TAG, "shared trailer : " + Urls.YOUTUBE_URL + data[0]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    return true;
+                }
+            });
         }
     }
 

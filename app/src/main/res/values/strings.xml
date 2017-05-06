@@ -27,5 +27,6 @@
     <string name="movies_hint">Search Movies</string>
 
     <string name="empty_view_text">No favorites yet!</string>
+    <string name="action_share">Share</string>
 
 </resources>
