@@ -11,7 +11,10 @@
     <dimen name="card_view_horizontal">1dp</dimen>
     <dimen name="card_view_vertical">2dp</dimen>
     <dimen name="card_view_radius">2dp</dimen>
+    <dimen name="rating_padding">4dp</dimen>
     <dimen name="rating_bottom_margin">8dp</dimen>
+    <dimen name="rating_bottom_padding">8dp</dimen>
+    <dimen name="rating_icon_size">24dp</dimen>
 
     <!-- detail -->
     <bool name="detail_is_card">false</bool>
