@@ -29,11 +29,18 @@ public class FavouriteFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
 
+    private FrameLayout mEmptyView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
         mAdapter = new MovieListAdapter(mMovieList, getActivity());
+
+        //mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
+
+//        mEmptyView.setVisibility(VISIBLE);
+//        mRecyclerView.setVisibility(INVISIBLE);
 
         getMovieList();
         setupRecyclerView(mRecyclerView);

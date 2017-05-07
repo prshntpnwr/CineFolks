@@ -29,4 +29,6 @@
     <dimen name="detail_title_bottom_margin">16dp</dimen>
     <dimen name="detail_toolbar_margin">24dp</dimen>
 
+    <dimen name="empty_tab_image">120dp</dimen>
+
 </resources>

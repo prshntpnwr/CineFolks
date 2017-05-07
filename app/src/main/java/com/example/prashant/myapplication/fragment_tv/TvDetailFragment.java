@@ -292,9 +292,9 @@ public class TvDetailFragment extends Fragment {
                         String.valueOf(tv.getId()));
 
         if (isMovieInDB) {
-            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_watchlist));
         } else {
-            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unfavorite));
+            fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unwatch));
         }
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -310,7 +310,7 @@ public class TvDetailFragment extends Fragment {
                     getActivity().getContentResolver().delete(contentUri, "id=?", new String[]{String.valueOf(tv.getId())});
                     Snackbar.make(view, getResources().getString(R.string.remove_tv_favourites), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unfavorite));
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_unwatch));
 
                 } else {
                     ContentValues values = new ContentValues();
@@ -333,7 +333,7 @@ public class TvDetailFragment extends Fragment {
                     Snackbar.make(view, getResources().getString(R.string.add_tv_favourites), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
-                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_favorite));
+                    fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_watchlist));
                 }
             }
         });
