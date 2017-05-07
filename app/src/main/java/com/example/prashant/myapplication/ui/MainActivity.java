@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.about:
+                                Toast.makeText(MainActivity.this, " About Application ", Toast.LENGTH_LONG).show();
                                 break;
-
                         }
 
                         mDrawerLayout.closeDrawers();
