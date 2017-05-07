@@ -31,5 +31,9 @@
 
     <string name="empty_view_text">No favorites yet!</string>
     <string name="action_share">Share</string>
+    <string name="action_feed">Help &amp; Feedback</string>
+    <string name="action_about">About MoviesApp</string>
+
+    <string name="email_address">prashant.panwar777@gmail.com</string>
 
 </resources>

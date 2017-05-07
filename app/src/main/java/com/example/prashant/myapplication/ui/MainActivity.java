@@ -130,17 +130,33 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
                         int id = menuItem.getItemId();
                         menuItem.setChecked(true);
+                        switch (id) {
+                            case R.id.nav_tv:
 
-                        if (id == R.id.nav_tv) {
+                                Intent intent = new Intent(getApplicationContext(), TvMainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(intent);
+                                break;
 
-                            Intent intent = new Intent(getApplicationContext(), TvMainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            startActivity(intent);
+                            case R.id.nav_movie:
+                                //do nothing
+                                break;
 
-                        } else if (id == R.id.nav_movie) {
-                            //do nothing
+                            case R.id.feedback:
+                                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                                emailIntent.setType("plain/text");
+                                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.email_address)});
+                                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name));
+                                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text goes here");
+                                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                                break;
+
+                            case R.id.about:
+                                break;
+
                         }
 
                         mDrawerLayout.closeDrawers();
