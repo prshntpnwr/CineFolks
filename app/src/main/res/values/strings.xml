@@ -35,5 +35,10 @@
     <string name="action_about">About MoviesApp</string>
 
     <string name="email_address">prashant.panwar777@gmail.com</string>
+    <string name="git_hub">https://github.com/prshntpnwr/MoviesApp-</string>
+    <string name="website">http://prshntpnwr.github.io</string>
+
+    <string name="contact">Connect with us</string>
+    <string name="copy_right">Copyrights © %1$d</string>
 
 </resources>

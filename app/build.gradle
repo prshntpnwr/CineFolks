@@ -43,5 +43,6 @@ dependencies {
     compile 'com.quinny898.library.persistentsearch:library:1.1.0-SNAPSHOT'
     compile 'com.github.arimorty:floatingsearchview:2.0.4'
     compile 'com.firebase:firebase-jobdispatcher:0.6.0'
+    compile 'com.github.medyo:android-about-page:1.2'
 
 }

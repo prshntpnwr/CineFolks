@@ -130,6 +130,7 @@ public class TvMainActivity extends AppCompatActivity {
 
                             case R.id.about:
                                 Toast.makeText(TvMainActivity.this, " About Application ", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(TvMainActivity.this, AboutActivity.class));
                                 break;
                         }
 

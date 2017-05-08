@@ -49,11 +49,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.SearchActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme.Search">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".ui.SearchActivity"
-            android:theme="@style/AppTheme.Search"
-            android:parentActivityName=".ui.MainActivity">
-
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.SearchTvActivity"
+            android:parentActivityName=".ui.TvMainActivity"
+            android:theme="@style/AppTheme.Search">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,10 +70,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.SearchTvActivity"
-            android:theme="@style/AppTheme.Search"
-            android:parentActivityName=".ui.TvMainActivity">
-
+        <activity
+            android:name=".ui.AboutActivity"
+            android:parentActivityName=".ui.TvMainActivity"
+            android:theme="@style/AppTheme.About">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,10 +87,10 @@
             android:exported="false" />
 
         <service
-            android:exported="false"
-            android:name=".service.NotifyJobService">
+            android:name=".service.NotifyJobService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
 
