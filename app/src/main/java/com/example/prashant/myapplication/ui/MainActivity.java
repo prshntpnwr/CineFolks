@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
         tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
@@ -135,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         switch (id) {
                             case R.id.nav_tv:
-
                                 Intent intent = new Intent(getApplicationContext(), TvMainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         return true;
     }
 
@@ -289,15 +288,15 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "HOME";
                 case 1:
-                    return "SECTION 2";
+                    return "TOP RATED";
                 case 2:
-                    return "SECTION 3";
+                    return "PLAYING NOW";
                 case 3:
-                    return "SECTION 4";
+                    return "UPCOMING";
                 case 4:
-                    return "SECTION 5";
+                    return "FAVORITES";
             }
             return null;
         }

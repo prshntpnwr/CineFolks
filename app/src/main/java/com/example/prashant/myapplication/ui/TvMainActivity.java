@@ -255,15 +255,15 @@ public class TvMainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "TAB 1";
+                    return "HOME";
                 case 1:
-                    return "TAB 2";
+                    return "TOP RATED";
                 case 2:
-                    return "TAB 3";
+                    return "AIRING TODAY";
                 case 3:
-                    return "TAB 4";
+                    return "CURRENTLY AIRING";
                 case 4:
-                    return "TAB 5";
+                    return "WATCHLIST";
 
             }
             return null;

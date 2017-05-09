@@ -42,6 +42,7 @@ public class AboutActivity extends AppCompatActivity {
                 .create();
 
         setContentView(aboutPage);
+
         this.setTitle("About");
     }
 
