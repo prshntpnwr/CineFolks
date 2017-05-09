@@ -68,7 +68,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
 
         Glide.with(mContext)
                 .load(mTvList.get(position).getImage())
-                .placeholder(R.color.colorAccent)
+                .placeholder(R.color.photo_placeholder)
                 .error(R.color.colorPrimaryDark)
                 .into(holder.imageView);
 

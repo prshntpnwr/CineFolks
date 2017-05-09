@@ -95,7 +95,7 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                     return false;
                                 }
                             })
-                            .placeholder(R.color.colorAccent)
+                            .placeholder(R.color.photo_placeholder)
                             .error(R.color.colorPrimaryDark)
                             .into(((ViewHolderDetails) holder).getImageView());
                 } catch (Exception e) {

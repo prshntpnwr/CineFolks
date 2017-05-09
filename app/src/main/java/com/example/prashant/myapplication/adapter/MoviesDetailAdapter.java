@@ -141,7 +141,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 //image loading using glide
                 Glide.with(mContext)
                         .load(Urls.YOUTUBE_THUMB + data[0] + Urls.YOUTUBE_MEDIUM_QUALITY)
-                        .placeholder(R.color.colorAccent)
+                        .placeholder(R.color.photo_placeholder)
                         .error(R.color.colorPrimaryDark)
                         .into(((ViewHolderTrailer) holder).getImageView());
 

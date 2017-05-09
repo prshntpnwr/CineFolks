@@ -1,16 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navigation_header_container"
     android:layout_width="match_parent"
     android:layout_height="260dp"
-    android:background="?attr/colorPrimaryDark"
-    android:gravity="bottom"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:gravity="center"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_height="match_parent"
+        android:background="@drawable/placeholder" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/nav_image"
+            android:layout_height="@dimen/nav_image"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_about_icon" />
+
+        <TextView
+            android:id="@+id/app_name"
+            android:text="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/nav_title"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

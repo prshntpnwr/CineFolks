@@ -64,7 +64,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         Log.d(TAG, "movie adapter onBindViewHolder");
         Glide.with(mContext)
                 .load(mMovieList.get(position).getImage())
-                .placeholder(R.color.colorAccent)
+                .placeholder(R.color.photo_placeholder)
                 .error(R.color.colorPrimaryDark)
                 .into(holder.imageView);
         Log.d(TAG, " Movie adapter poster " + mMovieList.get(position).getImage());
