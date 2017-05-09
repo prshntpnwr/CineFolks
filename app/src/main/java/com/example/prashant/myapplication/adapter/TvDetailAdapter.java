@@ -3,6 +3,7 @@ package com.example.prashant.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -103,6 +104,7 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
 
                 ((ViewHolderDetails) holder).getTitleView().setText(tv.getTitle());
+                ((ViewHolderDetails) holder).getTitleView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
 
                 ((ViewHolderDetails) holder).getDateStatusView().setText(tv.getDate()
                         + " (" + tv.getStatus() + ")");
@@ -121,8 +123,11 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 ((ViewHolderDetails) holder).getPopularityView().setText(tv.getPopularity().substring(0, 4));
                 ((ViewHolderDetails) holder).getLanguageView().setText(tv.getLanguage());
+
                 ((ViewHolderDetails) holder).getOverviewView().setText(tv.getOverview());
-                ((ViewHolderDetails) holder).getVoteCountView().setText(tv.getVoteCount() + " votes");
+                ((ViewHolderDetails) holder).getOverviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
+
+                ((ViewHolderDetails) holder).getVoteCountView().setText(tv.getVoteCount() + mContext.getString(R.string.votes));
                 break;
 
             case 1:

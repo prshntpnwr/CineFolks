@@ -3,6 +3,7 @@ package com.example.prashant.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -99,7 +100,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                     return false;
                                 }
                             })
-                            .placeholder(R.color.colorAccent)
+                            .placeholder(R.color.photo_placeholder)
                             .error(R.color.colorPrimaryDark)
                             .into(((ViewHolderDetails) holder).getImageView());
                 } catch (Exception e) {
@@ -107,6 +108,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 ((ViewHolderDetails) holder).getTitleView().setText(movie.getTitle());
+                ((ViewHolderDetails) holder).getTitleView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
 
                 if (!movie.getTagLine().equals("")) {
                     ((ViewHolderDetails) holder).getTaglineView().setText("\"" + movie.getTagLine() + "\"");
@@ -132,7 +134,8 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((ViewHolderDetails) holder).getPopularityView().setText(movie.getPopularity().substring(0, 4));
                 ((ViewHolderDetails) holder).getLanguageView().setText(movie.getLanguage());
                 ((ViewHolderDetails) holder).getOverviewView().setText(movie.getOverview());
-                ((ViewHolderDetails) holder).getVoteCountView().setText(movie.getVoteCount() + " votes");
+                ((ViewHolderDetails) holder).getOverviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
+                ((ViewHolderDetails) holder).getVoteCountView().setText(movie.getVoteCount() + mContext.getString(R.string.votes));
                 break;
 
             case 1:
@@ -160,8 +163,12 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 2:
                 ((ViewHolderReview) holder).getReviewView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
                         .substring(reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-") + 1));
+                ((ViewHolderReview) holder).getReviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
+
                 ((ViewHolderReview) holder).getReviewAuthorView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
                         .substring(0, reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-")));
+                ((ViewHolderReview) holder).getReviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
+
                 break;
         }
     }

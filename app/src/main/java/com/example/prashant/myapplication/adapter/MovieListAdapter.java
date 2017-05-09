@@ -2,6 +2,7 @@ package com.example.prashant.myapplication.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -59,6 +60,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public void onBindViewHolder(final MovieListAdapter.ViewHolder holder, int position) {
 
         holder.titleView.setText(mMovieList.get(position).getTitle());
+        holder.titleView.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
         holder.ratingView.setText(mMovieList.get(position).getRating());
 
         Log.d(TAG, "movie adapter onBindViewHolder");
