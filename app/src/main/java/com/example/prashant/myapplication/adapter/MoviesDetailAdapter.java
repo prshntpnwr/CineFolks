@@ -135,7 +135,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((ViewHolderDetails) holder).getLanguageView().setText(movie.getLanguage());
                 ((ViewHolderDetails) holder).getOverviewView().setText(movie.getOverview());
                 ((ViewHolderDetails) holder).getOverviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
-                ((ViewHolderDetails) holder).getVoteCountView().setText(movie.getVoteCount() + mContext.getString(R.string.votes));
+                ((ViewHolderDetails) holder).getVoteCountView().setText(movie.getVoteCount() + " " +  mContext.getString(R.string.votes));
                 break;
 
             case 1:

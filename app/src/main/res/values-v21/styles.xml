@@ -9,13 +9,15 @@
     <style name="AppTheme.Main" parent="@style/AppTheme">
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+
+        <!--<item name="android:windowExitTransition">@transition/main_list_exit_transition</item>-->
+        <!--<item name="android:windowReturnTransition">@transition/main_list_return_transition</item>-->
     </style>
 
     <style name="AppTheme.Detail" parent="@style/AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
 </resources>

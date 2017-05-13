@@ -42,4 +42,5 @@
     <string name="contact">Connect with us</string>
     <string name="copy_right">Copyrights © %1$d</string>
 
+    <string name="transition_image" translatable="false">TN_DetailIcon</string>
 </resources>

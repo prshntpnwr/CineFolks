@@ -127,7 +127,7 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((ViewHolderDetails) holder).getOverviewView().setText(tv.getOverview());
                 ((ViewHolderDetails) holder).getOverviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
 
-                ((ViewHolderDetails) holder).getVoteCountView().setText(tv.getVoteCount() + mContext.getString(R.string.votes));
+                ((ViewHolderDetails) holder).getVoteCountView().setText(tv.getVoteCount() + " " + mContext.getString(R.string.votes));
                 break;
 
             case 1:

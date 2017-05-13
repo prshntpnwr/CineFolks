@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,11 +18,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -93,10 +97,22 @@ public class MovieDetailFragment extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         setupToolbar();
+        //loadDetailWindowTransition();
 
         getMovieDataFromID(id);
         return v;
     }
+//
+//    public void loadDetailWindowTransition() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Slide slide = new Slide(Gravity.BOTTOM);
+//            slide.excludeTarget(R.id.appbar,true);
+//            slide.setInterpolator(
+//                    AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+//            slide.setDuration(250);
+//            getActivity().getWindow().setEnterTransition(slide);
+//        }
+//    }
 
     private void setupToolbar() {
         if (mToolbar != null) {
@@ -105,7 +121,7 @@ public class MovieDetailFragment extends Fragment {
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().finish();
+                    getActivity().supportFinishAfterTransition();
                 }
             });
 
