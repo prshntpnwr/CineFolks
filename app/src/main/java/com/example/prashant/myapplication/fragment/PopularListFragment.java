@@ -1,6 +1,8 @@
 package com.example.prashant.myapplication.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,17 +36,17 @@ public class PopularListFragment extends Fragment {
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
 
-
     private View mRootView;
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
     private StaggeredGridLayoutManager sglm;
+    private ProgressBar mProgressBar;
 
     private int firstVisibleItem;
     private int visibleItemCount;
     private int totalItemCount;
     private int previousTotal = 0;
-    private boolean loading = true;
+    private boolean isLoading = true;
     private int visibleThreshold = 4;
     private int pageCount = 1;
 
@@ -51,6 +54,9 @@ public class PopularListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+
+        mProgressBar = (ProgressBar) mRootView.findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.GONE);
 
         mAdapter = new MovieListAdapter(mMovieList, getContext());
 
@@ -71,7 +77,7 @@ public class PopularListFragment extends Fragment {
             firstVisibleItem = savedInstanceState.getInt("firstVisibleItem");
             visibleItemCount = savedInstanceState.getInt("visibleItemCount");
             totalItemCount = savedInstanceState.getInt("totalItemCount");
-            loading = savedInstanceState.getBoolean("loading");
+            isLoading = savedInstanceState.getBoolean("loading");
         }
     }
 
@@ -84,7 +90,7 @@ public class PopularListFragment extends Fragment {
         bundle.putInt("firstVisibleItem", firstVisibleItem);
         bundle.putInt("visibleItemCount", visibleItemCount);
         bundle.putInt("totalItemCount", totalItemCount);
-        bundle.putBoolean("loading", loading);
+        bundle.putBoolean("loading", isLoading);
     }
 
     private void fetchMovieTask(String url) {
@@ -93,10 +99,13 @@ public class PopularListFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
+        mProgressBar.setVisibility(View.GONE);
+
         JsonObjectRequest getListData = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+
                     Log.d(TAG + "this is the response", response.toString());
 
                     JSONArray mResultArray = response.getJSONArray("results");
@@ -144,19 +153,27 @@ public class PopularListFragment extends Fragment {
                 int[] firstVisibleItemPositions = new int[2];
                 firstVisibleItem = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItemPositions)[0];
 
-                if (loading) {
+                if (isLoading) {
                     if (totalItemCount > previousTotal) {
-                        loading = false;
+                        mProgressBar.setVisibility(View.VISIBLE);
+                        isLoading = false;
                         previousTotal = totalItemCount;
                         pageCount++;
                     }
                 }
-                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
-                    Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
-                    fetchMovieTask(url);
+                if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                    final String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
 
-                    loading = true;
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fetchMovieTask(url);
+                            Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
+                        }
+                    }, 3000);
+
+                    isLoading = true;
+
                 }
             }
         });

@@ -39,7 +39,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
     @Override
     public TVListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.movie_list_item, parent, false);
+                .inflate(R.layout.list_item, parent, false);
         Log.d(TAG, "Tv adapter onCreateViewHolder");
 
         final ViewHolder vh = new ViewHolder(view);
