@@ -17,9 +17,6 @@ import com.example.prashant.myapplication.objects.Movies;
 
 import java.util.ArrayList;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-
 public class FavouriteFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
 
@@ -33,14 +30,14 @@ public class FavouriteFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        mRootView = inflater.inflate(R.layout.fragment_list_fab, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.fab_recycler_view);
         mAdapter = new MovieListAdapter(mMovieList, getActivity());
 
-        //       mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
+        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
 
-//        mEmptyView.setVisibility(VISIBLE);
-//        mRecyclerView.setVisibility(INVISIBLE);
+        mEmptyView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
 
         getMovieList();
         setupRecyclerView(mRecyclerView);
@@ -56,6 +53,11 @@ public class FavouriteFragment extends Fragment {
         for (Movies movie : list) {
             mMovieList.add(movie);
         }
+
+        if (!list.isEmpty()) {
+            mEmptyView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -66,9 +68,11 @@ public class FavouriteFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setAdapter(mAdapter);
-        StaggeredGridLayoutManager sglm =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(sglm);
+        if (!mMovieList.isEmpty()) {
+            recyclerView.setAdapter(mAdapter);
+            StaggeredGridLayoutManager sglm =
+                    new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+            mRecyclerView.setLayoutManager(sglm);
+        }
     }
 }

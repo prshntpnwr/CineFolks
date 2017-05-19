@@ -3,7 +3,7 @@
 
     <group
         android:id="@+id/group_main"
-        android:checkableBehavior="single">
+        android:checkableBehavior="all">
         <item
             android:id="@+id/nav_movie"
             android:icon="@drawable/ic_movie"
@@ -17,7 +17,7 @@
 
     <group
         android:id="@+id/group_details"
-        android:checkableBehavior="single">
+        android:checkableBehavior="all">
         <item
             android:id="@+id/feedback"
             android:icon="@drawable/ic_feedback"

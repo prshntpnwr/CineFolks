@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class PopularListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
     private StaggeredGridLayoutManager sglm;
-    private ProgressBar mProgressBar;
+    private String url;
 
     private int firstVisibleItem;
     private int visibleItemCount;
@@ -55,12 +56,9 @@ public class PopularListFragment extends Fragment {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
-        mProgressBar = (ProgressBar) mRootView.findViewById(R.id.progressBar);
-        mProgressBar.setVisibility(View.GONE);
-
         mAdapter = new MovieListAdapter(mMovieList, getContext());
 
-        String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY;
+        url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY;
 
         fetchMovieTask(url);
         setupRecyclerView(mRecyclerView);
@@ -99,13 +97,10 @@ public class PopularListFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
-        mProgressBar.setVisibility(View.GONE);
-
         JsonObjectRequest getListData = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-
                     Log.d(TAG + "this is the response", response.toString());
 
                     JSONArray mResultArray = response.getJSONArray("results");
@@ -155,12 +150,12 @@ public class PopularListFragment extends Fragment {
 
                 if (isLoading) {
                     if (totalItemCount > previousTotal) {
-                        mProgressBar.setVisibility(View.VISIBLE);
                         isLoading = false;
                         previousTotal = totalItemCount;
                         pageCount++;
                     }
                 }
+
                 if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     final String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
 
@@ -173,7 +168,6 @@ public class PopularListFragment extends Fragment {
                     }, 3000);
 
                     isLoading = true;
-
                 }
             }
         });
