@@ -36,8 +36,8 @@ public class FavouriteFragment extends Fragment {
 
         mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_container);
 
-        mEmptyView.setVisibility(View.VISIBLE);
-        mRecyclerView.setVisibility(View.GONE);
+       // mEmptyView.setVisibility(View.VISIBLE);
+       // mRecyclerView.setVisibility(View.GONE);
 
         getMovieList();
         setupRecyclerView(mRecyclerView);
@@ -49,14 +49,20 @@ public class FavouriteFragment extends Fragment {
 
         ArrayList<Movies> list = new ArrayList<>(MoviesProviderHelper
                 .getMovieListFromDatabase(getActivity()));
+
         mMovieList.clear();
         for (Movies movie : list) {
             mMovieList.add(movie);
         }
 
-        if (!list.isEmpty()) {
+        if (list.isEmpty()) {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+            Log.d(TAG, "Empty view visible");
+        } else {
             mEmptyView.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
+            Log.d(TAG, "Empty view gone");
         }
     }
 
@@ -68,11 +74,9 @@ public class FavouriteFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        if (!mMovieList.isEmpty()) {
-            recyclerView.setAdapter(mAdapter);
-            StaggeredGridLayoutManager sglm =
-                    new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-            mRecyclerView.setLayoutManager(sglm);
-        }
+        recyclerView.setAdapter(mAdapter);
+        StaggeredGridLayoutManager sglm =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(sglm);
     }
 }
