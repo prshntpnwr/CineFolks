@@ -20,8 +20,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.Search" parent="@style/Theme.AppCompat.Light">
-    </style>
+    <style name="AppTheme.Search" parent="@style/Theme.AppCompat.Light"/>
 
     <style name="AppTheme.About" parent="@style/Theme.AppCompat.Light"/>
 
