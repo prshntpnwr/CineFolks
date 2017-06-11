@@ -157,15 +157,17 @@ public class PopularListFragment extends Fragment {
                 }
 
                 if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    final String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
+                    String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
+                    Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
+                    fetchMovieTask(url);
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            fetchMovieTask(url);
-                            Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
-                        }
-                    }, 3000);
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            fetchMovieTask(url);
+//                            Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }, 3000);
 
                     isLoading = true;
                 }
