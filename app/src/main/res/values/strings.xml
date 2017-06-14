@@ -43,4 +43,9 @@
     <string name="copy_right">Copyrights © %1$d</string>
 
     <string name="transition_image" translatable="false">TN_DetailIcon</string>
+
+    <string name="app_detail">CineFolks is an Android Application for viewing Movie and TV series
+        details. View details, add to favorites and watchlist,
+        get daily notification for watchlist added tv shows.
+    </string>
 </resources>

@@ -27,6 +27,7 @@ public class AboutActivity extends AppCompatActivity {
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.drawable.ic_about_icon)
+                .setDescription(getResources().getString(R.string.app_detail))
                 .addItem(new Element().setTitle("Version 1.0"))
                 .addItem(adsElement)
                 .addGroup(getResources().getString(R.string.contact))
