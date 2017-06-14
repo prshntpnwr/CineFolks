@@ -20,7 +20,7 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        simulateDayNight(/* DAY */ 0);
+        simulateDayNight(3);
         Element adsElement = new Element();
         adsElement.setTitle("Advertise with us");
 

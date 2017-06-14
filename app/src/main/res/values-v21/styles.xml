@@ -17,12 +17,12 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="AppTheme.Search" parent="@style/Theme.AppCompat.Light">
-        <item name="android:statusBarColor">@color/photo_placeholder</item>
+    <style name="AppTheme.Search" parent="@style/Theme.AppCompat.DayNight">
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
-    <style name="AppTheme.About" parent="@style/Theme.AppCompat.Light">
-        <item name="android:statusBarColor">@color/photo_placeholder</item>
+    <style name="AppTheme.About" parent="@style/Theme.AppCompat.DayNight">
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
 </resources>
