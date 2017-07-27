@@ -1,6 +1,6 @@
 # CineFolks
 
-
+CineFolks is an Android application for finding Movies and TV shows related details. Get notification for TV shows in the watch list.Use SQLite database to store favorites to offline mode.
 
 ## License
 

@@ -56,7 +56,7 @@ public class Urls {
     }
 
     public static String getUpcoming() {
-        SORT_UPCOMING = "&release_date.lte=" + getDate(8, 0) + "&" + "release_date.gte=" + getDate(0, 10);
+        SORT_UPCOMING = "&release_date.ltem=" + getDate(8, 0) + "&" + "release_date.gte=" + getDate(0, 10);
         return SORT_UPCOMING;
     }
 

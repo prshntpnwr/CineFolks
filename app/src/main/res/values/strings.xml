@@ -32,8 +32,10 @@
 
     <string name="empty_view_text">No favorites yet!</string>
     <string name="action_share">Share</string>
+
+    //about
     <string name="action_feed">Help &amp; Feedback</string>
-    <string name="action_about">About MoviesApp</string>
+    <string name="action_about">About App</string>
 
     <string name="email_address">prashant.panwar777@gmail.com</string>
     <string name="git_hub">https://github.com/prshntpnwr/MoviesApp-</string>
@@ -48,4 +50,5 @@
         details. View details, add to favorites and watchlist,
         get daily notification for watchlist added tv shows.
     </string>
+
 </resources>
