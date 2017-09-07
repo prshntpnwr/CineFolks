@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.TVListAdapter;
@@ -24,16 +27,18 @@ public class FavouriteTvFragment extends Fragment {
     private View mRootView;
     private RecyclerView mRecyclerView;
     private TVListAdapter mAdapter;
+    private FrameLayout mEmptyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
-        mAdapter = new TVListAdapter(mTvList, getActivity());
+
+        mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_view_container);
 
         getTvList();
-        setupRecyclerView(mRecyclerView);
-        return mRecyclerView;
+        setupRecyclerView();
+        return mRootView;
     }
 
     private void getTvList() {
@@ -46,6 +51,20 @@ public class FavouriteTvFragment extends Fragment {
         for (TV tv : list) {
             mTvList.add(tv);
         }
+
+        if (list.isEmpty()) {
+            mEmptyView.setVisibility(View.VISIBLE);
+            ImageView emptyImage = (ImageView) mRootView.findViewById(R.id.empty_image);
+            emptyImage.setImageResource(R.drawable.ic_unwatch);
+            TextView emptyText = (TextView) mRootView.findViewById(R.id.empty_text);
+            emptyText.setText(getActivity().getResources().getString(R.string.empty_view_text_fab));
+            mRecyclerView.setVisibility(View.GONE);
+            Log.d(TAG, "Empty view visible");
+        } else {
+            mEmptyView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            Log.d(TAG, "Empty view gone");
+        }
     }
 
     @Override
@@ -55,10 +74,11 @@ public class FavouriteTvFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setAdapter(mAdapter);
+    private void setupRecyclerView() {
         StaggeredGridLayoutManager sglm =
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mAdapter = new TVListAdapter(mTvList, getActivity());
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(sglm);
     }
 }

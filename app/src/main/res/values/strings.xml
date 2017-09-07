@@ -30,7 +30,9 @@
     <string name="tv_hint">Search Tv Shows</string>
     <string name="movies_hint">Search Movies</string>
 
-    <string name="empty_view_text">No favorites yet!</string>
+    <string name="empty_view_text_fab">No favorites yet!</string>
+    <string name="empty_view_text_watch">No WatchList yet!</string>
+
     <string name="action_share">Share</string>
 
     //about
