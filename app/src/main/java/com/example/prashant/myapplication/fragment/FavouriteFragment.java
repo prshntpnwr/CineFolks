@@ -35,6 +35,8 @@ public class FavouriteFragment extends Fragment {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
+        mAdapter = new MovieListAdapter(mMovieList, getActivity());
+
         mEmptyView = (FrameLayout) mRootView.findViewById(R.id.empty_view_container);
 
         getMovieList();

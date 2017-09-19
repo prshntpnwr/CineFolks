@@ -40,7 +40,7 @@ import com.example.prashant.myapplication.adapter.TvDetailAdapter;
 import com.example.prashant.myapplication.data.TvContract.TvEntry;
 import com.example.prashant.myapplication.data.TvProviderHelper;
 import com.example.prashant.myapplication.objects.TvDetail;
-import com.example.prashant.myapplication.ui.Urls;
+import com.example.prashant.myapplication.server.Urls;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -22,7 +22,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.objects.TvDetail;
-import com.example.prashant.myapplication.ui.Urls;
+import com.example.prashant.myapplication.server.Urls;
 
 import java.util.ArrayList;
 

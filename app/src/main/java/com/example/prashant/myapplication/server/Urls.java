@@ -1,4 +1,4 @@
-package com.example.prashant.myapplication.ui;
+package com.example.prashant.myapplication.server;
 
 import android.annotation.SuppressLint;
 

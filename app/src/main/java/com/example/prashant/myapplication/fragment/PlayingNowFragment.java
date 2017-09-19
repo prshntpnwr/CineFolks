@@ -10,20 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.MovieListAdapter;
 import com.example.prashant.myapplication.objects.Movies;
-import com.example.prashant.myapplication.ui.Urls;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.prashant.myapplication.server.ServerCall;
+import com.example.prashant.myapplication.ui.MovieCallbackInterFace;
+import com.example.prashant.myapplication.server.Urls;
 
 import java.util.ArrayList;
 
@@ -50,13 +42,12 @@ public class PlayingNowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
-        mAdapter = new MovieListAdapter(mMovieList, getActivity());
 
         String url = Urls.BASE_URL + Urls.API_KEY + Urls.getPlayingNow();
 
         fetchMovieTask(url);
         setupRecyclerView(mRecyclerView);
-        return mRecyclerView;
+        return mRootView;
     }
 
     @Override
@@ -88,39 +79,18 @@ public class PlayingNowFragment extends Fragment {
 
     private void fetchMovieTask(String url) {
 
-        Log.d(TAG, "Playing Now Url - " + url);
-
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-
-        JsonObjectRequest getListData = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        ServerCall.getMovies(getActivity(), url, new MovieCallbackInterFace() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Log.d(TAG, "Playing now response is - " + response.toString());
-                    JSONArray mResultArray = response.getJSONArray("results");
-                    for (int i = 0; i < mResultArray.length(); i++) {
-                        JSONObject mResultObject = mResultArray.getJSONObject(i);
-                        Movies movie = new Movies(mResultObject.getString("title"),
-                                "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"),
-                                getResources().getString(R.string.release_date) + mResultObject.getString("release_date"),
-                                mResultObject.getString("overview"),
-                                String.valueOf(mResultObject.getInt("id")),
-                                String.valueOf(mResultObject.getDouble("vote_average")));
-                        mMovieList.add(movie);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onSuccessResponse(Movies movies) {
+                mMovieList.add(movies);
                 mAdapter.notifyDataSetChanged();
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailResponse(String message) {
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
             }
         });
-
-        queue.add(getListData);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -157,6 +127,7 @@ public class PlayingNowFragment extends Fragment {
             }
         });
 
+        mAdapter = new MovieListAdapter(mMovieList, getActivity());
         recyclerView.setAdapter(mAdapter);
     }
 }

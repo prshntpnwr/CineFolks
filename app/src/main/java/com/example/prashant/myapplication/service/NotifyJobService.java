@@ -25,7 +25,7 @@ import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.data.TvContract;
 import com.example.prashant.myapplication.objects.TV;
 import com.example.prashant.myapplication.ui.MainActivity;
-import com.example.prashant.myapplication.ui.Urls;
+import com.example.prashant.myapplication.server.Urls;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
