@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.prashant.myapplication.R;
@@ -38,10 +39,13 @@ public class PopularListFragment extends Fragment {
     private int visibleThreshold = 4;
     private int pageCount = 1;
 
+    private ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        progressBar = (ProgressBar) mRootView.findViewById(R.id.progressbar);
 
         url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY;
 
@@ -82,6 +86,7 @@ public class PopularListFragment extends Fragment {
             @Override
             public void onSuccessResponse(Movies movies) {
                 mMovieList.add(movies);
+                progressBar.setVisibility(View.GONE);
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -119,6 +124,7 @@ public class PopularListFragment extends Fragment {
                 if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
                     Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.VISIBLE);
                     fetchMovieTask(url);
 
 //                    new Handler().postDelayed(new Runnable() {

@@ -63,7 +63,9 @@
                     android:paddingRight="16dp"
                     android:paddingTop="2dp" />
             </LinearLayout>
+
         </LinearLayout>
+
     </com.balysv.materialripple.MaterialRippleLayout>
 
     <View

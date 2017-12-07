@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,11 @@ import com.example.prashant.myapplication.objects.MoviesDetail;
 import com.example.prashant.myapplication.server.Urls;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final String TAG = getClass().getSimpleName();
 
     private MoviesDetail movie;
     private Context mContext;
@@ -72,6 +76,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 0:
                 try {
                     //image loading and setting color using glide and palette
+                    Log.d(TAG, "movie - " + movie.getId());
                     Glide.with(mContext)
                             .load(movie.getPoster())
                             .listener(new RequestListener<String, GlideDrawable>() {
@@ -111,9 +116,9 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((ViewHolderDetails) holder).getTitleView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
 
                 if (!movie.getTagLine().equals("")) {
-                    ((ViewHolderDetails) holder).getTaglineView().setText("\"" + movie.getTagLine() + "\"");
+                    ((ViewHolderDetails) holder).getTagLineView().setText("\"" + movie.getTagLine() + "\"");
                 } else {
-                    ((ViewHolderDetails) holder).getTaglineView().setVisibility(View.GONE);
+                    ((ViewHolderDetails) holder).getTagLineView().setVisibility(View.GONE);
                 }
 
                 ((ViewHolderDetails) holder).getDateStatusView().setText(movie.getDate()
@@ -140,6 +145,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             case 1:
                 final String[] data = trailerInfo.get(position - 1).split(",,");
+                Log.d(TAG, "trailer - " + data);
 
                 //image loading using glide
                 Glide.with(mContext)
@@ -194,7 +200,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         private ImageView imageView;
 
-        private TextView titleView, taglineView, dateStatusView, durationView,
+        private TextView titleView, tagLineView, dateStatusView, durationView,
                 ratingView, genreView, popularityView, languageView, overviewView, voteCountView;
 
         private ImageView ratingsBackground, genreBackground, popBackground, langBackground;
@@ -203,7 +209,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(view);
             imageView = (ImageView) view.findViewById(R.id.image);
             titleView = (TextView) view.findViewById(R.id.title);
-            taglineView = (TextView) view.findViewById(R.id.tag_line);
+            tagLineView = (TextView) view.findViewById(R.id.tag_line);
             dateStatusView = (TextView) view.findViewById(R.id.date_status);
             durationView = (TextView) view.findViewById(R.id.duration);
             ratingView = (TextView) view.findViewById(R.id.rating);
@@ -226,8 +232,8 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return titleView;
         }
 
-        public TextView getTaglineView() {
-            return taglineView;
+        public TextView getTagLineView() {
+            return tagLineView;
         }
 
         public TextView getDateStatusView() {

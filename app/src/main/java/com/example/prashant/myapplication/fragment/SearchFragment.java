@@ -50,10 +50,10 @@ public class SearchFragment extends Fragment {
 
         Log.d(TAG, "Search string is " + res);
 
-        url = Urls.MOVIE_BASE_SEARCH_URL + "api_key=b7f57ee32644eb6ddfdca9ca38b5513e" + "&query=" + res;
+        url = Urls.MOVIE_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + res;
 
         fetchMovieTask(url);
-        setupRecyclerView(mRecyclerView);
+        setupRecyclerView();
         return mRootView;
     }
 
@@ -99,9 +99,9 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
+    private void setupRecyclerView() {
         sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(sglm);
+        mRecyclerView.setLayoutManager(sglm);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -133,6 +133,6 @@ public class SearchFragment extends Fragment {
         });
 
         mAdapter = new MovieListAdapter(mMovieList, getContext());
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
     }
 }

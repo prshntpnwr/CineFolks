@@ -21,12 +21,10 @@ import org.json.JSONObject;
 
 public class ServerCall {
 
-    private static String TAG = "ServerCall";
+    private static String TAG = ServerCall.class.getSimpleName();
 
     public static void getMovies(final Context context, final String URL, final MovieCallbackInterFace callbackInterFace) {
         Log.d(TAG, "URL is - " + URL);
-
-        RequestQueue queue = Volley.newRequestQueue(context);
 
         JsonObjectRequest getListData = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
             @Override
@@ -60,13 +58,11 @@ public class ServerCall {
             }
         });
 
-        queue.add(getListData);
+        AppController.getInstance().addToRequestQueue(getListData);
     }
 
     public static void getTvShows(final Context context, final String URL, final TvCallbackInterface callbackInterface) {
         Log.d(TAG, " URL - " + URL);
-
-        RequestQueue queue = Volley.newRequestQueue(context);
 
         JsonObjectRequest getListData = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
             @Override
@@ -110,6 +106,6 @@ public class ServerCall {
             }
         });
 
-        queue.add(getListData);
+        AppController.getInstance().addToRequestQueue(getListData);
     }
 }

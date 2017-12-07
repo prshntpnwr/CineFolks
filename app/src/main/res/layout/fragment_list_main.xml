@@ -1,16 +1,26 @@
-<FrameLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="wrap_content">
 
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recycler_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:padding="@dimen/material_cards_padding" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:padding="@dimen/material_cards_padding" />
 
-    <include layout="@layout/empty_layout"
-        android:visibility="gone"/>
+    <include
+        layout="@layout/empty_layout"
+        android:visibility="gone" />
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/recycler_view"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="visible" />
+
+</RelativeLayout>

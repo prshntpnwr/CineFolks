@@ -25,11 +25,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -40,6 +38,7 @@ import com.example.prashant.myapplication.adapter.MoviesDetailAdapter;
 import com.example.prashant.myapplication.data.MoviesContract.MoviesEntry;
 import com.example.prashant.myapplication.data.MoviesProviderHelper;
 import com.example.prashant.myapplication.objects.MoviesDetail;
+import com.example.prashant.myapplication.server.AppController;
 import com.example.prashant.myapplication.server.Urls;
 
 import org.json.JSONArray;
@@ -52,11 +51,10 @@ public class MovieDetailFragment extends Fragment {
 
     private final String TAG = getClass().getSimpleName();
 
-    private MoviesDetail movie;
+    private MoviesDetail movie = new MoviesDetail();
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
@@ -67,7 +65,7 @@ public class MovieDetailFragment extends Fragment {
 
     private FloatingActionButton fab;
 
-    private static final String MoviesApp_SHARE_HASHTAG = " #MoviesApp";
+    private static final String MoviesApp_SHARE_HASHTAG = "#MoviesApp";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,12 +74,11 @@ public class MovieDetailFragment extends Fragment {
 
         String id = getActivity().getIntent().getStringExtra("id");
         Log.d(TAG, "intent receive from adapter is " + id);
-        movie = new MoviesDetail();
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_movie_details);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) v.findViewById(R.id.collapsing_toolbar_layout_movie_details);
         mToolbar = (Toolbar) v.findViewById(R.id.toolbar_movie_details);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mBackdrop = (ImageView) v.findViewById(R.id.backdrop);
 
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
@@ -98,7 +95,7 @@ public class MovieDetailFragment extends Fragment {
         getMovieDataFromID(id);
         return v;
     }
-//
+
 //    public void loadDetailWindowTransition() {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            Slide slide = new Slide(Gravity.BOTTOM);
@@ -136,7 +133,7 @@ public class MovieDetailFragment extends Fragment {
                             startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                                     .setType("text/plain")
                                     .setText(Urls.YOUTUBE_URL + data[0] + "\n\n"
-                                            + MoviesApp_SHARE_HASHTAG)
+                                            + " " + MoviesApp_SHARE_HASHTAG)
                                     .getIntent(), getString(R.string.action_share)));
 
                             Log.d(TAG, "shared trailer : " + Urls.YOUTUBE_URL + data[0]);
@@ -153,8 +150,6 @@ public class MovieDetailFragment extends Fragment {
     private void getMovieDataFromID(final String id) {
         Log.d(TAG, " getMovieDataFromID id is " + id);
         String url = Urls.MOVIE_BASE_URL + id + "?" + Urls.API_KEY;
-
-        RequestQueue queue = Volley.newRequestQueue(getContext());
 
         JsonObjectRequest getDetails = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -236,7 +231,7 @@ public class MovieDetailFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-        queue.add(getDetails);
+        AppController.getInstance().addToRequestQueue(getDetails);
     }
 
     private void getTrailerInfo(final String id) {
@@ -244,8 +239,7 @@ public class MovieDetailFragment extends Fragment {
 
         String requestUrl = Urls.MOVIE_BASE_URL + id + "/videos?" + Urls.API_KEY;
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        JsonObjectRequest mTrailerRequest = new JsonObjectRequest(Request.Method.GET, requestUrl, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest trailerRequest = new JsonObjectRequest(Request.Method.GET, requestUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -262,7 +256,6 @@ public class MovieDetailFragment extends Fragment {
                     mAdapter.notifyDataSetChanged();
                     getMovieReviews(id);
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -272,7 +265,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
-        queue.add(mTrailerRequest);
+        AppController.getInstance().addToRequestQueue(trailerRequest);
     }
 
     void getMovieReviews(String id) {
@@ -280,8 +273,7 @@ public class MovieDetailFragment extends Fragment {
 
         String reviewUrl = Urls.MOVIE_BASE_URL + id + "/reviews?" + Urls.API_KEY;
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        JsonObjectRequest mReviewRequest = new JsonObjectRequest(Request.Method.GET, reviewUrl, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, reviewUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -297,7 +289,6 @@ public class MovieDetailFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -306,7 +297,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
-        queue.add(mReviewRequest);
+        AppController.getInstance().addToRequestQueue(request);
     }
 
     private void fabAction() {

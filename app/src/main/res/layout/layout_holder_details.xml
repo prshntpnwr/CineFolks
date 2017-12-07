@@ -146,6 +146,7 @@
                     android:layout_height="64dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_genre" />
+
             </FrameLayout>
 
             <TextView
@@ -156,8 +157,8 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:textSize="12sp" />
-        </LinearLayout>
 
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/three"
@@ -200,6 +201,7 @@
                 android:gravity="center"
                 android:text="@string/popularity"
                 android:textSize="12sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -242,6 +244,7 @@
                 android:gravity="center"
                 android:text="@string/language"
                 android:textSize="12sp" />
+
         </LinearLayout>
 
     </RelativeLayout>

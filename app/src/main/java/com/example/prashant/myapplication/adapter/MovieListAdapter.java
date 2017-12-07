@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private Context mContext;
+    private int lastPosition = -1;
 
     public MovieListAdapter(ArrayList<Movies> MovieList, Context context) {
         this.mMovieList = MovieList;
@@ -63,6 +66,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         holder.titleView.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
         holder.ratingView.setText(mMovieList.get(position).getRating());
 
+        setAnimation(holder.itemView, position);
+
         Log.d(TAG, "movie adapter onBindViewHolder");
         Glide.with(mContext)
                 .load(mMovieList.get(position).getImage())
@@ -76,6 +81,17 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public int getItemCount() {
         Log.d(TAG, " Movie adapter getItemCount " + mMovieList.size());
         return mMovieList.size();
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
