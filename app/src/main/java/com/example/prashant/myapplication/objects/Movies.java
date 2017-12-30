@@ -5,36 +5,61 @@ import android.os.Parcelable;
 
 public class Movies implements Parcelable {
 
-    public static final Creator CREATOR = new Creator() {
+    private String title, date, overview, id, rating;
+    private String genre, status, backdrop, voteCount, tagLine,
+            runtime, language, popularity, poster;
+
+    public static final Creator<Movies> CREATOR = new Creator<Movies>() {
+        @Override
         public Movies createFromParcel(Parcel in) {
             return new Movies(in);
         }
 
+        @Override
         public Movies[] newArray(int size) {
             return new Movies[size];
         }
     };
-    private String title, image, date, overview, id, rating;
 
-    public Movies(String title, String image, String date, String overview, String id, String rating) {
+    protected Movies(Parcel in) {
+        title = in.readString();
+        date = in.readString();
+        overview = in.readString();
+        id = in.readString();
+        rating = in.readString();
+        genre = in.readString();
+        status = in.readString();
+        backdrop = in.readString();
+        voteCount = in.readString();
+        tagLine = in.readString();
+        runtime = in.readString();
+        language = in.readString();
+        popularity = in.readString();
+        poster = in.readString();
+    }
+
+    public Movies() {
+    }
+
+    public Movies(String title, String date, String overview,
+                  String id, String rating, String genre, String status,
+                  String backdrop, String voteCount, String tagLine,
+                  String runtime, String language, String popularity,
+                  String poster) {
         this.title = title;
-        this.image = image;
         this.date = date;
         this.overview = overview;
         this.id = id;
         this.rating = rating;
-    }
-
-    public Movies(Parcel in) {
-        String[] data = new String[6];
-
-        in.readStringArray(data);
-        this.title = data[0];
-        this.image = data[1];
-        this.date = data[2];
-        this.overview = data[3];
-        this.id = data[4];
-        this.rating = data[5];
+        this.genre = genre;
+        this.status = status;
+        this.backdrop = backdrop;
+        this.voteCount = voteCount;
+        this.tagLine = tagLine;
+        this.runtime = runtime;
+        this.language = language;
+        this.popularity = popularity;
+        this.poster = poster;
     }
 
     public String getTitle() {
@@ -43,14 +68,6 @@ public class Movies implements Parcelable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getDate() {
@@ -69,7 +86,7 @@ public class Movies implements Parcelable {
         this.overview = overview;
     }
 
-      public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -79,6 +96,78 @@ public class Movies implements Parcelable {
 
     public String getRating() {
         return rating;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getBackdrop() {
+        return backdrop;
+    }
+
+    public void setBackdrop(String backdrop) {
+        this.backdrop = backdrop;
+    }
+
+    public String getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(String voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public void setTagLine(String tagLine) {
+        this.tagLine = tagLine;
+    }
+
+    public String getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(String runtime) {
+        this.runtime = runtime;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
     public void setRating(String rating) {
@@ -92,12 +181,20 @@ public class Movies implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{this.title,
-                this.image,
-                this.date,
-                this.overview,
-                this.id,
-                this.rating
-        });
+
+        dest.writeString(title);
+        dest.writeString(date);
+        dest.writeString(overview);
+        dest.writeString(id);
+        dest.writeString(rating);
+        dest.writeString(genre);
+        dest.writeString(status);
+        dest.writeString(backdrop);
+        dest.writeString(voteCount);
+        dest.writeString(tagLine);
+        dest.writeString(runtime);
+        dest.writeString(language);
+        dest.writeString(popularity);
+        dest.writeString(poster);
     }
 }

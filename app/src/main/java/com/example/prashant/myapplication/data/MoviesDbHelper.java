@@ -45,5 +45,4 @@ public class MoviesDbHelper extends SQLiteOpenHelper {
         Log.i(TAG, "Old version = " + oldVersion + " New version = " + newVersion);
         onCreate(db);
     }
-
 }

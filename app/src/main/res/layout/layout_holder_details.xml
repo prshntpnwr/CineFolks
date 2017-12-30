@@ -2,33 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:behavior_overlapTop="64dp"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/activity_horizontal_padding">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="@dimen/activity_horizontal_margin">
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="126dp"
-            android:layout_height="192dp"
+            android:layout_width="@dimen/detail_poster_width"
+            android:layout_height="@dimen/detail_poster_height"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
+            android:src="@drawable/ic_notification"
             android:transitionName="@string/transition_image"/>
 
         <TextView
             android:id="@+id/title"
+            android:text="Movie Title: Just A Movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/image"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
+            android:paddingBottom="@dimen/activity_horizontal_padding_mid"
+            android:paddingLeft="@dimen/activity_horizontal_padding"
+            android:paddingRight="@dimen/activity_horizontal_padding"
+            android:paddingTop="@dimen/activity_horizontal_padding_mid"
             android:textSize="18sp"
             android:textColor="@color/primary_text"/>
 
@@ -38,30 +42,64 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
             android:layout_toEndOf="@id/image"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:text="this is a tag line"
+            android:paddingBottom="@dimen/activity_horizontal_padding_mid"
+            android:paddingLeft="@dimen/activity_horizontal_padding"
+            android:paddingRight="@dimen/activity_horizontal_padding"
             android:textStyle="italic" />
 
-        <TextView
-            android:id="@+id/date_status"
+        <LinearLayout
+            android:id="@+id/date"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tag_line"
+            android:gravity="end"
+            android:layout_below="@+id/tag_line"
             android:layout_toEndOf="@id/image"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp" />
+            android:layout_margin="@dimen/activity_horizontal_margin_small"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/duration"
+            <ImageView
+                android:layout_width="@dimen/rating_icon_size"
+                android:layout_height="@dimen/rating_icon_size"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/rating_padding"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_calendar" />
+
+            <TextView
+                android:id="@+id/date_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="2017-12-30 (release)" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/date_status"
+            android:gravity="end"
+            android:layout_below="@id/date"
             android:layout_toEndOf="@id/image"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp" />
+            android:layout_margin="@dimen/activity_horizontal_margin_small"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/rating_icon_size"
+                android:layout_height="@dimen/rating_icon_size"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/rating_padding"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_clock" />
+
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="120 min"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -69,24 +107,63 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#20000000"
-        android:padding="8dp" />
+        android:padding="@dimen/activity_horizontal_padding_mid" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="112dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin_mid"
         android:gravity="center">
 
         <LinearLayout
-            android:id="@+id/one"
-            android:layout_width="88dp"
+            android:id="@+id/zero"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingEnd="4dp"
-            android:paddingTop="16dp">
+            android:paddingEnd="@dimen/activity_horizontal_padding_regular"
+            android:paddingTop="@dimen/activity_horizontal_padding_mid">
+
+            <FrameLayout
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin_mid"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/up_votes"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin_mid"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_votes" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/vote_count"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/about_contact_us"
+                style="@style/TextAppearance.AppCompat.Caption" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_toEndOf="@+id/zero"
+            android:paddingEnd="@dimen/activity_horizontal_padding_regular"
+            android:paddingTop="@dimen/activity_horizontal_padding">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -109,31 +186,32 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp" />
+                    style="@style/TextAppearance.AppCompat.Caption" />
 
             </FrameLayout>
 
             <TextView
-                android:id="@+id/vote_count"
+                android:id="@+id/rating_count"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
-                android:textSize="12sp" />
+                android:text="@string/rating"
+                style="@style/TextAppearance.AppCompat.Caption" />
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/two"
-            android:layout_width="88dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/one"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingEnd="4dp"
-            android:paddingTop="16dp">
+            android:paddingEnd="@dimen/activity_horizontal_padding_regular"
+            android:paddingTop="@dimen/activity_horizontal_padding">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -156,20 +234,20 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:maxLines="1"
-                android:textSize="12sp" />
+                style="@style/TextAppearance.AppCompat.Caption" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/three"
-            android:layout_width="88dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/two"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingEnd="4dp"
-            android:paddingTop="16dp">
+            android:paddingEnd="@dimen/activity_horizontal_padding_regular"
+            android:paddingTop="@dimen/activity_horizontal_padding">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -190,7 +268,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp" />
+                    style="@style/TextAppearance.AppCompat.Caption" />
 
             </FrameLayout>
 
@@ -200,19 +278,19 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:text="@string/popularity"
-                android:textSize="12sp" />
+                style="@style/TextAppearance.AppCompat.Caption" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/four"
-            android:layout_width="88dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/three"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingTop="16dp">
+            android:paddingTop="@dimen/activity_horizontal_padding">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -233,7 +311,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp" />
+                    style="@style/TextAppearance.AppCompat.Caption" />
 
             </FrameLayout>
 
@@ -243,7 +321,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:text="@string/language"
-                android:textSize="12sp" />
+                style="@style/TextAppearance.AppCompat.Caption" />
 
         </LinearLayout>
 
@@ -252,23 +330,23 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin_mid"
+        android:layout_marginTop="@dimen/activity_horizontal_margin_mid"
         android:background="#20000000"
-        android:padding="8dp" />
+        android:padding="@dimen/activity_horizontal_padding_mid" />
 
     <TextView
         android:id="@+id/overview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="16dp" />
+        android:padding="@dimen/activity_horizontal_padding" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:background="#20000000"
-        android:padding="8dp" />
+        android:padding="@dimen/activity_horizontal_padding_mid" />
 
 </LinearLayout>

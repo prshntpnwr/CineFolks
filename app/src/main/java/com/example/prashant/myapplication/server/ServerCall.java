@@ -4,12 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.prashant.myapplication.R;
+import com.example.prashant.myapplication.helper.AppController;
 import com.example.prashant.myapplication.objects.Movies;
 import com.example.prashant.myapplication.objects.TV;
 import com.example.prashant.myapplication.ui.MovieCallbackInterFace;
@@ -36,12 +35,12 @@ public class ServerCall {
                     if (mResultArray.length() > 0) {
                         for (int i = 0; i < mResultArray.length(); i++) {
                             JSONObject mResultObject = mResultArray.getJSONObject(i);
-                            Movies movie = new Movies(mResultObject.getString("title"),
-                                    "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"),
-                                    context.getResources().getString(R.string.release_date) + mResultObject.getString("release_date"),
-                                    mResultObject.getString("overview"),
-                                    String.valueOf(mResultObject.getInt("id")),
-                                    String.valueOf(mResultObject.getDouble("vote_average")));
+                            Movies movie = new Movies();
+                            movie.setId(mResultObject.getString("id"));
+                            movie.setTitle(mResultObject.getString("title"));
+                            movie.setDate(mResultObject.getString("release_date"));
+                            movie.setBackdrop("http://image.tmdb.org/t/p/w780/" + mResultObject.getString("backdrop_path"));
+                            movie.setPoster("http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"));
 
                             callbackInterFace.onSuccessResponse(movie);
                         }

@@ -2,6 +2,18 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin_mid">8dp</dimen>
+    <dimen name="activity_vertical_margin_mid">8dp</dimen>
+    <dimen name="activity_horizontal_margin_small">4dp</dimen>
+    <dimen name="activity_vertical_margin_small">4dp</dimen>
+
+    <dimen name="activity_horizontal_padding">16dp</dimen>
+    <dimen name="activity_vertical_padding">16dp</dimen>
+    <dimen name="activity_horizontal_padding_mid">8dp</dimen>
+    <dimen name="activity_vertical_padding_mid">8dp</dimen>
+    <dimen name="activity_horizontal_padding_regular">4dp</dimen>
+    <dimen name="activity_vertical_padding_regular">4dp</dimen>
+
     <dimen name="appbar_padding_top">8dp</dimen>
 
     <!--card_padding-->
@@ -27,6 +39,8 @@
     <dimen name="detail_body_bottom_margin">32dp</dimen>
     <dimen name="detail_title_bottom_margin">16dp</dimen>
     <dimen name="detail_toolbar_margin">24dp</dimen>
+    <dimen name="detail_poster_width">130dp</dimen>
+    <dimen name="detail_poster_height">192dp</dimen>
 
     <!-- empty_layout-->
     <dimen name="empty_tab_image">120dp</dimen>

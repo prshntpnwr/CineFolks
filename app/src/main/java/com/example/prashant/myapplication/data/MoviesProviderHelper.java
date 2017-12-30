@@ -21,11 +21,19 @@ public class MoviesProviderHelper {
             do {
 
                 Movies movie = new Movies(c.getString(c.getColumnIndex(MoviesEntry.KEY_TITLE)),
-                        c.getString(c.getColumnIndex(MoviesEntry.KEY_POSTER)),
                         c.getString(c.getColumnIndex(MoviesEntry.KEY_DATE)),
                         c.getString(c.getColumnIndex(MoviesEntry.KEY_OVERVIEW)),
                         c.getString(c.getColumnIndex(MoviesEntry.KEY_ID)),
-                        c.getString(c.getColumnIndex(MoviesEntry.KEY_RATING)));
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_RATING)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_GENRE)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_STATUS)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_BACKDROP)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_VOTE_COUNT)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_TAG_LINE)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_RUN_TIME)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_LANGUAGE)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_POPULARITY)),
+                        c.getString(c.getColumnIndex(MoviesEntry.KEY_POSTER)));
 
                 mMovieList.add(movie);
             } while (c.moveToNext());

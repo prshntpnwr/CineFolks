@@ -21,6 +21,6 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/recycler_view"
         android:layout_margin="@dimen/fab_margin"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </RelativeLayout>

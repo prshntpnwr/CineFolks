@@ -8,6 +8,7 @@
     <string name="popularity">Popularity</string>
     <string name="language">Language</string>
     <string name="votes"> votes</string>
+    <string name="rating">Rating</string>
 
     <string name="duration">"Duration - "</string>
     <string name="site">"Site - "</string>
@@ -18,6 +19,7 @@
     <string name="movies">Movies</string>
     <string name="add_favourites">Movie added to favourites!</string>
     <string name="remove_favourites">Movie removed from favourites.</string>
+    <string name="transition_movie_photo" translatable="false">TN_Movie_Photo</string>
 
     //tv
     <string name="tv_shows">TV Series</string>

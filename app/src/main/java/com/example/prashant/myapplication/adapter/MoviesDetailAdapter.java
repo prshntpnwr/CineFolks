@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,23 +22,23 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.objects.MoviesDetail;
+import com.example.prashant.myapplication.objects.Movies;
 import com.example.prashant.myapplication.server.Urls;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
+import java.util.Arrays;
 
 public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final String TAG = getClass().getSimpleName();
 
-    private MoviesDetail movie;
+    private Movies movie;
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<String> trailerInfo;
     private ArrayList<String> reviewInfo;
 
-    public MoviesDetailAdapter(MoviesDetail movie, ArrayList<String> trailerInfo, ArrayList<String> reviewInfo, Context context) {
+    public MoviesDetailAdapter(Movies movie, ArrayList<String> trailerInfo, ArrayList<String> reviewInfo, Context context) {
         this.movie = movie;
         this.trailerInfo = trailerInfo;
         this.reviewInfo = reviewInfo;
@@ -75,6 +76,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         switch (getItemViewType(position)) {
             case 0:
                 try {
+
                     //image loading and setting color using glide and palette
                     Log.d(TAG, "movie - " + movie.getId());
                     Glide.with(mContext)
@@ -101,6 +103,8 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                             .setColorFilter(color);
                                     ((ViewHolderDetails) holder).getLangBackground()
                                             .setColorFilter(color);
+                                    ((ViewHolderDetails) holder).getUpVotes()
+                                            .setColorFilter(color);
 
                                     return false;
                                 }
@@ -115,7 +119,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((ViewHolderDetails) holder).getTitleView().setText(movie.getTitle());
                 ((ViewHolderDetails) holder).getTitleView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
 
-                if (!movie.getTagLine().equals("")) {
+                if (movie.getTagLine() != null && !movie.getTagLine().equals("")) {
                     ((ViewHolderDetails) holder).getTagLineView().setText("\"" + movie.getTagLine() + "\"");
                 } else {
                     ((ViewHolderDetails) holder).getTagLineView().setVisibility(View.GONE);
@@ -127,25 +131,34 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         + movie.getRuntime() + mContext.getString(R.string.min));
                 ((ViewHolderDetails) holder).getRatingView().setText(movie.getRating());
 
-                try {
-                    ((ViewHolderDetails) holder).getGenreView().setText(movie.getGenre().substring(0,
-                            movie.getGenre().indexOf(",")));
-                } catch (StringIndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                    ((ViewHolderDetails) holder).getGenreView().setText(movie.getGenre().substring(0,
-                            movie.getGenre().indexOf(".")));
+                if (movie.getGenre() != null) {
+                    try {
+                        ((ViewHolderDetails) holder).getGenreView().setText(movie.getGenre().substring(0,
+                                movie.getGenre().indexOf(",")));
+                    } catch (StringIndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                        ((ViewHolderDetails) holder).getGenreView().setText(movie.getGenre().substring(0,
+                                movie.getGenre().indexOf(".")));
+                    }
                 }
 
-                ((ViewHolderDetails) holder).getPopularityView().setText(movie.getPopularity().substring(0, 4));
-                ((ViewHolderDetails) holder).getLanguageView().setText(movie.getLanguage());
-                ((ViewHolderDetails) holder).getOverviewView().setText(movie.getOverview());
-                ((ViewHolderDetails) holder).getOverviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
-                ((ViewHolderDetails) holder).getVoteCountView().setText(movie.getVoteCount() + " " +  mContext.getString(R.string.votes));
+                if (movie.getPopularity() != null)
+                    ((ViewHolderDetails) holder).getPopularityView().setText(movie.getPopularity().substring(0, 4));
+                if (movie.getLanguage() != null)
+                    ((ViewHolderDetails) holder).getLanguageView().setText(movie.getLanguage());
+
+                if (movie.getOverview() != null) {
+                    ((ViewHolderDetails) holder).getOverviewView().setText(movie.getOverview());
+                    ((ViewHolderDetails) holder).getOverviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
+                }
+                if (movie.getVoteCount() != null) {
+                    ((ViewHolderDetails) holder).getVoteCountView().setText(movie.getVoteCount() + " " + mContext.getString(R.string.votes));
+                }
                 break;
 
             case 1:
                 final String[] data = trailerInfo.get(position - 1).split(",,");
-                Log.d(TAG, "trailer - " + data);
+                Log.d(TAG, "trailer - " + Arrays.toString(data));
 
                 //image loading using glide
                 Glide.with(mContext)
@@ -196,16 +209,16 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return 999;
     }
 
-    public static class ViewHolderDetails extends RecyclerView.ViewHolder {
+    private static class ViewHolderDetails extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
 
         private TextView titleView, tagLineView, dateStatusView, durationView,
                 ratingView, genreView, popularityView, languageView, overviewView, voteCountView;
 
-        private ImageView ratingsBackground, genreBackground, popBackground, langBackground;
+        private ImageView upVotes, ratingsBackground, genreBackground, popBackground, langBackground;
 
-        public ViewHolderDetails(View view) {
+        ViewHolderDetails(View view) {
             super(view);
             imageView = (ImageView) view.findViewById(R.id.image);
             titleView = (TextView) view.findViewById(R.id.title);
@@ -217,6 +230,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             popularityView = (TextView) view.findViewById(R.id.popularity);
             languageView = (TextView) view.findViewById(R.id.language);
             overviewView = (TextView) view.findViewById(R.id.overview);
+            upVotes = (ImageView) view.findViewById(R.id.up_votes);
             ratingsBackground = (ImageView) view.findViewById(R.id.ratings_background);
             voteCountView = (TextView) view.findViewById(R.id.vote_count);
             genreBackground = (ImageView) view.findViewById(R.id.genre_background);
@@ -224,74 +238,78 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             langBackground = (ImageView) view.findViewById(R.id.lang_background);
         }
 
-        public ImageView getImageView() {
+        ImageView getImageView() {
             return imageView;
         }
 
-        public TextView getTitleView() {
+        TextView getTitleView() {
             return titleView;
         }
 
-        public TextView getTagLineView() {
+        TextView getTagLineView() {
             return tagLineView;
         }
 
-        public TextView getDateStatusView() {
+        TextView getDateStatusView() {
             return dateStatusView;
         }
 
-        public TextView getDurationView() {
+        TextView getDurationView() {
             return durationView;
         }
 
-        public TextView getRatingView() {
+        TextView getRatingView() {
             return ratingView;
         }
 
-        public TextView getGenreView() {
+        TextView getGenreView() {
             return genreView;
         }
 
-        public TextView getPopularityView() {
+        public ImageView getUpVotes() {
+            return upVotes;
+        }
+
+        TextView getPopularityView() {
             return popularityView;
         }
 
-        public TextView getLanguageView() {
+        TextView getLanguageView() {
             return languageView;
         }
 
-        public TextView getOverviewView() {
+        TextView getOverviewView() {
             return overviewView;
         }
 
-        public ImageView getRatingsBackground() {
+        ImageView getRatingsBackground() {
             return ratingsBackground;
         }
 
-        public TextView getVoteCountView() {
+        TextView getVoteCountView() {
             return voteCountView;
         }
 
-        public ImageView getGenreBackground() {
+        ImageView getGenreBackground() {
             return genreBackground;
         }
 
-        public ImageView getPopBackground() {
+        ImageView getPopBackground() {
             return popBackground;
         }
 
-        public ImageView getLangBackground() {
+        ImageView getLangBackground() {
             return langBackground;
         }
     }
 
-    public static class ViewHolderTrailer extends RecyclerView.ViewHolder {
+    private static class ViewHolderTrailer extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
         private MaterialRippleLayout rippleLayout;
         private TextView titleView, siteView, qualityView;
 
-        public ViewHolderTrailer(View view) {
+        ViewHolderTrailer(View view) {
             super(view);
             rippleLayout = (MaterialRippleLayout) view.findViewById(R.id.ripple);
             imageView = (ImageView) view.findViewById(R.id.trailer_image);
@@ -300,43 +318,43 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             qualityView = (TextView) view.findViewById(R.id.quality_text);
         }
 
-        public MaterialRippleLayout getRippleLayout() {
+        MaterialRippleLayout getRippleLayout() {
             return rippleLayout;
         }
 
-        public ImageView getImageView() {
+        ImageView getImageView() {
             return imageView;
         }
 
-        public TextView getTitleView() {
+        TextView getTitleView() {
             return titleView;
         }
 
-        public TextView getSiteView() {
+        TextView getSiteView() {
             return siteView;
         }
 
-        public TextView getQualityView() {
+        TextView getQualityView() {
             return qualityView;
         }
     }
 
-    public static class ViewHolderReview extends RecyclerView.ViewHolder {
+    private static class ViewHolderReview extends RecyclerView.ViewHolder {
 
         private TextView reviewView;
         private TextView reviewAuthorView;
 
-        public ViewHolderReview(View view) {
+        ViewHolderReview(View view) {
             super(view);
             reviewAuthorView = (TextView) view.findViewById(R.id.review_author_text);
             reviewView = (TextView) view.findViewById(R.id.review_text);
         }
 
-        public TextView getReviewAuthorView() {
+        TextView getReviewAuthorView() {
             return reviewAuthorView;
         }
 
-        public TextView getReviewView() {
+        TextView getReviewView() {
             return reviewView;
         }
     }

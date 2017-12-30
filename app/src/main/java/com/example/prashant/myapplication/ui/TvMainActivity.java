@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,15 +17,14 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.fragment_tv.AiringTodayTvFragment;
-import com.example.prashant.myapplication.fragment_tv.CurrentlyAiringTvFragment;
-import com.example.prashant.myapplication.fragment_tv.FavouriteTvFragment;
-import com.example.prashant.myapplication.fragment_tv.PopularTvFragment;
-import com.example.prashant.myapplication.fragment_tv.TopRatedTvFragment;
+import com.example.prashant.myapplication.fragment.AiringTodayTvFragment;
+import com.example.prashant.myapplication.fragment.CurrentlyAiringTvFragment;
+import com.example.prashant.myapplication.fragment.FavouriteTvFragment;
+import com.example.prashant.myapplication.fragment.PopularTvFragment;
+import com.example.prashant.myapplication.fragment.TopRatedTvFragment;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
 
@@ -167,7 +164,7 @@ public class TvMainActivity extends AppCompatActivity {
 
     public void openSearch() {
         search.setLogoText(getResources().getString(R.string.app_name));
-        search.setLogoTextColor(Color.parseColor("#696969"));
+        search.setLogoTextColor(Color.parseColor(String.valueOf(R.color.colorAccent)));
         search.setHint(getResources().getString(R.string.tv_hint));
 
         search.setMenuListener(new SearchBox.MenuListener() {

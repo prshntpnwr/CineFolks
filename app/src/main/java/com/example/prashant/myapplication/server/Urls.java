@@ -25,11 +25,6 @@ public class Urls {
     public static String SORT_POPULARITY = "&sort_by=popularity.desc";
     public static String SORT_TOP_RATED
             = "&certification_country=US&certification=R&sort_by=vote_average.desc&vote_count.gte=250";
-    private static String SORT_PLAYING_NOW;
-    private static String SORT_UPCOMING;
-
-    private static String SORT_AIRING_TODAY;
-    private static String SORT_CURRENTLY_AIRING;
 
     //youtube strings url/endpoint
     public static String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
@@ -51,23 +46,23 @@ public class Urls {
 
     //movies
     public static String getPlayingNow() {
-        SORT_PLAYING_NOW = "&release_date.lte=" + getDate(0, 3) + "&" + "release_date.gte=" + getDate(-1, -2);
+        String SORT_PLAYING_NOW = "&release_date.lte=" + getDate(0, 3) + "&" + "release_date.gte=" + getDate(-1, -2);
         return SORT_PLAYING_NOW;
     }
 
     public static String getUpcoming() {
-        SORT_UPCOMING = "&release_date.ltem=" + getDate(8, 0) + "&" + "release_date.gte=" + getDate(0, 10);
+        String SORT_UPCOMING = "&release_date.ltem=" + getDate(8, 0) + "&" + "release_date.gte=" + getDate(0, 10);
         return SORT_UPCOMING;
     }
 
     //tv-series
     public static String getAiringToday() {
-        SORT_AIRING_TODAY = "&air_date.lte=" + getDate(0, 0) + "&" + "air_date.gte=" + getDate(0, 0);
+        String SORT_AIRING_TODAY = "&air_date.lte=" + getDate(0, 0) + "&" + "air_date.gte=" + getDate(0, 0);
         return SORT_AIRING_TODAY;
     }
 
     public static String getCurrentlyAiring() {
-        SORT_CURRENTLY_AIRING = "&air_date.gte=" + getDate(0, 0) + "&" + "first_air_date.lte=" + getDate(0, 0);
+        String SORT_CURRENTLY_AIRING = "&air_date.gte=" + getDate(0, 0) + "&" + "first_air_date.lte=" + getDate(0, 0);
         return SORT_CURRENTLY_AIRING;
     }
 }

@@ -46,9 +46,8 @@ public class FavouriteFragment extends Fragment {
 
     private void getMovieList() {
         Log.d(TAG, "get movie list is called");
-
-        ArrayList<Movies> list = new ArrayList<>(MoviesProviderHelper
-                .getMovieListFromDatabase(getActivity()));
+        ArrayList<Movies> list = MoviesProviderHelper
+                .getMovieListFromDatabase(getActivity());
 
         mMovieList.clear();
         for (Movies movie : list) {

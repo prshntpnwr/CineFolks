@@ -1,12 +1,17 @@
 package com.example.prashant.myapplication.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,11 +30,9 @@ public class PopularListFragment extends Fragment {
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
 
-    private View mRootView;
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
     private StaggeredGridLayoutManager sglm;
-    private String url;
 
     private int firstVisibleItem;
     private int visibleItemCount;
@@ -40,19 +43,6 @@ public class PopularListFragment extends Fragment {
     private int pageCount = 1;
 
     private ProgressBar progressBar;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
-        progressBar = (ProgressBar) mRootView.findViewById(R.id.progressbar);
-
-        url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY;
-
-        fetchMovieTask(url);
-        setupRecyclerView(mRecyclerView);
-        return mRootView;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +56,8 @@ public class PopularListFragment extends Fragment {
             totalItemCount = savedInstanceState.getInt("totalItemCount");
             isLoading = savedInstanceState.getBoolean("loading");
         }
+        String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY;
+        fetchMovieTask(url);
     }
 
     @Override
@@ -78,6 +70,29 @@ public class PopularListFragment extends Fragment {
         bundle.putInt("visibleItemCount", visibleItemCount);
         bundle.putInt("totalItemCount", totalItemCount);
         bundle.putBoolean("loading", isLoading);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        progressBar = (ProgressBar) mRootView.findViewById(R.id.progressbar);
+
+        loadDetailWindowTransition();
+
+        setupRecyclerView(mRecyclerView);
+        return mRootView;
+    }
+
+    public void loadDetailWindowTransition() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Slide slide = new Slide(Gravity.BOTTOM);
+            slide.excludeTarget(R.id.appbar, true);
+            slide.setInterpolator(
+                    AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+            slide.setDuration(250);
+            getActivity().getWindow().setEnterTransition(slide);
+        }
     }
 
     private void fetchMovieTask(String url) {

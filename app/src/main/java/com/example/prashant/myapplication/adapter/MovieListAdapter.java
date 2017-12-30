@@ -1,9 +1,13 @@
 package com.example.prashant.myapplication.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +30,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private Context mContext;
-    private int lastPosition = -1;
+//    private int lastPosition = -1;
 
     public MovieListAdapter(ArrayList<Movies> MovieList, Context context) {
         this.mMovieList = MovieList;
@@ -34,13 +38,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         Log.d(TAG, " Movie adapter MovieList " + MovieList.size() + " " + mMovieList.size());
     }
 
-    private String getItem(int position) {
-        return mMovieList.get(position).getId();
-    }
-
     @Override
     public MovieListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item, parent, false);
 
         final ViewHolder vh = new ViewHolder(view);
@@ -48,11 +48,21 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             @Override
             public void onClick(View v) {
                 final Bundle args = new Bundle();
-                args.putString("id", getItem(vh.getAdapterPosition()));
+                args.putParcelable("movie", mMovieList.get((vh.getAdapterPosition())));
                 Intent intent = new Intent(v.getContext(), MovieDetailActivity.class);
                 intent.putExtras(args);
-                v.getContext().startActivity(intent);
-                Log.d(TAG, "detail intent send");
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    final ImageView image = (ImageView) view.findViewById(R.id.image);
+
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
+                            ((Activity) view.getContext(), image, view.getContext()
+                                    .getResources().getString(R.string.transition_movie_photo));
+                    view.getContext().startActivity(intent, optionsCompat.toBundle());
+                } else {
+                    view.getContext().startActivity(intent);
+                }
 
             }
         });
@@ -61,20 +71,23 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(final MovieListAdapter.ViewHolder holder, int position) {
-
+        Log.d(TAG, "onBindViewHolder");
         holder.titleView.setText(mMovieList.get(position).getTitle());
         holder.titleView.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
         holder.ratingView.setText(mMovieList.get(position).getRating());
+        if (mMovieList.get(position).getDate() != null) {
+            String date = mMovieList.get(position).getDate().replace("Release :", "");
+            holder.yearView.setText(date.substring(0, date.indexOf("-")));
+        }
 
-        setAnimation(holder.itemView, position);
+    //    setAnimation(holder.itemView, position);
 
-        Log.d(TAG, "movie adapter onBindViewHolder");
         Glide.with(mContext)
-                .load(mMovieList.get(position).getImage())
+                .load(mMovieList.get(position).getPoster())
                 .placeholder(R.color.photo_placeholder)
                 .error(R.color.colorPrimaryDark)
                 .into(holder.imageView);
-        Log.d(TAG, " Movie adapter poster " + mMovieList.get(position).getImage());
+        Log.d(TAG, " Movie adapter poster " + mMovieList.get(position).getPoster());
     }
 
     @Override
@@ -83,28 +96,28 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         return mMovieList.size();
     }
 
-    private void setAnimation(View viewToAnimate, int position)
-    {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition)
-        {
-            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
-    }
+//    private void setAnimation(View viewToAnimate, int position) {
+//        // If the bound view wasn't previously displayed on screen, it's animated
+//        if (position > lastPosition) {
+//            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
+//            viewToAnimate.startAnimation(animation);
+//            lastPosition = position;
+//        }
+//    }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
         TextView titleView;
         TextView ratingView;
+        TextView yearView;
 
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             imageView = (ImageView) v.findViewById(R.id.image);
             titleView = (TextView) v.findViewById(R.id.title);
             ratingView = (TextView) v.findViewById(R.id.list_rating);
+            yearView = (TextView) v.findViewById(R.id.list_year);
         }
     }
 }

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.fragment_tv.TvDetailFragment;
+import com.example.prashant.myapplication.fragment.TvDetailFragment;
 
 public class TvDetailActivity extends AppCompatActivity {
 

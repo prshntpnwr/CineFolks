@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin_mid"
             android:ellipsize="end"
+            android:hint="Avenger: Infinity War"
             android:maxLines="2"
-            android:hint="some thing"
             android:padding="@dimen/activity_vertical_padding_regular"
             android:textColor="@color/primary_text" />
 
@@ -58,10 +58,10 @@
                     android:id="@+id/ratings_calender"
                     android:layout_width="@dimen/rating_icon_size"
                     android:layout_height="@dimen/rating_icon_size"
+                    android:layout_gravity="center_vertical"
                     android:adjustViewBounds="true"
                     android:padding="@dimen/rating_padding"
                     android:scaleType="centerCrop"
-                    android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_calendar" />
 
             </LinearLayout>

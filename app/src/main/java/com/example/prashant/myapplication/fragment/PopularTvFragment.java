@@ -1,12 +1,16 @@
 package com.example.prashant.myapplication.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.prashant.myapplication.R;
@@ -39,18 +43,6 @@ public class PopularTvFragment extends Fragment {
     private int pageCount = 1;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
-
-        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY;
-
-        fetchTvTask(url);
-        setupRecyclerView(mRecyclerView);
-        return mRootView;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
@@ -74,6 +66,18 @@ public class PopularTvFragment extends Fragment {
         bundle.putInt("visibleItemCount", visibleItemCount);
         bundle.putInt("totalItemCount", totalItemCount);
         bundle.putBoolean("loading", loading);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+
+        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY;
+
+        fetchTvTask(url);
+        setupRecyclerView(mRecyclerView);
+        return mRootView;
     }
 
     private void fetchTvTask(String url) {

@@ -39,6 +39,7 @@ public class MoviesDetail implements Parcelable {
         this.language = language;
         this.popularity = popularity;
         this.poster = poster;
+
     }
 
     public MoviesDetail(Parcel in) {
