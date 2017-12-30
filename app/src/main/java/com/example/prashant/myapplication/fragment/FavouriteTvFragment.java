@@ -1,4 +1,4 @@
-package com.example.prashant.myapplication.fragment_tv;
+package com.example.prashant.myapplication.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

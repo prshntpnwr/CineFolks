@@ -1,4 +1,4 @@
-package com.example.prashant.myapplication.fragment_tv;
+package com.example.prashant.myapplication.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +18,7 @@ import com.example.prashant.myapplication.ui.TvCallbackInterface;
 
 import java.util.ArrayList;
 
-public class SearchTvFragment extends Fragment {
+public class TopRatedTvFragment extends Fragment {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -38,17 +38,12 @@ public class SearchTvFragment extends Fragment {
     private int visibleThreshold = 4;
     private int pageCount = 1;
 
-    private String res;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
-        res = getActivity().getIntent().getStringExtra("search");
-        getActivity().setTitle(res);
-
-        String url = Urls.TV_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + res;
+        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_TOP_RATED;
 
         fetchTvTask(url);
         setupRecyclerView(mRecyclerView);
@@ -101,7 +96,6 @@ public class SearchTvFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(sglm);
-
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -122,7 +116,7 @@ public class SearchTvFragment extends Fragment {
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.TV_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + res + "&page=" + String.valueOf(pageCount);
+                    String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_TOP_RATED + "&page=" + String.valueOf(pageCount);
                     Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
                     fetchTvTask(url);
 

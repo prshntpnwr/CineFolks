@@ -1,4 +1,4 @@
-package com.example.prashant.myapplication.fragment_tv;
+package com.example.prashant.myapplication.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.TVListAdapter;
 import com.example.prashant.myapplication.objects.TV;
@@ -17,7 +18,7 @@ import com.example.prashant.myapplication.ui.TvCallbackInterface;
 
 import java.util.ArrayList;
 
-public class AiringTodayTvFragment extends Fragment {
+public class CurrentlyAiringTvFragment extends Fragment {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -42,7 +43,7 @@ public class AiringTodayTvFragment extends Fragment {
         mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
-        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getAiringToday();
+        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getCurrentlyAiring();
 
         fetchTvTask(url);
         setupRecyclerView(mRecyclerView);
@@ -116,7 +117,7 @@ public class AiringTodayTvFragment extends Fragment {
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getAiringToday() + "&page=" + String.valueOf(pageCount);
+                    String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getCurrentlyAiring() + "&page=" + String.valueOf(pageCount);
                     Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
                     fetchTvTask(url);
 

@@ -1,4 +1,4 @@
-package com.example.prashant.myapplication.server;
+package com.example.prashant.myapplication.helper;
 
 import android.app.Application;
 import android.text.TextUtils;

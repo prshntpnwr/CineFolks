@@ -1,4 +1,4 @@
-package com.example.prashant.myapplication.server;
+package com.example.prashant.myapplication.helper;
 
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;

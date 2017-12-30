@@ -1,4 +1,4 @@
-package com.example.prashant.myapplication.fragment_tv;
+package com.example.prashant.myapplication.fragment;
 
 import android.content.ContentValues;
 import android.content.Intent;
