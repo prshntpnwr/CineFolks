@@ -76,7 +76,6 @@ public class AiringTodayTvFragment extends Fragment {
     }
 
     private void fetchTvTask(String url) {
-
         ServerCall.getTvShows(getActivity(), url, new TvCallbackInterface() {
             @Override
             public void onSuccessResponse(TV tv) {

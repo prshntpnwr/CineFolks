@@ -38,6 +38,9 @@ public class TV implements Parcelable, Comparable<TV> {
         this.rating = data[5];
     }
 
+    public TV() {
+    }
+
     public String getTitle() {
         return title;
     }

@@ -16,7 +16,6 @@ public class AppController extends Application {
     private static final String TAG = AppController.class.getSimpleName();
     private static AppController mInstance;
     private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -32,17 +31,7 @@ public class AppController extends Application {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-
         return mRequestQueue;
-    }
-
-    public ImageLoader getImageLoader() {
-        getRequestQueue();
-        if (mImageLoader == null) {
-            mImageLoader = new ImageLoader(this.mRequestQueue,
-                    new LruBitmapCache());
-        }
-        return this.mImageLoader;
     }
 
     public <T> void addToRequestQueue(Request<T> req, String tag) {

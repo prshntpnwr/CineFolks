@@ -138,7 +138,6 @@ public class PopularListFragment extends Fragment {
 
                 if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
-                    Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.VISIBLE);
                     fetchMovieTask(url);
 

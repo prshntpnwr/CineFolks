@@ -45,16 +45,13 @@ public class DataProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenMovieHelper = new MoviesDbHelper(getContext());
-
         mOpenTvHelper = new TvDbHelper(getContext());
-
         return true;
     }
 
     @Override
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
-
         switch (match) {
             case MOVIES:
                 return MoviesEntry.CONTENT_ITEM_TYPE;

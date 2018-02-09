@@ -46,23 +46,19 @@ public class Urls {
 
     //movies
     public static String getPlayingNow() {
-        String SORT_PLAYING_NOW = "&release_date.lte=" + getDate(0, 3) + "&" + "release_date.gte=" + getDate(-1, -2);
-        return SORT_PLAYING_NOW;
+        return "&release_date.lte=" + getDate(0, 3) + "&" + "release_date.gte=" + getDate(-1, -2);
     }
 
     public static String getUpcoming() {
-        String SORT_UPCOMING = "&release_date.ltem=" + getDate(8, 0) + "&" + "release_date.gte=" + getDate(0, 10);
-        return SORT_UPCOMING;
+        return "&release_date.ltem=" + getDate(8, 0) + "&" + "release_date.gte=" + getDate(0, 10);
     }
 
     //tv-series
     public static String getAiringToday() {
-        String SORT_AIRING_TODAY = "&air_date.lte=" + getDate(0, 0) + "&" + "air_date.gte=" + getDate(0, 0);
-        return SORT_AIRING_TODAY;
+        return "&air_date.lte=" + getDate(0, 0) + "&" + "air_date.gte=" + getDate(0, 0);
     }
 
     public static String getCurrentlyAiring() {
-        String SORT_CURRENTLY_AIRING = "&air_date.gte=" + getDate(0, 0) + "&" + "first_air_date.lte=" + getDate(0, 0);
-        return SORT_CURRENTLY_AIRING;
+        return "&air_date.gte=" + getDate(0, 0) + "&" + "first_air_date.lte=" + getDate(0, 0);
     }
 }

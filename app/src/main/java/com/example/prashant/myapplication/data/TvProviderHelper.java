@@ -19,7 +19,6 @@ public class TvProviderHelper {
         Cursor c = activity.getContentResolver().query(contentUri, null, null, null, null);
         if (c != null && c.moveToFirst()) {
             do {
-
                 TV tv = new TV(c.getString(c.getColumnIndex(TvEntry.KEY_TITLE)),
                         c.getString(c.getColumnIndex(TvEntry.KEY_POSTER)),
                         c.getString(c.getColumnIndex(TvEntry.KEY_DATE)),
@@ -35,7 +34,6 @@ public class TvProviderHelper {
     }
 
     public static boolean isTvInDatabase(Activity mAct, String id) {
-
         ArrayList<TV> list = new ArrayList<>(TvProviderHelper
                 .getTvListFromDatabase(mAct));
         for (TV listItem : list) {
@@ -71,8 +69,8 @@ public class TvProviderHelper {
                 }
 
             } while (c.moveToNext());
-        }
-        c.close();
+        } else
+            c.close();
         return tv;
     }
 }

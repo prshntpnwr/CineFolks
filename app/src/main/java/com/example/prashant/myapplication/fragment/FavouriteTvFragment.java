@@ -48,9 +48,7 @@ public class FavouriteTvFragment extends Fragment {
                 .getTvListFromDatabase(getActivity()));
 
         mTvList.clear();
-        for (TV tv : list) {
-            mTvList.add(tv);
-        }
+        mTvList.addAll(list);
 
         if (list.isEmpty()) {
             mEmptyView.setVisibility(View.VISIBLE);

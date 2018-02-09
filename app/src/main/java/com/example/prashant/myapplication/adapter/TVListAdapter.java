@@ -31,10 +31,9 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
         Log.d(TAG, " Tv adapter TvList " + TvList.size() + " " + mTvList.size());
     }
 
-    public String getItem(int position) {
+    private String getItem(int position) {
         return mTvList.get(position).getId();
     }
-
 
     @Override
     public TVListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,7 +52,6 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
                 intent.putExtras(args);
                 v.getContext().startActivity(intent);
                 Log.d(TAG, "id from tv adapter " + getItem(vh.getAdapterPosition()));
-
             }
         });
 
@@ -83,13 +81,12 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
         return mTvList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
+    static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView titleView;
         TextView ratingView;
 
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             imageView = (ImageView) v.findViewById(R.id.image);
             titleView = (TextView) v.findViewById(R.id.title);

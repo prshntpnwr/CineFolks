@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,12 +28,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private final String TAG = getClass().getSimpleName();
 
     private Movies movie;
     private Context mContext;
-    private LayoutInflater mInflater;
     private ArrayList<String> trailerInfo;
     private ArrayList<String> reviewInfo;
 
@@ -43,27 +40,25 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.trailerInfo = trailerInfo;
         this.reviewInfo = reviewInfo;
         this.mContext = context;
-
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
         if (viewType == 0) {
-            View v = mInflater.inflate(R.layout.layout_holder_details, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_holder_details, parent, false);
             vh = new ViewHolderDetails(v);
             return vh;
         }
 
         if (viewType == 1) {
-            View v = mInflater.inflate(R.layout.layout_holder_trailer, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_holder_trailer, parent, false);
             vh = new ViewHolderTrailer(v);
             return vh;
         }
 
         if (viewType == 2) {
-            View v = mInflater.inflate(R.layout.layout_holder_review, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_holder_review, parent, false);
             vh = new ViewHolderReview(v);
             return vh;
         }
@@ -72,11 +67,9 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-
         switch (getItemViewType(position)) {
             case 0:
                 try {
-
                     //image loading and setting color using glide and palette
                     Log.d(TAG, "movie - " + movie.getId());
                     Glide.with(mContext)
@@ -128,7 +121,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((ViewHolderDetails) holder).getDateStatusView().setText(movie.getDate()
                         + " (" + movie.getStatus() + ")");
                 ((ViewHolderDetails) holder).getDurationView().setText(mContext.getString(R.string.duration)
-                        + movie.getRuntime() + mContext.getString(R.string.min));
+                        + " " + movie.getRuntime() + mContext.getString(R.string.min));
                 ((ViewHolderDetails) holder).getRatingView().setText(movie.getRating());
 
                 if (movie.getGenre() != null) {
@@ -199,7 +192,6 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-
         if (position == 0)
             return 0;
         if (position > 0 && position <= trailerInfo.size())
@@ -207,6 +199,14 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (position > trailerInfo.size() && position <= trailerInfo.size() + reviewInfo.size())
             return 2;
         return 999;
+    }
+
+    public void notifyAdapter(Movies movie, ArrayList<String> trailerInfo, ArrayList<String> reviewInfo) {
+        this.movie = movie;
+        this.trailerInfo = trailerInfo;
+        this.reviewInfo = reviewInfo;
+
+        notifyDataSetChanged();
     }
 
     private static class ViewHolderDetails extends RecyclerView.ViewHolder {
@@ -266,7 +266,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return genreView;
         }
 
-        public ImageView getUpVotes() {
+        ImageView getUpVotes() {
             return upVotes;
         }
 

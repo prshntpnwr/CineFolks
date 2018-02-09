@@ -43,7 +43,7 @@ public class MoviesContract {
         public static final String KEY_POPULARITY = "popularity";
         public static final String KEY_POSTER = "poster";
 
-        public static Uri buildUri(long id) {
+        static Uri buildUri(long id) {
             //ContentUris.withAppendedId() is a helper method to create an id-based URI
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }

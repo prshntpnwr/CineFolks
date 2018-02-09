@@ -20,14 +20,11 @@ import com.example.prashant.myapplication.server.Urls;
 import java.util.ArrayList;
 
 public class SearchFragment extends Fragment {
-
     private final String TAG = getClass().getSimpleName();
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
-    private String url;
     private String res;
 
-    private View mRootView;
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
     private StaggeredGridLayoutManager sglm;
@@ -42,7 +39,7 @@ public class SearchFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        View mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
         res = getActivity().getIntent().getStringExtra("search");
@@ -50,7 +47,7 @@ public class SearchFragment extends Fragment {
 
         Log.d(TAG, "Search string is " + res);
 
-        url = Urls.MOVIE_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + res;
+        String url = Urls.MOVIE_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + res;
 
         fetchMovieTask(url);
         setupRecyclerView();
@@ -124,7 +121,6 @@ public class SearchFragment extends Fragment {
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     String url = Urls.MOVIE_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + res + "&page=" + String.valueOf(pageCount);
-                    Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
                     fetchMovieTask(url);
 
                     loading = true;

@@ -23,6 +23,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.data.TvContract;
+import com.example.prashant.myapplication.helper.AppController;
 import com.example.prashant.myapplication.objects.TV;
 import com.example.prashant.myapplication.ui.MainActivity;
 import com.example.prashant.myapplication.server.Urls;
@@ -37,19 +38,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class NotifyJobService extends JobService {
-
     private final String TAG = getClass().getSimpleName();
 
     private int notify_ID = 911;
-    private ArrayList<TV> mTvList = new ArrayList<>();
-    private String title;
-    private String poster;
 
     @Override
     public boolean onStartJob(JobParameters job) {
-
         getTodayShows();
-
         return false; // Answers the question: "Is there still work going on?"
     }
 
@@ -58,52 +53,37 @@ public class NotifyJobService extends JobService {
         return false; // Answers the question: "Should this job be retried?"
     }
 
-    private ArrayList<TV> getListFromDB() {
-
-        ArrayList<TV> list = new ArrayList<>(getTvListFromDatabase());
-
-        mTvList.clear();
-        for (TV tv : list) {
-            mTvList.add(tv);
-        }
-
-        return mTvList;
-    }
-
     private void getTodayShows() {
-        getListFromDB();
-
+        ArrayList<TV> mTvList = getListFromDB();
         for (int i = 0; i < mTvList.size(); i++) {
             AiringToday(Integer.parseInt(mTvList.get(i).getId()));
         }
     }
 
-    public ArrayList<TV> getTvListFromDatabase() {
-
+    public ArrayList<TV> getListFromDB() {
         ArrayList<TV> mTVList = new ArrayList<>();
         Uri contentUri = TvContract.TvEntry.CONTENT_URI;
-        Cursor c = getContentResolver().query(contentUri, null, null, null, null);
-        if (c != null && c.moveToFirst()) {
+        Cursor cursor = getContentResolver().query(contentUri,
+                null,
+                null,
+                null,
+                null);
+
+        if (cursor.moveToFirst()) {
             do {
-
-                TV tv = new TV(c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_TITLE)),
-                        c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_POSTER)),
-                        c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_DATE)),
-                        c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_OVERVIEW)),
-                        c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_ID)),
-                        c.getString(c.getColumnIndex(TvContract.TvEntry.KEY_RATING)));
-
+                TV tv = new TV();
+                tv.setId(cursor.getString(cursor.getColumnIndex(TvContract.TvEntry.KEY_ID)));
                 mTVList.add(tv);
-            } while (c.moveToNext());
-        }
-        c.close();
+            } while (cursor.moveToNext());
+        } else
+            cursor.close();
+
         return mTVList;
     }
 
     private void AiringToday(final int id) {
 
         String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getAiringToday();
-        RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest getListData = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -114,6 +94,7 @@ public class NotifyJobService extends JobService {
                     JSONArray mResultArray = response.getJSONArray("results");
                     Log.d(TAG + " TV Response length - ", String.valueOf(mResultArray.length()));
 
+                    String title, poster;
                     for (int i = 0; i < mResultArray.length(); i++) {
                         Log.d(TAG, " Enter into tv response loop " + i);
 
@@ -127,7 +108,6 @@ public class NotifyJobService extends JobService {
                             createNotifications(title, poster);
                         } else Log.d(TAG, " not found ");
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d(TAG, " failed to parse json from TV " + e);
@@ -140,7 +120,7 @@ public class NotifyJobService extends JobService {
                 Log.d(TAG, "fail response from Tv api " + error);
             }
         });
-        queue.add(getListData);
+        AppController.getInstance().addToRequestQueue(getListData);
     }
 
     private void createNotifications(String title, String poster) {

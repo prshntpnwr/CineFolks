@@ -1,16 +1,12 @@
 package com.example.prashant.myapplication.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.prashant.myapplication.R;
@@ -23,10 +19,8 @@ import com.example.prashant.myapplication.ui.TvCallbackInterface;
 import java.util.ArrayList;
 
 public class PopularTvFragment extends Fragment {
-
     private final String TAG = getClass().getSimpleName();
 
-    private View mRootView;
     private RecyclerView mRecyclerView;
     private TVListAdapter mAdapter;
 
@@ -70,7 +64,7 @@ public class PopularTvFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        View mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
         String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY;
@@ -81,7 +75,6 @@ public class PopularTvFragment extends Fragment {
     }
 
     private void fetchTvTask(String url) {
-
         ServerCall.getTvShows(getActivity(), url, new TvCallbackInterface() {
             @Override
             public void onSuccessResponse(TV tv) {
@@ -122,7 +115,6 @@ public class PopularTvFragment extends Fragment {
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
-                    Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
                     fetchTvTask(url);
 
                     loading = true;

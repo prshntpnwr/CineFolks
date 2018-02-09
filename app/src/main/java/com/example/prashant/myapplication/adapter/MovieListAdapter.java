@@ -1,5 +1,7 @@
 package com.example.prashant.myapplication.adapter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,14 +9,11 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.objects.Movies;
 import com.example.prashant.myapplication.ui.MovieDetailActivity;
+import com.example.prashant.myapplication.ui.Utility;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private Context mContext;
-//    private int lastPosition = -1;
+    private int previousPosition = 0;
 
     public MovieListAdapter(ArrayList<Movies> MovieList, Context context) {
         this.mMovieList = MovieList;
@@ -71,6 +71,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(final MovieListAdapter.ViewHolder holder, int position) {
+        if (position > previousPosition)
+            animate(holder, true);
+        else
+            animate(holder, false);
+
+        previousPosition = position;
+
         Log.d(TAG, "onBindViewHolder");
         holder.titleView.setText(mMovieList.get(position).getTitle());
         holder.titleView.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
@@ -80,11 +87,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             holder.yearView.setText(date.substring(0, date.indexOf("-")));
         }
 
-    //    setAnimation(holder.itemView, position);
-
         Glide.with(mContext)
                 .load(mMovieList.get(position).getPoster())
-                .placeholder(R.color.photo_placeholder)
+                .placeholder(Utility.getRandomDrawableColor())
                 .error(R.color.colorPrimaryDark)
                 .into(holder.imageView);
         Log.d(TAG, " Movie adapter poster " + mMovieList.get(position).getPoster());
@@ -96,17 +101,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         return mMovieList.size();
     }
 
-//    private void setAnimation(View viewToAnimate, int position) {
-//        // If the bound view wasn't previously displayed on screen, it's animated
-//        if (position > lastPosition) {
-//            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
-//            viewToAnimate.startAnimation(animation);
-//            lastPosition = position;
-//        }
-//    }
+    private void animate(RecyclerView.ViewHolder holder, boolean goesDown) {
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator animatorTranslateY = ObjectAnimator.ofFloat(holder.itemView, "translationY", goesDown ? 300 : -300, 0);
+        animatorTranslateY.setDuration(700);
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+        animatorSet.playTogether(animatorTranslateY);
+        animatorSet.start();
+    }
 
+    class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView titleView;
         TextView ratingView;

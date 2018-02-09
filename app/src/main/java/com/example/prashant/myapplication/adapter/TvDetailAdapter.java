@@ -32,28 +32,23 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private TvDetail tv;
     private Context mContext;
-    private LayoutInflater mInflater;
     private ArrayList<String> trailerInfo;
 
     public TvDetailAdapter(TvDetail tv, ArrayList<String> trailerInfo, Context context) {
         this.tv = tv;
         this.trailerInfo = trailerInfo;
         this.mContext = context;
-
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
         if (viewType == 0) {
-            View v = mInflater.inflate(R.layout.layout_holder_details, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_holder_details, parent, false);
             vh = new ViewHolderDetails(v);
             return vh;
-        }
-
-        if (viewType == 1) {
-            View v = mInflater.inflate(R.layout.layout_holder_trailer, parent, false);
+        } else if (viewType == 1) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_holder_trailer, parent, false);
             vh = new ViewHolderTrailer(v);
             return vh;
         }
@@ -63,7 +58,6 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-
         switch (getItemViewType(position)) {
             case 0:
                 try {
@@ -172,19 +166,16 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public static class ViewHolderDetails extends RecyclerView.ViewHolder {
-
         private ImageView imageView;
-
-        private TextView titleView, taglineView, dateStatusView, durationView,
+        private TextView titleView, tagLineView, dateStatusView, durationView,
                 ratingView, genreView, popularityView, languageView, overviewView, voteCountView;
-
         private ImageView ratingsBackground, genreBackground, popBackground, langBackground;
 
-        public ViewHolderDetails(View view) {
+        ViewHolderDetails(View view) {
             super(view);
             imageView = (ImageView) view.findViewById(R.id.image);
             titleView = (TextView) view.findViewById(R.id.title);
-            taglineView = (TextView) view.findViewById(R.id.tag_line);
+            tagLineView = (TextView) view.findViewById(R.id.tag_line);
             dateStatusView = (TextView) view.findViewById(R.id.date_status);
             durationView = (TextView) view.findViewById(R.id.duration);
             ratingView = (TextView) view.findViewById(R.id.rating);
@@ -199,74 +190,73 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             langBackground = (ImageView) view.findViewById(R.id.lang_background);
         }
 
-        public ImageView getImageView() {
+        ImageView getImageView() {
             return imageView;
         }
 
-        public TextView getTitleView() {
+        TextView getTitleView() {
             return titleView;
         }
 
-        public TextView getTaglineView() {
-            return taglineView;
+        TextView getTaglineView() {
+            return tagLineView;
         }
 
-        public TextView getDateStatusView() {
+        TextView getDateStatusView() {
             return dateStatusView;
         }
 
-        public TextView getDurationView() {
+        TextView getDurationView() {
             return durationView;
         }
 
-        public TextView getRatingView() {
+        TextView getRatingView() {
             return ratingView;
         }
 
-        public TextView getGenreView() {
+        TextView getGenreView() {
             return genreView;
         }
 
-        public TextView getPopularityView() {
+        TextView getPopularityView() {
             return popularityView;
         }
 
-        public TextView getLanguageView() {
+        TextView getLanguageView() {
             return languageView;
         }
 
-        public TextView getOverviewView() {
+        TextView getOverviewView() {
             return overviewView;
         }
 
-        public ImageView getRatingsBackground() {
+        ImageView getRatingsBackground() {
             return ratingsBackground;
         }
 
-        public TextView getVoteCountView() {
+        TextView getVoteCountView() {
             return voteCountView;
         }
 
-        public ImageView getGenreBackground() {
+        ImageView getGenreBackground() {
             return genreBackground;
         }
 
-        public ImageView getPopBackground() {
+        ImageView getPopBackground() {
             return popBackground;
         }
 
-        public ImageView getLangBackground() {
+        ImageView getLangBackground() {
             return langBackground;
         }
     }
 
     public static class ViewHolderTrailer extends RecyclerView.ViewHolder {
-
         private ImageView imageView;
         private MaterialRippleLayout rippleLayout;
         private TextView titleView, siteView, qualityView;
 
-        public ViewHolderTrailer(View view) {
+        ViewHolderTrailer(View view) {
             super(view);
             rippleLayout = (MaterialRippleLayout) view.findViewById(R.id.ripple);
             imageView = (ImageView) view.findViewById(R.id.trailer_image);
@@ -275,23 +265,23 @@ public class TvDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             qualityView = (TextView) view.findViewById(R.id.quality_text);
         }
 
-        public MaterialRippleLayout getRippleLayout() {
+        MaterialRippleLayout getRippleLayout() {
             return rippleLayout;
         }
 
-        public ImageView getImageView() {
+        ImageView getImageView() {
             return imageView;
         }
 
-        public TextView getTitleView() {
+        TextView getTitleView() {
             return titleView;
         }
 
-        public TextView getSiteView() {
+        TextView getSiteView() {
             return siteView;
         }
 
-        public TextView getQualityView() {
+        TextView getQualityView() {
             return qualityView;
         }
     }

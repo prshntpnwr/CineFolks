@@ -43,9 +43,9 @@ public class MoviesProviderHelper {
     }
 
     public static boolean isMovieInDatabase(Activity mAct, String id) {
-
         ArrayList<Movies> list = new ArrayList<>(MoviesProviderHelper
                 .getMovieListFromDatabase(mAct));
+
         for (Movies listItem : list) {
             if (listItem.getId().equals(id)) {
                 return true;
@@ -78,10 +78,9 @@ public class MoviesProviderHelper {
                             c.getString(c.getColumnIndex(MoviesEntry.KEY_POSTER)));
                     break;
                 }
-
             } while (c.moveToNext());
-        }
-        c.close();
+        } else
+            c.close();
         return movie;
     }
 }

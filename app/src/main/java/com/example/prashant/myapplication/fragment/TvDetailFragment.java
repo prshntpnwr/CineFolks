@@ -39,6 +39,7 @@ import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.TvDetailAdapter;
 import com.example.prashant.myapplication.data.TvContract.TvEntry;
 import com.example.prashant.myapplication.data.TvProviderHelper;
+import com.example.prashant.myapplication.helper.AppController;
 import com.example.prashant.myapplication.objects.TvDetail;
 import com.example.prashant.myapplication.server.Urls;
 
@@ -49,14 +50,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class TvDetailFragment extends Fragment {
-
     private final String TAG = getClass().getSimpleName();
 
     private TvDetail tv;
 
     private RecyclerView mRecyclerView;
     private TvDetailAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
@@ -79,7 +78,6 @@ public class TvDetailFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_movie_details);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) v.findViewById(R.id.collapsing_toolbar_layout_movie_details);
         mToolbar = (Toolbar) v.findViewById(R.id.toolbar_movie_details);
-        mLayoutManager = new LinearLayoutManager(getActivity());
         mBackdrop = (ImageView) v.findViewById(R.id.backdrop);
 
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
@@ -87,8 +85,10 @@ public class TvDetailFragment extends Fragment {
         mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(android.R.color.white));
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mAdapter = new TvDetailAdapter(tv, trailerInfo, getContext());
+        mRecyclerView.setAdapter(mAdapter);
 
         setupToolbar();
 
@@ -108,13 +108,10 @@ public class TvDetailFragment extends Fragment {
             });
 
             mToolbar.setTitle("");
-
             mToolbar.inflateMenu(R.menu.menu_detail);
-
             mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-
                     if (item.getItemId() == R.id.action_share) {
                         String[] data = trailerInfo.get(0).split(",,");
 
@@ -140,8 +137,6 @@ public class TvDetailFragment extends Fragment {
         Log.d(TAG, " getTvDataFromID id is " + id);
 
         String url = Urls.TV_BASE_URL + id + "?" + Urls.API_KEY;
-
-        RequestQueue queue = Volley.newRequestQueue(getContext());
 
         JsonObjectRequest getDetails = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -230,14 +225,10 @@ public class TvDetailFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    mAdapter = new TvDetailAdapter(tv, trailerInfo, getContext());
-                    mRecyclerView.setAdapter(mAdapter);
-
-                    getTrailerInfo(id);
-
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } finally {
+                    mAdapter.notifyDataSetChanged();
                     getTrailerInfo(id);
                 }
             }
@@ -247,19 +238,17 @@ public class TvDetailFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-        queue.add(getDetails);
+        AppController.getInstance().addToRequestQueue(getDetails);
     }
 
     private void getTrailerInfo(final String id) {
-        trailerInfo.clear();
-
         String requestUrl = Urls.TV_BASE_URL + id + "/videos?" + Urls.API_KEY;
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
         JsonObjectRequest mTrailerRequest = new JsonObjectRequest(Request.Method.GET, requestUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    trailerInfo.clear();
                     JSONArray mTrailerArray = response.getJSONArray("results");
                     for (int i = 0; i < mTrailerArray.length(); i++) {
                         JSONObject mTrailerObject = mTrailerArray.getJSONObject(i);
@@ -270,7 +259,6 @@ public class TvDetailFragment extends Fragment {
                     e.printStackTrace();
                 } finally {
                     Log.d(TAG, "Trailers are - " + trailerInfo);
-                    mAdapter = new TvDetailAdapter(tv, trailerInfo, getContext());
                     mAdapter.notifyDataSetChanged();
                 }
 
@@ -282,7 +270,7 @@ public class TvDetailFragment extends Fragment {
             }
         });
 
-        queue.add(mTrailerRequest);
+        AppController.getInstance().addToRequestQueue(mTrailerRequest);
     }
 
     private void fabAction() {

@@ -60,7 +60,7 @@ public class MovieDetailFragment extends Fragment {
     private Movies movie;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MoviesDetailAdapter mAdapter;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
@@ -227,7 +227,7 @@ public class MovieDetailFragment extends Fragment {
                     movie.setLanguage(response.getString("original_language"));
                     movie.setPopularity(String.valueOf(response.getDouble("popularity")));
 
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyAdapter(movie, trailerInfo, reviewInfo);
 
                     getTrailerInfo(id);
 
@@ -262,8 +262,7 @@ public class MovieDetailFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {
-                    mAdapter = new MoviesDetailAdapter(movie, trailerInfo, reviewInfo, getContext());
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyAdapter(movie, trailerInfo, reviewInfo);
                     getMovieReviews(id);
                 }
             }
@@ -294,7 +293,7 @@ public class MovieDetailFragment extends Fragment {
                             JSONObject mReview = mReviewArray.getJSONObject(i);
                             reviewInfo.add(mReview.getString("author") + "-" + mReview.getString("content"));
                         }
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyAdapter(movie, trailerInfo, reviewInfo);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

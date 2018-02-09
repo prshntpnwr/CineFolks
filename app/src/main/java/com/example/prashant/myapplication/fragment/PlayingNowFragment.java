@@ -20,12 +20,10 @@ import com.example.prashant.myapplication.server.Urls;
 import java.util.ArrayList;
 
 public class PlayingNowFragment extends Fragment {
-
     private final String TAG = getClass().getSimpleName();
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
 
-    private View mRootView;
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
     private StaggeredGridLayoutManager sglm;
@@ -40,7 +38,7 @@ public class PlayingNowFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        View mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
 
         String url = Urls.BASE_URL + Urls.API_KEY + Urls.getPlayingNow();
@@ -119,7 +117,6 @@ public class PlayingNowFragment extends Fragment {
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     String url = Urls.BASE_URL + Urls.API_KEY + Urls.getPlayingNow() + "&page=" + String.valueOf(pageCount);
                     Log.d(TAG, "Endless scroll url is " + url);
-                    Toast.makeText(getContext(), "Loading Page - " + String.valueOf(pageCount), Toast.LENGTH_SHORT).show();
                     fetchMovieTask(url);
 
                     loading = true;

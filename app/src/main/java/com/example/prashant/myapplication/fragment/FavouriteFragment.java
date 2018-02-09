@@ -50,9 +50,7 @@ public class FavouriteFragment extends Fragment {
                 .getMovieListFromDatabase(getActivity());
 
         mMovieList.clear();
-        for (Movies movie : list) {
-            mMovieList.add(movie);
-        }
+        mMovieList.addAll(list);
 
         Log.d(TAG, "list size - " + list.size());
 
@@ -79,12 +77,10 @@ public class FavouriteFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-
         StaggeredGridLayoutManager sglm =
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sglm);
         mAdapter = new MovieListAdapter(mMovieList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
-
     }
 }
