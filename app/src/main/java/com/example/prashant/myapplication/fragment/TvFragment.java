@@ -1,5 +1,7 @@
 package com.example.prashant.myapplication.fragment;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +20,21 @@ import com.example.prashant.myapplication.ui.TvCallbackInterface;
 
 import java.util.ArrayList;
 
-public class CurrentlyAiringTvFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link TvFragment} interface
+ * to handle interaction events.
+ * Use the {@link TvFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class TvFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
+
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_URL = "urlParam";
+
+    private String mUrl;
 
     private RecyclerView mRecyclerView;
     private TVListAdapter mAdapter;
@@ -36,22 +51,33 @@ public class CurrentlyAiringTvFragment extends Fragment {
     private int visibleThreshold = 4;
     private int pageCount = 1;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+//    private OnFragmentInteractionListener mListener;
 
-        String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getCurrentlyAiring();
-
-        fetchTvTask(url);
-        setupRecyclerView(mRecyclerView);
-        return mRootView;
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param mUrl Parameter 1.
+     * @return A new instance of fragment TvFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static TvFragment newInstance(String mUrl) {
+        TvFragment fragment = new TvFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_URL, mUrl);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mUrl = getArguments().getString(ARG_URL);
+        }
+
         if (savedInstanceState != null) {
+            mUrl = savedInstanceState.getString(ARG_URL);
             mTVList = savedInstanceState.getParcelableArrayList("TvList");
             pageCount = savedInstanceState.getInt("pageCount");
             previousTotal = savedInstanceState.getInt("previousTotal");
@@ -65,6 +91,7 @@ public class CurrentlyAiringTvFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
+        bundle.putString(ARG_URL, mUrl);
         bundle.putParcelableArrayList("TvList", mTVList);
         bundle.putInt("pageCount", pageCount);
         bundle.putInt("previousTotal", previousTotal);
@@ -72,6 +99,16 @@ public class CurrentlyAiringTvFragment extends Fragment {
         bundle.putInt("visibleItemCount", visibleItemCount);
         bundle.putInt("totalItemCount", totalItemCount);
         bundle.putBoolean("loading", loading);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+
+        fetchTvTask(mUrl);
+        setupRecyclerView(mRecyclerView);
+        return mRootView;
     }
 
     private void fetchTvTask(String url) {
@@ -114,7 +151,7 @@ public class CurrentlyAiringTvFragment extends Fragment {
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.BASE_URL_TV + Urls.API_KEY + Urls.getCurrentlyAiring() + "&page=" + String.valueOf(pageCount);
+                    String url = mUrl.concat("&page=" + String.valueOf(pageCount));
                     fetchTvTask(url);
 
                     loading = true;
@@ -125,4 +162,42 @@ public class CurrentlyAiringTvFragment extends Fragment {
         mAdapter = new TVListAdapter(mTVList, getContext());
         recyclerView.setAdapter(mAdapter);
     }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+//    /**
+//     * This interface must be implemented by activities that contain this
+//     * fragment to allow an interaction in this fragment to be communicated
+//     * to the activity and potentially other fragments contained in that
+//     * activity.
+//     * <p>
+//     * See the Android Training lesson <a href=
+//     * "http://developer.android.com/training/basics/fragments/communicating.html"
+//     * >Communicating with Other Fragments</a> for more information.
+//     */
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 }

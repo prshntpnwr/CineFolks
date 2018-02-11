@@ -3,7 +3,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.Main" parent="@style/AppTheme">
@@ -18,11 +17,11 @@
     </style>
 
     <style name="AppTheme.Search" parent="@style/Theme.AppCompat.DayNight">
-        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppTheme.About" parent="@style/Theme.AppCompat.DayNight">
-        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 </resources>

@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.objects.TV;
 import com.example.prashant.myapplication.ui.TvDetailActivity;
+import com.example.prashant.myapplication.ui.Utility;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
 
         Glide.with(mContext)
                 .load(mTvList.get(position).getImage())
-                .placeholder(R.color.photo_placeholder)
+                .placeholder(Utility.getRandomDrawableColor())
                 .error(R.color.colorPrimaryDark)
                 .into(holder.imageView);
 

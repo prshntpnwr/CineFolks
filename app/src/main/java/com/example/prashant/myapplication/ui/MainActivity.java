@@ -18,17 +18,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.fragment.FavouriteFragment;
-import com.example.prashant.myapplication.fragment.PlayingNowFragment;
-import com.example.prashant.myapplication.fragment.PopularListFragment;
-import com.example.prashant.myapplication.fragment.TopRatedFragment;
-import com.example.prashant.myapplication.fragment.UpcomingFragment;
+import com.example.prashant.myapplication.fragment.MovieFragment;
+import com.example.prashant.myapplication.server.Urls;
 import com.example.prashant.myapplication.service.NotifyJobService;
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -222,7 +220,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSearch(String searchTerm) {
                 Toast.makeText(MainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
                 Bundle bundle = new Bundle();
-                bundle.putString("search", searchTerm);
+                bundle.putString("title", searchTerm);
+                bundle.putString("url", Urls.MOVIE_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + searchTerm);
 
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -271,16 +270,20 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new PopularListFragment();
+                    Log.e("MainActivity", "url 0 - " + Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY);
+                    return MovieFragment.newInstance(Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY);
                 case 1:
-                    return new TopRatedFragment();
+                    return MovieFragment.newInstance(Urls.BASE_URL + Urls.API_KEY + Urls.SORT_TOP_RATED);
+//                return new TopRatedFragment();
                 case 2:
-                    return new PlayingNowFragment();
+                    return MovieFragment.newInstance(Urls.BASE_URL + Urls.API_KEY + Urls.getPlayingNow());
+//                    return new PlayingNowFragment();
                 case 3:
-                    return new UpcomingFragment();
+                    return MovieFragment.newInstance(Urls.BASE_URL + Urls.API_KEY + Urls.getUpcoming());
+//                    return new UpcomingFragment();
                 case 4:
+                    //return MovieFragment.newInstance(Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY);
                     return new FavouriteFragment();
-
                 default:
                     return null;
             }

@@ -89,6 +89,7 @@
                 android:layout_height="@dimen/rating_icon_size"
                 android:adjustViewBounds="true"
                 android:padding="@dimen/rating_padding"
+                android:backgroundTint="@color/black"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_clock" />
 

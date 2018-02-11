@@ -1,12 +1,14 @@
 package com.example.prashant.myapplication.fragment;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.transition.Slide;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +21,26 @@ import com.example.prashant.myapplication.R;
 import com.example.prashant.myapplication.adapter.MovieListAdapter;
 import com.example.prashant.myapplication.objects.Movies;
 import com.example.prashant.myapplication.server.ServerCall;
-import com.example.prashant.myapplication.ui.MovieCallbackInterFace;
 import com.example.prashant.myapplication.server.Urls;
+import com.example.prashant.myapplication.ui.MovieCallbackInterFace;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
-public class PopularListFragment extends Fragment {
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * to handle interaction events.
+ * Use the {@link MovieFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class MovieFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
+
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_URL = "urlParam";
+
+    private String mUrl;
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
 
@@ -44,10 +58,29 @@ public class PopularListFragment extends Fragment {
 
     private ProgressBar progressBar;
 
+//    private OnFragmentInteractionListener mListener;
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param mUrl Parameter 1.
+     * @return A new instance of fragment MovieFragment.
+     */
+    public static MovieFragment newInstance(String url) {
+        MovieFragment fragment = new MovieFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_URL, url);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUrl = getArguments().getString(ARG_URL);
         if (savedInstanceState != null) {
+            mUrl = savedInstanceState.getString(ARG_URL);
             mMovieList = savedInstanceState.getParcelableArrayList("mMoviesList");
             pageCount = savedInstanceState.getInt("pageCount");
             previousTotal = savedInstanceState.getInt("previousTotal");
@@ -56,13 +89,14 @@ public class PopularListFragment extends Fragment {
             totalItemCount = savedInstanceState.getInt("totalItemCount");
             isLoading = savedInstanceState.getBoolean("loading");
         }
-        String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY;
-        fetchMovieTask(url);
+
+        fetchMovieTask(mUrl);
     }
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
+        bundle.putString(ARG_URL, mUrl);
         bundle.putParcelableArrayList("mMoviesList", mMovieList);
         bundle.putInt("pageCount", pageCount);
         bundle.putInt("previousTotal", previousTotal);
@@ -96,7 +130,7 @@ public class PopularListFragment extends Fragment {
     }
 
     private void fetchMovieTask(String url) {
-
+        Log.e(TAG, "url 1 - " + url);
         ServerCall.getMovies(getActivity(), url, new MovieCallbackInterFace() {
             @Override
             public void onSuccessResponse(Movies movies) {
@@ -137,7 +171,8 @@ public class PopularListFragment extends Fragment {
                 }
 
                 if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.BASE_URL + Urls.API_KEY + Urls.SORT_POPULARITY + "&page=" + String.valueOf(pageCount);
+                    String url = mUrl.concat("&page=" + String.valueOf(pageCount));
+                    Log.e(TAG, "url 2 - " + url);
                     progressBar.setVisibility(View.VISIBLE);
                     fetchMovieTask(url);
 
@@ -157,4 +192,43 @@ public class PopularListFragment extends Fragment {
         mAdapter = new MovieListAdapter(mMovieList, getContext());
         recyclerView.setAdapter(mAdapter);
     }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+//        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
 }

@@ -21,9 +21,12 @@ import java.util.ArrayList;
 
 public class SearchFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_URL = "urlParam";
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
-    private String res;
+    private String mUrl;
+    private String mTitle;
 
     private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
@@ -38,26 +41,16 @@ public class SearchFragment extends Fragment {
     private int pageCount = 1;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
-
-        res = getActivity().getIntent().getStringExtra("search");
-        getActivity().setTitle(res);
-
-        Log.d(TAG, "Search string is " + res);
-
-        String url = Urls.MOVIE_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + res;
-
-        fetchMovieTask(url);
-        setupRecyclerView();
-        return mRootView;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if (bundle != null) {
+            mUrl = bundle.getString("url");
+            mTitle = bundle.getString("title");
+        }
+
         if (savedInstanceState != null) {
+            mUrl = savedInstanceState.getString(ARG_URL);
             mMovieList = savedInstanceState.getParcelableArrayList("mMoviesList");
             pageCount = savedInstanceState.getInt("pageCount");
             previousTotal = savedInstanceState.getInt("previousTotal");
@@ -71,6 +64,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
+        bundle.putString(ARG_URL, mUrl);
         bundle.putParcelableArrayList("mMoviesList", mMovieList);
         bundle.putInt("pageCount", pageCount);
         bundle.putInt("previousTotal", previousTotal);
@@ -78,6 +72,18 @@ public class SearchFragment extends Fragment {
         bundle.putInt("visibleItemCount", visibleItemCount);
         bundle.putInt("totalItemCount", totalItemCount);
         bundle.putBoolean("loading", loading);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View mRootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view);
+
+        getActivity().setTitle(mTitle);
+
+        fetchMovieTask(mUrl);
+        setupRecyclerView();
+        return mRootView;
     }
 
     private void fetchMovieTask(String url) {
@@ -120,7 +126,7 @@ public class SearchFragment extends Fragment {
                     }
                 }
                 if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                    String url = Urls.MOVIE_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + res + "&page=" + String.valueOf(pageCount);
+                    String url = mUrl.concat("&page=" + String.valueOf(pageCount));
                     fetchMovieTask(url);
 
                     loading = true;

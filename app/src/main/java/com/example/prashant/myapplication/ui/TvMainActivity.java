@@ -20,11 +20,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.prashant.myapplication.R;
-import com.example.prashant.myapplication.fragment.AiringTodayTvFragment;
-import com.example.prashant.myapplication.fragment.CurrentlyAiringTvFragment;
 import com.example.prashant.myapplication.fragment.FavouriteTvFragment;
-import com.example.prashant.myapplication.fragment.PopularTvFragment;
-import com.example.prashant.myapplication.fragment.TopRatedTvFragment;
+import com.example.prashant.myapplication.fragment.TvFragment;
+import com.example.prashant.myapplication.server.Urls;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
 
@@ -40,13 +38,8 @@ public class TvMainActivity extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private SearchBox search;
-    private Toolbar toolbar;
 
     static {
         AppCompatDelegate.setDefaultNightMode(
@@ -58,7 +51,7 @@ public class TvMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -84,7 +77,10 @@ public class TvMainActivity extends AppCompatActivity {
                 tabLayout.getTabCount());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        /*
+      The {@link ViewPager} that will host the section contents.
+     */
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mViewPager.setOffscreenPageLimit(5);
@@ -164,7 +160,7 @@ public class TvMainActivity extends AppCompatActivity {
 
     public void openSearch() {
         search.setLogoText(getResources().getString(R.string.app_name));
-        search.setLogoTextColor(Color.parseColor(String.valueOf(R.color.colorAccent)));
+        search.setLogoTextColor(Color.parseColor("#696969"));
         search.setHint(getResources().getString(R.string.tv_hint));
 
         search.setMenuListener(new SearchBox.MenuListener() {
@@ -196,9 +192,10 @@ public class TvMainActivity extends AppCompatActivity {
             public void onSearch(String searchTerm) {
                 Toast.makeText(TvMainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
                 Bundle bundle = new Bundle();
-                bundle.putString("search", searchTerm);
+                bundle.putString("title", searchTerm);
+                bundle.putString("url", Urls.TV_BASE_SEARCH_URL + Urls.API_KEY + "&query=" + searchTerm);
 
-                Intent intent = new Intent(TvMainActivity.this, SearchTvActivity.class);
+                Intent intent = new Intent(TvMainActivity.this, SearchActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -235,13 +232,17 @@ public class TvMainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new PopularTvFragment();
+                    return TvFragment.newInstance(Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_POPULARITY);
+//                    return new PopularTvFragment();
                 case 1:
-                    return new TopRatedTvFragment();
+                    return TvFragment.newInstance(Urls.BASE_URL_TV + Urls.API_KEY + Urls.SORT_TOP_RATED);
+//                    return new TopRatedTvFragment();
                 case 2:
-                    return new AiringTodayTvFragment();
+                    return TvFragment.newInstance(Urls.BASE_URL_TV + Urls.API_KEY + Urls.getAiringToday());
+//                    return new AiringTodayTvFragment();
                 case 3:
-                    return new CurrentlyAiringTvFragment();
+                    return TvFragment.newInstance(Urls.BASE_URL_TV + Urls.API_KEY + Urls.getCurrentlyAiring());
+//                    return new CurrentlyAiringTvFragment();
                 case 4:
                     return new FavouriteTvFragment();
 
