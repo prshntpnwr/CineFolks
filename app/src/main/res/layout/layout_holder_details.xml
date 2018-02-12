@@ -25,16 +25,17 @@
 
         <TextView
             android:id="@+id/title"
-            android:text="Movie Title: Just A Movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/image"
+            android:fontFamily="@font/roboto_medium"
             android:paddingBottom="@dimen/activity_horizontal_padding_mid"
             android:paddingLeft="@dimen/activity_horizontal_padding"
             android:paddingRight="@dimen/activity_horizontal_padding"
             android:paddingTop="@dimen/activity_horizontal_padding_mid"
-            android:textSize="18sp"
-            android:textColor="@color/primary_text"/>
+            android:text="Movie Title: Just A Movie"
+            android:textColor="@color/primary_text"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tag_line"
@@ -42,10 +43,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
             android:layout_toEndOf="@id/image"
-            android:text="this is a tag line"
+            android:fontFamily="@font/roboto_condensed_regular_italic"
             android:paddingBottom="@dimen/activity_horizontal_padding_mid"
             android:paddingLeft="@dimen/activity_horizontal_padding"
             android:paddingRight="@dimen/activity_horizontal_padding"
+            android:text="this is a tag line"
             android:textStyle="italic" />
 
         <LinearLayout
@@ -71,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/roboto_condensed_regular"
                 android:text="2017-12-30 (release)" />
 
         </LinearLayout>
@@ -97,8 +100,9 @@
                 android:id="@+id/duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="120 min"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:text="120 min" />
 
         </LinearLayout>
 
@@ -145,13 +149,14 @@
 
             <TextView
                 android:id="@+id/vote_count"
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/roboto_condensed_regular"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@string/about_contact_us"
-                style="@style/TextAppearance.AppCompat.Caption" />
+                android:text="@string/about_contact_us" />
 
         </LinearLayout>
 
@@ -193,13 +198,14 @@
 
             <TextView
                 android:id="@+id/rating_count"
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/roboto_condensed_regular"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@string/rating"
-                style="@style/TextAppearance.AppCompat.Caption" />
+                android:text="@string/rating" />
 
         </LinearLayout>
 
@@ -230,12 +236,13 @@
 
             <TextView
                 android:id="@+id/genre"
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/roboto_condensed_regular"
                 android:gravity="center"
-                android:maxLines="1"
-                style="@style/TextAppearance.AppCompat.Caption" />
+                android:maxLines="1" />
 
         </LinearLayout>
 
@@ -274,12 +281,13 @@
             </FrameLayout>
 
             <TextView
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/roboto_condensed_regular"
                 android:gravity="center"
-                android:text="@string/popularity"
-                style="@style/TextAppearance.AppCompat.Caption" />
+                android:text="@string/popularity" />
 
         </LinearLayout>
 
@@ -317,12 +325,13 @@
             </FrameLayout>
 
             <TextView
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/roboto_condensed_regular"
                 android:gravity="center"
-                android:text="@string/language"
-                style="@style/TextAppearance.AppCompat.Caption" />
+                android:text="@string/language" />
 
         </LinearLayout>
 
@@ -340,6 +349,7 @@
         android:id="@+id/overview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_light"
         android:gravity="center"
         android:padding="@dimen/activity_horizontal_padding" />
 

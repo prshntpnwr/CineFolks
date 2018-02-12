@@ -26,8 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin_mid"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:fontFamily="@font/roboto_medium"
             android:hint="some thing"
+            android:maxLines="2"
             android:padding="@dimen/activity_vertical_padding_regular"
             android:textColor="@color/primary_text" />
 
@@ -50,6 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin_small"
+                    android:fontFamily="@font/roboto_medium"
                     android:hint="2017"
                     android:padding="@dimen/rating_padding"
                     android:textColor="@color/title_color" />
@@ -79,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/roboto_medium"
                     android:hint="7.2"
                     android:padding="@dimen/rating_padding"
                     android:textColor="@color/title_color" />

@@ -30,7 +30,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     private ArrayList<Movies> mMovieList = new ArrayList<>();
     private Context mContext;
-    private int previousPosition = 0;
 
     public MovieListAdapter(ArrayList<Movies> MovieList, Context context) {
         this.mMovieList = MovieList;
@@ -71,16 +70,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(final MovieListAdapter.ViewHolder holder, int position) {
-        if (position > previousPosition)
-            animate(holder, true);
-        else
-            animate(holder, false);
-
-        previousPosition = position;
-
-        Log.d(TAG, "onBindViewHolder");
         holder.titleView.setText(mMovieList.get(position).getTitle());
-        holder.titleView.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
         holder.ratingView.setText(mMovieList.get(position).getRating());
         if (mMovieList.get(position).getDate() != null) {
             String date = mMovieList.get(position).getDate().replace("Release :", "");

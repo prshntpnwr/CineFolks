@@ -61,10 +61,8 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final TVListAdapter.ViewHolder holder, int position) {
-
         Log.d(TAG, " Tv adapter onBindViewHolder ");
         holder.titleView.setText(mTvList.get(position).getTitle());
-        holder.titleView.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
         holder.ratingView.setText(mTvList.get(position).getRating());
 
         Glide.with(mContext)
@@ -89,9 +87,9 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
 
         ViewHolder(View v) {
             super(v);
-            imageView = (ImageView) v.findViewById(R.id.image);
-            titleView = (TextView) v.findViewById(R.id.title);
-            ratingView = (TextView) v.findViewById(R.id.list_rating);
+            imageView = v.findViewById(R.id.image);
+            titleView = v.findViewById(R.id.title);
+            ratingView = v.findViewById(R.id.list_rating);
         }
     }
 }

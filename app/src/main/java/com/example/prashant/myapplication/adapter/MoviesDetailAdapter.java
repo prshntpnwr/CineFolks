@@ -3,7 +3,6 @@ package com.example.prashant.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -110,18 +109,17 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 ((ViewHolderDetails) holder).getTitleView().setText(movie.getTitle());
-                ((ViewHolderDetails) holder).getTitleView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
 
                 if (movie.getTagLine() != null && !movie.getTagLine().equals("")) {
-                    ((ViewHolderDetails) holder).getTagLineView().setText("\"" + movie.getTagLine() + "\"");
+                    ((ViewHolderDetails) holder).getTagLineView().setText("\"".concat(movie.getTagLine() + "\""));
                 } else {
                     ((ViewHolderDetails) holder).getTagLineView().setVisibility(View.GONE);
                 }
 
-                ((ViewHolderDetails) holder).getDateStatusView().setText(movie.getDate()
-                        + " (" + movie.getStatus() + ")");
-                ((ViewHolderDetails) holder).getDurationView().setText(mContext.getString(R.string.duration)
-                        + " " + movie.getRuntime() + mContext.getString(R.string.min));
+                ((ViewHolderDetails) holder).getDateStatusView().setText(movie.getDate().concat(
+                        " (" + movie.getStatus() + ")"));
+                ((ViewHolderDetails) holder).getDurationView().setText(mContext.getString(R.string.duration).concat(
+                        " " + movie.getRuntime() + mContext.getString(R.string.min)));
                 ((ViewHolderDetails) holder).getRatingView().setText(movie.getRating());
 
                 if (movie.getGenre() != null) {
@@ -142,10 +140,9 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 if (movie.getOverview() != null) {
                     ((ViewHolderDetails) holder).getOverviewView().setText(movie.getOverview());
-                    ((ViewHolderDetails) holder).getOverviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
                 }
                 if (movie.getVoteCount() != null) {
-                    ((ViewHolderDetails) holder).getVoteCountView().setText(movie.getVoteCount() + " " + mContext.getString(R.string.votes));
+                    ((ViewHolderDetails) holder).getVoteCountView().setText(movie.getVoteCount().concat(" " + mContext.getString(R.string.votes)));
                 }
                 break;
 
@@ -161,8 +158,8 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .into(((ViewHolderTrailer) holder).getImageView());
 
                 ((ViewHolderTrailer) holder).getTitleView().setText(data[1]);
-                ((ViewHolderTrailer) holder).getSiteView().setText(mContext.getString(R.string.site) + data[2]);
-                ((ViewHolderTrailer) holder).getQualityView().setText(mContext.getString(R.string.quality) + data[3] + "p");
+                ((ViewHolderTrailer) holder).getSiteView().setText(mContext.getString(R.string.site).concat(data[2]));
+                ((ViewHolderTrailer) holder).getQualityView().setText(mContext.getString(R.string.quality).concat(data[3] + "p"));
 
                 ((ViewHolderTrailer) holder).getRippleLayout().setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -175,12 +172,9 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case 2:
                 ((ViewHolderReview) holder).getReviewView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
                         .substring(reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-") + 1));
-                ((ViewHolderReview) holder).getReviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Medium.ttf"));
 
                 ((ViewHolderReview) holder).getReviewAuthorView().setText(reviewInfo.get(position - 1 - trailerInfo.size())
                         .substring(0, reviewInfo.get(position - 1 - trailerInfo.size()).indexOf("-")));
-                ((ViewHolderReview) holder).getReviewView().setTypeface(Typeface.createFromAsset(mContext.getAssets(), "Roboto-Regular.ttf"));
-
                 break;
         }
     }
@@ -220,22 +214,22 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         ViewHolderDetails(View view) {
             super(view);
-            imageView = (ImageView) view.findViewById(R.id.image);
-            titleView = (TextView) view.findViewById(R.id.title);
-            tagLineView = (TextView) view.findViewById(R.id.tag_line);
-            dateStatusView = (TextView) view.findViewById(R.id.date_status);
-            durationView = (TextView) view.findViewById(R.id.duration);
-            ratingView = (TextView) view.findViewById(R.id.rating);
-            genreView = (TextView) view.findViewById(R.id.genre);
-            popularityView = (TextView) view.findViewById(R.id.popularity);
-            languageView = (TextView) view.findViewById(R.id.language);
-            overviewView = (TextView) view.findViewById(R.id.overview);
-            upVotes = (ImageView) view.findViewById(R.id.up_votes);
-            ratingsBackground = (ImageView) view.findViewById(R.id.ratings_background);
-            voteCountView = (TextView) view.findViewById(R.id.vote_count);
-            genreBackground = (ImageView) view.findViewById(R.id.genre_background);
-            popBackground = (ImageView) view.findViewById(R.id.pop_background);
-            langBackground = (ImageView) view.findViewById(R.id.lang_background);
+            imageView = view.findViewById(R.id.image);
+            titleView = view.findViewById(R.id.title);
+            tagLineView = view.findViewById(R.id.tag_line);
+            dateStatusView = view.findViewById(R.id.date_status);
+            durationView = view.findViewById(R.id.duration);
+            ratingView = view.findViewById(R.id.rating);
+            genreView = view.findViewById(R.id.genre);
+            popularityView = view.findViewById(R.id.popularity);
+            languageView = view.findViewById(R.id.language);
+            overviewView = view.findViewById(R.id.overview);
+            upVotes = view.findViewById(R.id.up_votes);
+            ratingsBackground = view.findViewById(R.id.ratings_background);
+            voteCountView = view.findViewById(R.id.vote_count);
+            genreBackground = view.findViewById(R.id.genre_background);
+            popBackground = view.findViewById(R.id.pop_background);
+            langBackground = view.findViewById(R.id.lang_background);
         }
 
         ImageView getImageView() {
@@ -311,11 +305,11 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         ViewHolderTrailer(View view) {
             super(view);
-            rippleLayout = (MaterialRippleLayout) view.findViewById(R.id.ripple);
-            imageView = (ImageView) view.findViewById(R.id.trailer_image);
-            titleView = (TextView) view.findViewById(R.id.title_text);
-            siteView = (TextView) view.findViewById(R.id.site_text);
-            qualityView = (TextView) view.findViewById(R.id.quality_text);
+            rippleLayout = view.findViewById(R.id.ripple);
+            imageView = view.findViewById(R.id.trailer_image);
+            titleView = view.findViewById(R.id.title_text);
+            siteView = view.findViewById(R.id.site_text);
+            qualityView = view.findViewById(R.id.quality_text);
         }
 
         MaterialRippleLayout getRippleLayout() {
@@ -346,8 +340,8 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         ViewHolderReview(View view) {
             super(view);
-            reviewAuthorView = (TextView) view.findViewById(R.id.review_author_text);
-            reviewView = (TextView) view.findViewById(R.id.review_text);
+            reviewAuthorView = view.findViewById(R.id.review_author_text);
+            reviewView = view.findViewById(R.id.review_text);
         }
 
         TextView getReviewAuthorView() {
